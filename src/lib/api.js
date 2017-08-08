@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 import queryString from 'query-string';
-import { API_HOST } from 'constants';
+import { API_HOST } from '../constants';
 
 export function getErrorMessages (error, fieldName, context) {
   const prefix = context ? `${context}.` : '';
@@ -9,6 +9,7 @@ export function getErrorMessages (error, fieldName, context) {
 }
 
 // Events
+
 
 export function getEvents({ name, remark } = {}) {
   const query = {
