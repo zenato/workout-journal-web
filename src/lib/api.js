@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import axios from 'axios';
 import queryString from 'query-string';
-import { API_HOST } from 'constants';
+import { API_HOST } from '../constants';
 
 export const getErrorMessages = (error, fieldName, hasDataContext = true) =>
   _.get(error, `${hasDataContext ? 'data.' : ''}${fieldName}`);
 
 
 // Events
+
 
 export function getEvents({ name, remark } = {}) {
   const query = {
