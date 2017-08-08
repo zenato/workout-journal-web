@@ -3,9 +3,10 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { API_HOST } from 'constants';
 
-export const getErrorMessages = (error, fieldName, hasDataContext = true) =>
-  _.get(error, `${hasDataContext ? 'data.' : ''}${fieldName}`);
-
+export function getErrorMessages (error, fieldName, context) {
+  const prefix = context ? `${context}.` : '';
+  return _.get(error, prefix + fieldName);
+}
 
 // Events
 
