@@ -1,0 +1,24 @@
+# Workout journal
+
+React based workout journal web client toy project.
+
+## Getting Started
+
+### Install dependency modules
+`yarn`
+
+### Start app
+`yarn run start`
+
+### Test app
+`yarn run test`
+
+### Production build
+`yarn run build`
+
+You may need to `constants.js`.
+
+
+## Related project
+* [REST API Server](https://github.com/zenato/workout-journal-server) - Python based REST API server toy project.
+* [Mobile client] - Progressive.
