@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import SearchForm from './SearchForm';
+import SearchForm from '../SearchForm';
 
 
 it('submit input', () => {

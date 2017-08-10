@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Performance from './Performace';
+import Performance from '../Performace';
 
 const events = [
   {

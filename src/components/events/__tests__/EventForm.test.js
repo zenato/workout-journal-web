@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EventForm from './EventForm';
+import EventForm from '../EventForm';
 
 const item = {
   id: 1,

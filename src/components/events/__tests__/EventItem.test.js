@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EventItem from './EventItem';
+import EventItem from '../EventItem';
 
 const item = {
   id: 1,

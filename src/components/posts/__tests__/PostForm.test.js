@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PostForm from './PostForm';
+import PostForm from '../PostForm';
 
 const item = {
   id: 1,

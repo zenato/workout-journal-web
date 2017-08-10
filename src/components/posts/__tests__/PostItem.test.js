@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PostItem from './PostItem';
+import PostItem from '../PostItem';
 
 const item = {
   id: 1,
