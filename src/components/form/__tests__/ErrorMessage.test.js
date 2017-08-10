@@ -10,5 +10,5 @@ it('renders error', () => {
     },
   };
   const wrapper = shallow(<ErrorMessage name={fieldName} error={error} />);
-  expect(wrapper.find('.error-message li').length).toEqual(2);
+  expect(wrapper).toMatchSnapshot();
 });
