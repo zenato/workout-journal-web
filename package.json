@@ -71,7 +71,8 @@
     "start:server": "node server",
     "build": "cross-env NODE_PATH=src node scripts/build.js",
     "build:server": "cross-env NODE_PATH=src node scripts/build.server.js",
-    "test": "cross-env NODE_PATH=src node scripts/test.js --env=jsdom"
+    "test": "cross-env NODE_PATH=src node scripts/test.js --env=jsdom",
+    "test:updateSnapshot": "cross-env NODE_PATH=src node scripts/test.js --env=jsdom --updateSnapshot"
   },
   "jest": {
     "collectCoverageFrom": [
