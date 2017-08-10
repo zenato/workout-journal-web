@@ -4,5 +4,6 @@ import Menu from '../Menu';
 
 
 it('renders without crashing', () => {
-  shallow(<Menu />);
+  const wrapper = shallow(<Menu />);
+  expect(wrapper).toMatchSnapshot();
 });
