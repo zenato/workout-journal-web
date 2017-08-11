@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { handleChangeInput } from 'lib/form';
 import ErrorMessage from 'components/form/ErrorMessage';
 import Performance from 'components/posts/Performace';
@@ -47,12 +48,12 @@ class PostForm extends Component {
     e.preventDefault();
     const performances = [...this.state.performances, {
       event: null,
-      value: '',
-      set1: '',
-      set2: '',
-      set3: '',
-      set4: '',
-      set5: '',
+      value: 0,
+      set1: 0,
+      set2: 0,
+      set3: 0,
+      set4: 0,
+      set5: 0,
     }];
     this.setState({ performances });
   };
@@ -165,5 +166,14 @@ class PostForm extends Component {
     );
   }
 }
+
+PostForm.propTypes = {
+  item: PropTypes.object,
+  events: PropTypes.array.isRequired,
+  error: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onMoveList: PropTypes.func.isRequired,
+};
 
 export default PostForm;

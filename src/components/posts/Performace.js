@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ErrorMessage from 'components/form/ErrorMessage';
 import { getValue } from 'lib/form';
 import { add } from 'lib/math';
@@ -114,5 +115,28 @@ class Performance extends Component {
     );
   }
 }
+
+Performance.propTypes = {
+  idx: PropTypes.number.isRequired,
+  item: PropTypes.shape({
+    event: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      unit: PropTypes.string.isRequired,
+    }),
+    value: PropTypes.number,
+    set1: PropTypes.number,
+    set2: PropTypes.number,
+    set3: PropTypes.number,
+    set4: PropTypes.number,
+    set5: PropTypes.number,
+  }).isRequired,
+  events: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    last_performace: PropTypes.shape({
+      value: PropTypes.number.isRequired,
+    }),
+  })).isRequired,
+};
 
 export default Performance;

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const EventItem = ({ item, onDetail }) => (
   <li key={item.id} className="list-item">
@@ -12,5 +13,18 @@ const EventItem = ({ item, onDetail }) => (
     </a>
   </li>
 );
+
+EventItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    workout_date: PropTypes.string.isRequired,
+    performances: PropTypes.arrayOf(PropTypes.shape({
+      event: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    })),
+  }).isRequired,
+  onDetail: PropTypes.func.isRequired,
+};
 
 export default EventItem;
