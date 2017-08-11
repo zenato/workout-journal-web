@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { handleChangeInput } from 'lib/form';
 import ErrorMessage from 'components/form/ErrorMessage';
+import { Event as EventType } from './propTypes';
 
 class EventForm extends Component {
   constructor(props) {
@@ -114,5 +116,13 @@ class EventForm extends Component {
     );
   }
 }
+
+EventForm.propTypes = {
+  item: EventType,
+  error: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onMoveList: PropTypes.func.isRequired,
+};
 
 export default EventForm;

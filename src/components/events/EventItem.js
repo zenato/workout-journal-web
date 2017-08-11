@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Event as EventType } from './propTypes';
 
 const EventItem = ({ item, onDetail }) => (
   <li key={item.id} className="list-item">
@@ -13,5 +15,10 @@ const EventItem = ({ item, onDetail }) => (
     </a>
   </li>
 );
+
+EventItem.propTypes = {
+  item: EventType.isRequired,
+  onDetail: PropTypes.func.isRequired,
+};
 
 export default EventItem;
