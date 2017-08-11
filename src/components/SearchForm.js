@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { handleChangeInput } from 'lib/form';
 
@@ -48,5 +49,17 @@ class SearchForm extends Component {
     );
   }
 }
+
+SearchForm.propTypes = {
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+SearchForm.defaultProps = {
+  placeholder: 'Input search text.',
+};
 
 export default SearchForm;
