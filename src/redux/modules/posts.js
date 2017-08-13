@@ -57,7 +57,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      events: action.payload.data.results,
+      events: action.payload.data,
     }),
   }),
   ...pender({

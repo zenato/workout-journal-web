@@ -32,7 +32,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      items: action.payload.data.results,
+      items: action.payload.data,
     }),
   }),
   [CLEAR_EVENTS]: (state, action) => ({
