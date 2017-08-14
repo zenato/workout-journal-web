@@ -24,10 +24,6 @@ class Posts extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.PostsActions.clearPosts();
-  }
-
   fetchData({ location }) {
     const query = queryString.parse(location.search);
     return this.props.PostsActions.getPosts(query);

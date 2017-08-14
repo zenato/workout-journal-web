@@ -3,7 +3,6 @@ import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
 export const GET_POSTS = 'posts/GET_POSTS';
-const CLEAR_POSTS = 'posts/CLEAR_POSTS';
 
 export const GET_POST = 'posts/GET_POST';
 export const UPDATE_POST = 'posts/UPDATE_POST';
@@ -13,7 +12,6 @@ const CLEAR_POST = 'posts/CLEAR_POST';
 export const GET_POST_EVENTS = 'posts/GET_POST_EVENTS';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
-export const clearPosts = createAction(CLEAR_POSTS);
 
 export const getPost = createAction(GET_POST, api.getPost);
 export const getPostEvents = createAction(GET_POST_EVENTS, api.getEvents);
@@ -37,11 +35,6 @@ export default handleActions({
       error: null,
       items: action.payload.data.results,
     }),
-  }),
-  [CLEAR_POSTS]: (state, action) => ({
-    ...state,
-    items: [],
-    error: null,
   }),
 
   ...pender({
