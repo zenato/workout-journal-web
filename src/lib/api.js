@@ -35,6 +35,7 @@ export function getPosts({ name } = {}) {
 }
 
 export const getPost = id => axios.get(`${API_HOST}/posts/${id}`);
+export const getMorePosts = next => axios.get(next);
 export const updatePost = (id, params) => axios.put(`${API_HOST}/posts/${id}/`, params);
 export const insertPost = (params) => axios.post(`${API_HOST}/posts/`, params);
 export const deletePost = id => axios.delete(`${API_HOST}/posts/${id}`);

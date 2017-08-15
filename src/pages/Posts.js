@@ -44,8 +44,12 @@ class Posts extends Component {
     this.props.history.push(`/posts/new${this.props.location.search}`);
   };
 
+  handleMorePosts = () => {
+    return this.props.PostsActions.getMorePosts(this.props.next);
+  };
+
   render() {
-    const { items, location } = this.props;
+    const { items, location, next } = this.props;
     return (
       <div className="post-list">
         <Helmet>
@@ -64,6 +68,10 @@ class Posts extends Component {
             <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
           ))}
         </ul>
+
+        {next && (
+          <button onClick={this.handleMorePosts} className="btn">More</button>
+        )}
       </div>
     );
   }
@@ -72,6 +80,7 @@ class Posts extends Component {
 export default withDone(connect(
   (state) => ({
     items: state.posts.items,
+    next: state.posts.next,
   }),
   (dispatch) => ({
     PostsActions: bindActionCreators(postsActions, dispatch),

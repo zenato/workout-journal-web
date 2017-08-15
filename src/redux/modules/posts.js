@@ -3,6 +3,7 @@ import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
 export const GET_POSTS = 'posts/GET_POSTS';
+export const GET_MORE_POSTS = 'posts/GET_MORE_POSTS';
 
 export const GET_POST = 'posts/GET_POST';
 export const UPDATE_POST = 'posts/UPDATE_POST';
@@ -12,6 +13,7 @@ const CLEAR_POST = 'posts/CLEAR_POST';
 export const GET_POST_EVENTS = 'posts/GET_POST_EVENTS';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
+export const getMorePosts = createAction(GET_MORE_POSTS, api.getMorePosts);
 
 export const getPost = createAction(GET_POST, api.getPost);
 export const getPostEvents = createAction(GET_POST_EVENTS, api.getEvents);
@@ -21,10 +23,11 @@ export const insertPost = createAction(INSERT_POST, api.insertPost);
 export const deletePost = createAction(DELETE_POST, api.deletePost);
 
 const initialState = {
+  events: [],
   items: [],
   item: null,
   error: null,
-  events: [],
+  next: null,
 };
 
 export default handleActions({
@@ -34,6 +37,19 @@ export default handleActions({
       ...state,
       error: null,
       items: action.payload.data.results,
+      next: action.payload.data.next,
+    }),
+  }),
+  ...pender({
+    type: GET_MORE_POSTS,
+    onSuccess: (state, action) => ({
+      ...state,
+      error: null,
+      items: [
+        ...state.items,
+        ...action.payload.data.results,
+      ],
+      next: action.payload.data.next,
     }),
   }),
 
@@ -55,11 +71,15 @@ export default handleActions({
   }),
   ...pender({
     type: UPDATE_POST,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      item: action.payload.data,
-    }),
+    onSuccess: (state, action) => {
+      const item = action.payload.data;
+      return ({
+        ...state,
+        error: null,
+        item,
+        items: state.items.map(i => i.id === item.id ? item : i),
+      });
+    },
     onFailure: (state, action) => ({
       ...state,
       error: action.payload.response,
@@ -71,6 +91,10 @@ export default handleActions({
       ...state,
       error: null,
       item: action.payload.data,
+      items: [
+        action.payload.data,
+        ...state.items,
+      ],
     }),
     onFailure: (state, action) => ({
       ...state,
@@ -82,6 +106,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
+      items: state.items.filter(i => i.id !== state.item.id),
     }),
   }),
   [CLEAR_POST]: (state, action) => ({
