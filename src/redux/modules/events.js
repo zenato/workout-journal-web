@@ -3,7 +3,6 @@ import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
 export const GET_EVENTS = 'events/GET_EVENTS';
-const CLEAR_EVENTS = 'events/CLEAR_EVENTS';
 
 export const GET_EVENT = 'events/GET_EVENT';
 export const UPDATE_EVENT = 'events/UPDATE_EVENT';
@@ -12,7 +11,6 @@ export const DELETE_EVENT = 'events/DELETE_EVENT';
 const CLEAR_EVENT = 'events/CLEAR_EVENT';
 
 export const getEvents = createAction(GET_EVENTS, api.getEvents);
-export const clearEvents = createAction(CLEAR_EVENTS);
 
 export const getEvent = createAction(GET_EVENT, api.getEvent);
 export const clearEvent = createAction(CLEAR_EVENT);
@@ -34,11 +32,6 @@ export default handleActions({
       error: null,
       items: action.payload.data,
     }),
-  }),
-  [CLEAR_EVENTS]: (state, action) => ({
-    ...state,
-    items: [],
-    error: null,
   }),
 
   ...pender({

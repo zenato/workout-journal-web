@@ -24,10 +24,6 @@ class Events extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.EventsActions.clearEvents();
-  }
-
   fetchData({ location }) {
     const query = queryString.parse(location.search);
     return this.props.EventsActions.getEvents(query);
