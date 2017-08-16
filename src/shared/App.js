@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className={cx('app')}>
         <Helmet>
           <title>{SITE_NAME}</title>
         </Helmet>
