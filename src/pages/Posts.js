@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as postsActions from 'redux/modules/posts';
 import { hasChangedLocation } from 'lib/location';
+import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import PostItem from 'components/posts/PostItem';
 import { SITE_NAME } from '../constants';
@@ -56,12 +57,8 @@ class Posts extends Component {
           <title>{`Posts | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <input
-          type="button"
-          value="Add Post"
-          onClick={this.handleForm}
-          className="btn primary add-post"
-        />
+        <Button value="Add Post" onClick={this.handleForm} className="primary add-post" />
+
         <SearchForm location={location} onSubmit={this.handleSearch} placeholder="Input post name." />
         <ul>
           {items.map(item => (

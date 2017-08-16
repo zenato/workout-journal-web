@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
 import { hasChangedLocation } from 'lib/location';
+import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import EventItem from 'components/events/EventItem';
 import { SITE_NAME } from '../constants';
@@ -52,12 +53,8 @@ class Events extends Component {
           <title>{`Events | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <input
-          type="button"
-          value="Add Event"
-          onClick={this.handleForm}
-          className="btn primary add-event"
-        />
+        <Button value="Add Event" onClick={this.handleForm} className="primary add-event" />
+
         <SearchForm
           location={location}
           onSubmit={this.handleSearch}

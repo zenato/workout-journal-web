@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { handleChangeInput } from 'lib/form';
-import ErrorMessage from 'components/form/ErrorMessage';
+import { Input, Button, ErrorMessage } from 'components/form';
 import Performance from 'components/posts/Performace';
 import { formatDate } from 'lib/date'
 
@@ -70,13 +70,12 @@ class PostForm extends Component {
         <div className="item">
           <label htmlFor="post-workout-date">Date</label>
           <div className="field">
-            <input
+            <Input
               id="post-workout-date"
               type="date"
               name="workout_date"
               value={formatDate(this.state.workout_date)}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="workout_date" />
           </div>
@@ -137,13 +136,12 @@ class PostForm extends Component {
         <div className="item">
           <label htmlFor="post-remark">Remark</label>
           <div className="field">
-            <input
+            <Input
               id="post-remark"
               type="text"
               name="remark"
               value={this.state.remark || ''}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="remark" />
           </div>
@@ -156,10 +154,10 @@ class PostForm extends Component {
         )}
 
         <div className="tool">
-          <input type="submit" value="Save" className="btn primary" />
-          <input type="button" value="List" onClick={this.handleMoveList} className="btn" />
+          <Button type="submit" value="Save" className="primary" />
+          <Button value="List" onClick={this.handleMoveList} />
           {this.state.id && (
-            <input type="button" value="Delete" onClick={this.handleDelete} className="btn" />
+            <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
       </form>

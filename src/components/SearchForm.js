@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { handleChangeInput } from 'lib/form';
+import { Input, Button } from 'components/form';
 
 class SearchForm extends Component {
   constructor(props) {
@@ -25,25 +26,24 @@ class SearchForm extends Component {
     e.preventDefault();
     const { name } = this.state;
     this.props.onSubmit({ name, });
-    this.name.blur();
+    // Legacy codes.
+    document.querySelector('.search-form input').blur();
   };
 
   render() {
     return (
       <form onSubmit={this.handleSearch} className="search-form">
         <div className="field">
-          <input
+          <Input
             type="text"
             name="name"
             value={this.state.name}
-            ref={(e) => { this.name = e; }}
             onChange={this.handleInputChange}
             placeholder={this.props.placeholder}
-            className="form-control"
           />
         </div>
         <div className="tool">
-          <input type="submit" value="Search" className="btn" />
+          <Button type="submit" value="Search" />
         </div>
       </form>
     );

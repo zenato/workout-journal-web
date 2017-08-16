@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { handleChangeInput } from 'lib/form';
-import ErrorMessage from 'components/form/ErrorMessage';
+import { Input, Button, ErrorMessage } from 'components/form';
 
 class EventForm extends Component {
   constructor(props) {
@@ -44,13 +44,12 @@ class EventForm extends Component {
         <div className="item">
           <label htmlFor="event-name">Name</label>
           <div className="field">
-            <input
+            <Input
               id="event-name"
               type="text"
               name="name"
               value={this.state.name || ''}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="name" />
           </div>
@@ -58,13 +57,12 @@ class EventForm extends Component {
         <div className="item">
           <label htmlFor="event-value">Value</label>
           <div className="field">
-            <input
+            <Input
               id="event-value"
               type="text"
               name="value"
               value={this.state.value || ''}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="value" />
           </div>
@@ -72,13 +70,12 @@ class EventForm extends Component {
         <div className="item">
           <label htmlFor="event-unit">Unit</label>
           <div className="field">
-            <input
+            <Input
               id="event-unit"
               type="text"
               name="unit"
               value={this.state.unit || ''}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="unit" />
           </div>
@@ -86,13 +83,12 @@ class EventForm extends Component {
         <div className="item">
           <label htmlFor="event-remark">Remark</label>
           <div className="field">
-            <input
+            <Input
               id="event-remark"
               type="text"
               name="remark"
               value={this.state.remark || ''}
               onChange={this.handleChangeInput}
-              className="form-control"
             />
             <ErrorMessage error={error} name="remark" />
           </div>
@@ -105,10 +101,10 @@ class EventForm extends Component {
         )}
 
         <div className="tool">
-          <input type="submit" value="Save" className="btn primary" />
-          <input type="button" value="List" onClick={this.handleMoveList} className="btn" />
+          <Button type="submit" value="Save" className="primary" />
+          <Button value="List" onClick={this.handleMoveList} />
           {this.state.id && (
-            <input type="button" value="Delete" onClick={this.handleDelete} className="btn" />
+            <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
       </form>

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ErrorMessage from 'components/form/ErrorMessage';
+import { Input, Select, Button, ErrorMessage } from 'components/form';
 import { getValue } from 'lib/form';
 import { add } from 'lib/math';
 
@@ -37,79 +37,73 @@ class Performance extends Component {
     return (
       <tr>
         <td>
-          <select
+          <Select
             name="event"
             value={event ? event.id : ''}
             onChange={this.onChange}
-            className="form-control">
+          >
             <option>선택하세요</option>
             {events.map(e => (
               <option key={e.id} value={e.id}>{e.name}</option>
             ))}
-          </select>
+          </Select>
           <ErrorMessage error={error} name={`performances[${idx}].event`} />
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="value"
             value={value}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td>
           {event && event.unit}
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="set1"
             value={set1}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="set2"
             value={set2}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="set3"
             value={set3}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="set4"
             value={set4}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td>
-          <input
+          <Input
             type="number"
             name="set5"
             value={set5}
             onChange={this.onChange}
-            className="form-control"
           />
         </td>
         <td className="num">{total}</td>
         <td className="num">{volume}</td>
         <td>
-          <button onClick={this.onDelete} className="btn">Del</button>
+          <Button value="Del" onClick={this.onDelete} />
         </td>
       </tr>
     );
