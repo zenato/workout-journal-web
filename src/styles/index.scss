@@ -1,0 +1,268 @@
+@import 'common';
+
+.container {
+  padding: 5px;
+}
+
+.btn {
+  background-color: #fff;
+  color: #323232;
+  padding: 10px;
+  border: solid #d4d4d4 1px;
+  cursor: pointer;
+
+  $color: #161616;
+  &:hover {
+    color: $color;
+    background-color: #f6f6f6;
+  }
+  &:active {
+    color: $color;
+    background-color: #efefef;
+  }
+
+  &.primary {
+    color: #fff;
+    background-color: #008ee0;
+    &:hover {
+      background-color: #00a4ff;
+    }
+  }
+}
+
+.form-control {
+  display: block;
+  background-color: #fff;
+  color: #4a4a4a;
+  border: solid #d4d4d4 1px;
+  padding: 10px;
+  width: 100%;
+}
+
+.num {
+  text-align: right;
+}
+
+
+.menu {
+  $color: #f2f2f2;
+
+  background-color: #323232;
+  color: $color;
+  padding: 10px;
+  maring: 0;
+  font-size: 1.2rem;
+
+  a {
+    color: $color;
+  }
+
+  li:not(:last-child) {
+    float: left;
+    margin-right: 10px;
+  }
+}
+
+
+.search-form {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .field {
+    display: inline-block;
+    flex: 10;
+  }
+
+  .tool {
+    display: inline-block;
+    flex: 2;
+    text-align: right;
+  }
+}
+
+.event-list {
+  .list-item {
+    border: solid 1px #c7c7c7;
+    margin-bottom: 5px;
+    background-color: #fff;
+
+    >a {
+      padding: 10px;
+      display: flex;
+
+      &:hover {
+        background-color: #f9f9f9;
+      }
+      &:active {
+        background-color: #ebebeb;
+      }
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #ff5008;
+    }
+
+    .value-unit {
+      margin-left: 5px;
+      color: #4e4e4e;
+    }
+
+    .remark {
+      color: #a0a0a0;
+      font-size: 0.7rem;
+      margin-top: 5px;
+    }
+  }
+}
+
+.event-form {
+  padding: 10px;
+
+  .item {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+
+    label {
+      flex: 2;
+      text-align: right;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .field {
+      flex: 10;
+      padding-right: 10px;
+      vertical-align: middle;
+    }
+
+    .error-message {
+      color: #f00;
+      font-size: 0.7rem;
+      padding: 5px;
+    }
+  }
+
+  .tool {
+    text-align: center;
+
+    .btn {
+      margin-left: 5px;
+    }
+  }
+
+  .error {
+    color: #f00;
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 5px;
+  }
+}
+
+.post-list {
+  .list-item {
+    border: solid 1px #c7c7c7;
+    margin-bottom: 5px;
+    background-color: #fff;
+
+    >a {
+      padding: 10px;
+      display: flex;
+
+      &:hover {
+        background-color: #efefef;
+      }
+      &:active {
+        background-color: #d7d7d7;
+      }
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #ff5008;
+    }
+
+    .weekday {
+      margin-left: 3px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #7c7c7c;
+    }
+
+    .value-unit {
+      margin-left: 5px;
+      color: #4e4e4e;
+    }
+
+    .remark {
+      color: #a0a0a0;
+      font-size: 0.7rem;
+      margin-top: 5px;
+    }
+  }
+}
+
+
+.post-form {
+  padding: 10px;
+
+  .item {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+
+    label {
+      flex: 2;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: right;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .field {
+      flex: 10;
+      padding-right: 10px;
+      vertical-align: middle;
+      overflow-x: auto;
+    }
+
+    .error-message {
+      color: #f00;
+      font-size: 0.7rem;
+      padding: 5px;
+    }
+  }
+
+  .tool {
+    text-align: center;
+
+    .btn {
+      margin-left: 3px;
+    }
+  }
+
+  .error {
+    color: #f00;
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 5px;
+  }
+
+  .performances {
+    td {
+      vertical-align: top;
+    }
+  }
+}
