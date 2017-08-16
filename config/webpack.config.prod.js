@@ -147,6 +147,7 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
+          /\.scss$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
@@ -195,9 +196,6 @@ module.exports = {
                     importLoaders: 1,
                     minimize: true,
                     sourceMap: true,
-                    // Enable CSS modules.
-                    //modules: true,
-                    //localIdentName: '[path][name]__[local]--[hash:base64:5]',
                   },
                 },
                 {
@@ -239,8 +237,8 @@ module.exports = {
                     minimize: true,
                     sourceMap: true,
                     // Enable CSS modules.
-                    //modules: true,
-                    //localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                    modules: true,
+                    localIdentName: '[path][name]__[local]--[hash:base64:5]',
                   },
                 },
                 {

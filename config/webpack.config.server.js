@@ -30,7 +30,8 @@ module.exports = {
       {
         exclude: [
           /\.(js|jsx)$/,
-          /\.json$/
+          /\.json$/,
+          /\.scss$/,
         ],
         loader: 'ignore',
       },
@@ -41,7 +42,27 @@ module.exports = {
         options: {
           cacheDirectory: true,
         },
-      }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: require.resolve('css-loader/locals'),
+            options: {
+              importLoaders: 1,
+              // Enable CSS modules.
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          },
+          {
+            loader: require.resolve('sass-loader'),
+            options: {
+              includePaths: [paths.styles],
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

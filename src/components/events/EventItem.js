@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import styles from './EventItem.scss';
+
+const cx = classNames.bind(styles);
 
 const EventItem = ({ item, onDetail }) => (
-  <li key={item.id} className="list-item">
+  <li key={item.id} className={cx('event-item')}>
     <a href="" onClick={(e) => onDetail(e, item.id)}>
-      <div className="info">
-        <span className="name">{item.name}</span>
+      <div className={cx('info')}>
+        <span className={cx('name')}>{item.name}</span>
         {item.value && (
-          <span className="value-unit">{item.value}{item.unit}</span>
+          <span className={cx('value-unit')}>{item.value}{item.unit}</span>
         )}
-        <div className="remark">{item.remark}</div>
+        <div className={cx('remark')}>{item.remark}</div>
       </div>
     </a>
   </li>

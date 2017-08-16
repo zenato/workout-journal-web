@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import classNames from 'classnames/bind';
 import { handleChangeInput } from 'lib/form';
 import { Input, Button } from 'components/form';
+import styles from './SearchForm.scss';
+
+const cx = classNames.bind(styles);
 
 class SearchForm extends Component {
   constructor(props) {
@@ -32,8 +36,8 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSearch} className="search-form">
-        <div className="field">
+      <form onSubmit={this.handleSearch} className={cx('search-form')}>
+        <div className={cx('field')}>
           <Input
             type="text"
             name="name"
@@ -42,7 +46,7 @@ class SearchForm extends Component {
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="tool">
+        <div className={cx('tool')}>
           <Button type="submit" value="Search" />
         </div>
       </form>

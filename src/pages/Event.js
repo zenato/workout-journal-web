@@ -58,7 +58,7 @@ class Event extends Component {
   render() {
     const { match, item, error, loading } = this.props;
     return (
-      <div className="event-form">
+      <div>
         {loading && (
           <span>Now loading...</span>
         )}

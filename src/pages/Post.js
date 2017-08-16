@@ -61,7 +61,7 @@ class Post extends Component {
   render() {
     const { match, item, events, error, loading } = this.props;
     return (
-      <div className="post-form">
+      <div>
         {loading && (
           <span>Now loading...</span>
         )}

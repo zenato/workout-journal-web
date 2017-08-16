@@ -52,14 +52,15 @@ class Posts extends Component {
   render() {
     const { items, location, next } = this.props;
     return (
-      <div className="post-list">
+      <div>
         <Helmet>
           <title>{`Posts | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <Button value="Add Post" onClick={this.handleForm} className="primary add-post" />
+        <Button value="Add Post" onClick={this.handleForm} className="primary" />
 
         <SearchForm location={location} onSubmit={this.handleSearch} placeholder="Input post name." />
+
         <ul>
           {items.map(item => (
             <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
@@ -67,7 +68,7 @@ class Posts extends Component {
         </ul>
 
         {next && (
-          <button onClick={this.handleMorePosts} className="btn">More</button>
+          <Button onClick={this.handleMorePosts} value="More" />
         )}
       </div>
     );

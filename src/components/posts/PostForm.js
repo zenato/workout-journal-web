@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { handleChangeInput } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import Performance from 'components/posts/Performace';
 import { formatDate } from 'lib/date'
+import styles from './PostForm.scss';
+
+const cx = classNames.bind(styles);
 
 class PostForm extends Component {
   constructor(props) {
@@ -66,10 +70,10 @@ class PostForm extends Component {
   render() {
     const { error } = this.props;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="item">
+      <form onSubmit={this.handleSubmit} className={cx('post-form')}>
+        <div className={cx('item')}>
           <label htmlFor="post-workout-date">Date</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="post-workout-date"
               type="date"
@@ -81,12 +85,12 @@ class PostForm extends Component {
           </div>
         </div>
 
-        <div className="item">
+        <div className={cx('item')}>
           <label>Perf.</label>
-          <div className="field overflow">
-            <button onClick={this.handleAddPerformance} className="btn">Add</button>
+          <div className={cx('field')}>
+            <Button onClick={this.handleAddPerformance} value="Add" />
             {this.state.performances.length > 0 && (
-              <table className="performances">
+              <table>
                 <colgroup>
                   <col width="*" />
                   <col width="8%" />
@@ -109,10 +113,9 @@ class PostForm extends Component {
                   <th>3</th>
                   <th>4</th>
                   <th>5</th>
-                  <th className="num">Tot.</th>
-                  <th className="num">Vol.</th>
-                  <th>
-                  </th>
+                  <th className={cx('num')}>Tot.</th>
+                  <th className={cx('num')}>Vol.</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,9 +136,9 @@ class PostForm extends Component {
           </div>
         </div>
 
-        <div className="item">
+        <div className={cx('item')}>
           <label htmlFor="post-remark">Remark</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="post-remark"
               type="text"
@@ -148,12 +151,12 @@ class PostForm extends Component {
         </div>
 
         {error && (
-          <div className="error">
+          <div className={cx('error')}>
             <span>Oops, An expected error seems to have occurred.</span>
           </div>
         )}
 
-        <div className="tool">
+        <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
           <Button value="List" onClick={this.handleMoveList} />
           {this.state.id && (

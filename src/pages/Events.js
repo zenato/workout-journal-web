@@ -48,19 +48,20 @@ class Events extends Component {
   render() {
     const { items, location } = this.props;
     return (
-      <div className="event-list">
+      <div>
         <Helmet>
           <title>{`Events | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <Button value="Add Event" onClick={this.handleForm} className="primary add-event" />
+        <Button value="Add Event" onClick={this.handleForm} className="primary" />
 
         <SearchForm
           location={location}
           onSubmit={this.handleSearch}
           placeholder="Input event name."
         />
-        <ul className="list-container">
+
+        <ul>
           {items.map(item => (
             <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
           ))}

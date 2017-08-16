@@ -1,9 +1,13 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { Input, Select, Button, ErrorMessage } from 'components/form';
 import { getValue } from 'lib/form';
 import { add } from 'lib/math';
+import styles from './Performance.scss';
+
+const cx = classNames.bind(styles);
 
 class Performance extends Component {
   onChange = (e) => {
@@ -35,7 +39,7 @@ class Performance extends Component {
     const volume = total * value;
 
     return (
-      <tr>
+      <tr className={cx('performance')}>
         <td>
           <Select
             name="event"

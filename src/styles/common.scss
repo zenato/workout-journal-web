@@ -1,38 +1,12 @@
-* {
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  -webkit-border-radius: 0;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  font-size: 14px;
-  background-color: rgb(242, 244, 247);
-}
-
-input, select, button {
-  font-size: 14px;
-}
-
-input[type=number] {
+.num {
   text-align: right;
 }
 
-a {
-  $color: #000;
-  text-decoration: none;
-  &:visited, &:active, &:hover {
-    color: $color;
-  }
-}
-
-ul {
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  list-style: none;
+.form-control {
+  display: block;
+  background-color: #fff;
+  color: #4a4a4a;
+  border: solid #d4d4d4 1px;
+  padding: 10px;
+  width: 100%;
 }

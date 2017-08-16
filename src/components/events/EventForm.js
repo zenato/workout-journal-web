@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { handleChangeInput } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
+import styles from './EventForm.scss';
+
+const cx = classNames.bind(styles);
 
 class EventForm extends Component {
   constructor(props) {
@@ -40,10 +44,10 @@ class EventForm extends Component {
   render() {
     const { error } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="item">
+      <form onSubmit={this.handleSubmit} className={cx('event-form')}>
+        <div className={cx('item')}>
           <label htmlFor="event-name">Name</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="event-name"
               type="text"
@@ -54,9 +58,9 @@ class EventForm extends Component {
             <ErrorMessage error={error} name="name" />
           </div>
         </div>
-        <div className="item">
+        <div className={cx('item')}>
           <label htmlFor="event-value">Value</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="event-value"
               type="text"
@@ -67,9 +71,9 @@ class EventForm extends Component {
             <ErrorMessage error={error} name="value" />
           </div>
         </div>
-        <div className="item">
+        <div className={cx('item')}>
           <label htmlFor="event-unit">Unit</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="event-unit"
               type="text"
@@ -80,9 +84,9 @@ class EventForm extends Component {
             <ErrorMessage error={error} name="unit" />
           </div>
         </div>
-        <div className="item">
+        <div className={cx('item')}>
           <label htmlFor="event-remark">Remark</label>
-          <div className="field">
+          <div className={cx('field')}>
             <Input
               id="event-remark"
               type="text"
@@ -95,12 +99,12 @@ class EventForm extends Component {
         </div>
 
         {error && (
-          <div className="error">
+          <div className={cx('error')}>
             <span>Oops, An expected error seems to have occurred.</span>
           </div>
         )}
 
-        <div className="tool">
+        <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
           <Button value="List" onClick={this.handleMoveList} />
           {this.state.id && (

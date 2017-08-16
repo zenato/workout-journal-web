@@ -1,0 +1,20 @@
+@import 'common';
+
+.search-form {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .field {
+    display: inline-block;
+    flex: 10;
+  }
+
+  .tool {
+    display: inline-block;
+    flex: 2;
+    text-align: right;
+  }
+}
+
