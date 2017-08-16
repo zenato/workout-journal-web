@@ -5,18 +5,13 @@ import styles from './Menu.scss';
 
 const cx = classNames.bind(styles);
 
-const activeStyle = {
-  color: 'red',
-  fontWeight: 'bold',
-};
-
 const Menu = () => {
   return (
     <div className={cx('menu')}>
       <ul>
-        <li><NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink></li>
-        <li><NavLink to="/events" activeStyle={activeStyle}>Events</NavLink></li>
-        <li><NavLink to="/posts" activeStyle={activeStyle}>Posts</NavLink></li>
+        <li><NavLink exact to="/" activeClassName={cx('active')}>Home</NavLink></li>
+        <li><NavLink to="/events" activeClassName={cx('active')}>Events</NavLink></li>
+        <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
       </ul>
     </div>
   );
