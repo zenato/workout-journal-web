@@ -1,44 +1,6 @@
 @import 'common';
 
 .app {
-  @at-root {
-    * {
-      box-sizing: border-box;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      font-size: 14px;
-      background-color: rgb(242, 244, 247);
-    }
-
-    input, select, button {
-      font-size: 14px;
-    }
-
-    input[type=number] {
-      text-align: right;
-    }
-
-    ul {
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      list-style: none;
-    }
-
-    a {
-      text-decoration: none;
-      &:visited, &:active, &:hover {}
-    }
-  }
-
   .container {
     padding: 5px;
   }
