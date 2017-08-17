@@ -11,6 +11,9 @@
 
   a {
     color: $color;
+    &:hover, &:active, &:visited {
+      color: $color;
+    }
   }
 
   li:not(:last-child) {
@@ -19,7 +22,7 @@
   }
 
   .active {
-    color: red;
+    color: red !important;
     font-weight: bold;
   }
 }
