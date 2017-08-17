@@ -9,7 +9,7 @@ const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), { 
 
 module.exports = (ctx) => {
   const location = ctx.path;
-  return render(location).then(({ html, state, helmet }) => {
+  return render(location).then(({ html, state, helmet, style }) => {
     const page = template
       .replace(
         '<div id="root"></div>',
@@ -18,7 +18,12 @@ module.exports = (ctx) => {
       .replace(
         '<meta helmet>',
         `${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}`,
+      )
+      .replace(
+        '<style></style>',
+        style,
       );
+
     ctx.body = page;
   });
 };
