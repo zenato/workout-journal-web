@@ -4,7 +4,7 @@ import PostItem from '../PostItem';
 
 const item = {
   id: 1,
-  workout_date: new Date().getTime(),
+  workout_date: '2017-08-18T05:54:17.061Z',
   remark: 'test',
   performances: [
     {

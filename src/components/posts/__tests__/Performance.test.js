@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Performance from '../Performace';
 
 const events = [
@@ -22,14 +22,18 @@ const item = {
 
 it('renders without errors', () => {
   shallow(
-    <Performance
-      events={events}
-      idx={0}
-      item={item}
-      error={null}
-      onChange={() => {}}
-      onDelete={() => {}}
-    />
+    <table>
+      <tbody>
+        <Performance
+          events={events}
+          idx={0}
+          item={item}
+          error={null}
+          onChange={() => {}}
+          onDelete={() => {}}
+        />
+      </tbody>
+    </table>
   );
 });
 
@@ -40,15 +44,19 @@ it('simulate change form', () => {
     performance = { ...performance, ...p };
   }
 
-  const wrapper = shallow(
-    <Performance
-      events={events}
-      idx={0}
-      item={item}
-      error={null}
-      onChange={onChange}
-      onDelete={() => {}}
-    />
+  const wrapper = mount(
+    <table>
+      <tbody>
+        <Performance
+          events={events}
+          idx={0}
+          item={item}
+          error={null}
+          onChange={onChange}
+          onDelete={() => {}}
+        />
+      </tbody>
+    </table>
   );
 
   // Changed input form
@@ -113,18 +121,22 @@ it('simulate change form', () => {
 it('simulate delete click', () => {
   const onDelete = jest.fn();
 
-  const wrapper = shallow(
-    <Performance
-      idx={1}
-      events={events}
-      item={item}
-      error={null}
-      onChange={() => {}}
-      onDelete={onDelete}
-    />
+  const wrapper = mount(
+    <table>
+      <tbody>
+        <Performance
+          idx={1}
+          events={events}
+          item={item}
+          error={null}
+          onChange={() => {}}
+          onDelete={onDelete}
+        />
+      </tbody>
+    </table>
   );
 
-  wrapper.find('button').simulate('click', {
+  wrapper.find('input[type="button"]').simulate('click', {
     preventDefault: () => {},
   });
 

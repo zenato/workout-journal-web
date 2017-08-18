@@ -37,6 +37,7 @@ ShallowWrapper {
       "_compositeType": 2,
       "_context": Object {},
       "_currentElement": <ErrorMessage
+        context="data"
         error={
                 Object {
                         "data": Object {
@@ -56,6 +57,7 @@ ShallowWrapper {
         "_reactInternalInstance": [Circular],
         "context": Object {},
         "props": Object {
+          "context": "data",
           "error": Object {
             "data": Object {
               "name": Array [
@@ -119,6 +121,7 @@ ShallowWrapper {
   },
   "root": [Circular],
   "unrendered": <ErrorMessage
+    context="data"
     error={
         Object {
             "data": Object {

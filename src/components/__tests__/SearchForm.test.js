@@ -6,7 +6,7 @@ import SearchForm from '../SearchForm';
 it('submit input', () => {
   const onSubmit = jest.fn();
   const location = {
-    search: {},
+    search: '',
   };
 
   const searchName = 'name';

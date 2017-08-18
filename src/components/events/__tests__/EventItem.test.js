@@ -6,6 +6,7 @@ const item = {
   id: 1,
   name: 'test name',
   value: 10,
+  unit: 'KG',
   remark: 'test mock data',
 };
 

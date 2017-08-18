@@ -15,12 +15,6 @@ ShallowWrapper {
         <li>
             <NavLink
                 activeClassName="active"
-                activeStyle={
-                    Object {
-                        "color": "red",
-                        "fontWeight": "bold",
-                      }
-                }
                 exact={true}
                 to="/"
             >
@@ -30,12 +24,6 @@ ShallowWrapper {
         <li>
             <NavLink
                 activeClassName="active"
-                activeStyle={
-                    Object {
-                        "color": "red",
-                        "fontWeight": "bold",
-                      }
-                }
                 to="/events"
             >
                 Events
@@ -44,12 +32,6 @@ ShallowWrapper {
         <li>
             <NavLink
                 activeClassName="active"
-                activeStyle={
-                    Object {
-                        "color": "red",
-                        "fontWeight": "bold",
-                      }
-                }
                 to="/posts"
             >
                 Posts
@@ -65,12 +47,6 @@ ShallowWrapper {
             <li>
                   <NavLink
                         activeClassName="active"
-                        activeStyle={
-                              Object {
-                                    "color": "red",
-                                    "fontWeight": "bold",
-                                  }
-                        }
                         exact={true}
                         to="/"
                   >
@@ -80,12 +56,6 @@ ShallowWrapper {
             <li>
                   <NavLink
                         activeClassName="active"
-                        activeStyle={
-                              Object {
-                                    "color": "red",
-                                    "fontWeight": "bold",
-                                  }
-                        }
                         to="/events"
                   >
                         Events
@@ -94,12 +64,6 @@ ShallowWrapper {
             <li>
                   <NavLink
                         activeClassName="active"
-                        activeStyle={
-                              Object {
-                                    "color": "red",
-                                    "fontWeight": "bold",
-                                  }
-                        }
                         to="/posts"
                   >
                         Posts
@@ -149,12 +113,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         exact={true}
                                         to="/"
                               >
@@ -164,12 +122,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         to="/events"
                               >
                                         Events
@@ -178,12 +130,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         to="/posts"
                               >
                                         Posts
@@ -199,12 +145,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         exact={true}
                                         to="/"
                               >
@@ -214,12 +154,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         to="/events"
                               >
                                         Events
@@ -228,12 +162,6 @@ ShallowWrapper {
                     <li>
                               <NavLink
                                         activeClassName="active"
-                                        activeStyle={
-                                                  Object {
-                                                            "color": "red",
-                                                            "fontWeight": "bold",
-                                                          }
-                                        }
                                         to="/posts"
                               >
                                         Posts

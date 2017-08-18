@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import EventForm from '../EventForm';
 
 const item = {
@@ -27,15 +27,13 @@ it('renders without errors', () => {
 
 it('simulate submit after change form', () => {
   const onSubmit = jest.fn();
-  const wrapper = shallow(
+  const wrapper = mount(
     <EventForm
       item={item}
       error={null}
       onSubmit={onSubmit}
-      onDelete={() => {
-      }}
-      onMoveList={() => {
-      }}
+      onDelete={() => {}}
+      onMoveList={() => {}}
     />
   );
 
@@ -82,7 +80,7 @@ it('simulate submit after change form', () => {
 it('simulate move list click', () => {
   const onMoveList = jest.fn();
 
-  const wrapper = shallow(
+  const wrapper = mount(
     <EventForm
       item={item}
       error={null}
@@ -102,7 +100,7 @@ it('simulate move list click', () => {
 it('simulate delete click', () => {
   const onDelete = jest.fn();
 
-  const wrapper = shallow(
+  const wrapper = mount(
     <EventForm
       item={item}
       error={null}

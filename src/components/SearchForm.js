@@ -31,7 +31,8 @@ class SearchForm extends Component {
     const { name } = this.state;
     this.props.onSubmit({ name, });
     // Legacy codes.
-    document.querySelector('.search-form input').blur();
+    const input = document.querySelector('.search-form input')
+    input && input.blur();
   };
 
   render() {

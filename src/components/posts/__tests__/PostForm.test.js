@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import PostForm from '../PostForm';
 
 const item = {
@@ -53,15 +53,14 @@ it('renders without errors', () => {
 
 it('simulate submit after change form', () => {
   const onSubmit = jest.fn();
-  const wrapper = shallow(
+  const wrapper = mount(
     <PostForm
+      events={events}
       item={item}
       error={null}
       onSubmit={onSubmit}
-      onDelete={() => {
-      }}
-      onMoveList={() => {
-      }}
+      onDelete={() => {}}
+      onMoveList={() => {}}
     />
   );
 
@@ -80,8 +79,7 @@ it('simulate submit after change form', () => {
   });
 
   wrapper.find('form').simulate('submit', {
-    preventDefault: () => {
-    },
+    preventDefault: () => {},
   });
 
   expect(onSubmit).toBeCalledWith({
@@ -111,7 +109,7 @@ it('simulate submit after change form', () => {
 it('simulate move list click', () => {
   const onMoveList = jest.fn();
 
-  const wrapper = shallow(
+  const wrapper = mount(
     <PostForm
       events={events}
       item={item}
@@ -122,9 +120,8 @@ it('simulate move list click', () => {
     />
   );
 
-  wrapper.find('input[type="button"]').at(0).simulate('click', {
-    preventDefault: () => {
-    },
+  wrapper.find('input[type="button"][value="List"]').at(0).simulate('click', {
+    preventDefault: () => {},
   });
 
   expect(onMoveList).toBeCalledWith();
@@ -133,7 +130,7 @@ it('simulate move list click', () => {
 it('simulate delete click', () => {
   const onDelete = jest.fn();
 
-  const wrapper = shallow(
+  const wrapper = mount(
     <PostForm
       events={events}
       item={item}
@@ -144,9 +141,8 @@ it('simulate delete click', () => {
     />
   );
 
-  wrapper.find('input[type="button"]').at(1).simulate('click', {
-    preventDefault: () => {
-    },
+  wrapper.find('input[type="button"][value="Delete"]').at(0).simulate('click', {
+    preventDefault: () => {},
   });
 
   expect(onDelete).toBeCalledWith();
