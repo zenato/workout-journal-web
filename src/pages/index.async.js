@@ -5,3 +5,4 @@ export const Events = asyncRoute(() => import('./Events'));
 export const Event = asyncRoute(() => import('./Event'));
 export const Posts = asyncRoute(() => import('./Posts'));
 export const Post = asyncRoute(() => import('./Post'));
+export const Login = asyncRoute(() => import('./Login'));

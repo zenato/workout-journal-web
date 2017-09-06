@@ -31,25 +31,22 @@ class SearchForm extends Component {
     const { name } = this.state;
     this.props.onSubmit({ name, });
     // Legacy codes.
-    const input = document.querySelector('.search-form input')
+    const input = document.querySelector('.search-form input');
     input && input.blur();
   };
 
   render() {
     return (
       <form onSubmit={this.handleSearch} className={cx('search-form')}>
-        <div className={cx('field')}>
-          <Input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleInputChange}
-            placeholder={this.props.placeholder}
-          />
-        </div>
-        <div className={cx('tool')}>
-          <Button type="submit" value="Search" />
-        </div>
+        <Input
+          type="text"
+          name="name"
+          value={this.state.name}
+          onChange={this.handleInputChange}
+          placeholder={this.props.placeholder}
+          className={cx('field')}
+        />
+        <Button type="submit" value="Search" />
       </form>
     );
   }

@@ -39,3 +39,18 @@ export const getMorePosts = next => axios.get(next);
 export const updatePost = (id, params) => axios.put(`${API_HOST}/posts/${id}/`, params);
 export const insertPost = (params) => axios.post(`${API_HOST}/posts/`, params);
 export const deletePost = id => axios.delete(`${API_HOST}/posts/${id}`);
+
+
+// Users
+
+// Mock API
+export const login = (params) => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve({
+      data: {
+        username: 'zenato',
+        name: 'John Doe',
+      },
+    });
+  }, 500);
+});
