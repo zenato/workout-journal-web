@@ -18,7 +18,9 @@ class App extends Component {
           <title>{SITE_NAME}</title>
         </Helmet>
 
-        <Menu />
+        <header>
+          <Menu />
+        </header>
 
         <Container>
           <Route exact path="/" component={Home} />
