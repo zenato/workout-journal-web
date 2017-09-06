@@ -7,14 +7,8 @@
   margin-bottom: 10px;
 
   .field {
-    display: inline-block;
-    flex: 10;
-  }
-
-  .tool {
-    display: inline-block;
-    flex: 2;
-    text-align: right;
+    flex: 1;
+    margin-right: 3px;
   }
 }
 
