@@ -3,7 +3,7 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { API_HOST } from '../constants';
 
-export function getErrorMessages (error, fieldName, context) {
+export function getErrorMessages(error, fieldName, context) {
   const prefix = context ? `${context}.` : '';
   return _.get(error, prefix + fieldName);
 }
@@ -43,14 +43,17 @@ export const deletePost = id => axios.delete(`${API_HOST}/posts/${id}`);
 
 // Users
 
-// Mock API
-export const login = (params) => new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve({
-      data: {
-        username: 'zenato',
-        name: 'John Doe',
-      },
-    });
-  }, 500);
-});
+export const login = ({ username, password }) => axios.post(
+  `${API_HOST}/o/token/`,
+  queryString.stringify({
+    'grant_type': 'password',
+    username,
+    password,
+  }),
+  {
+    auth: {
+      username: '2PonmCBOuJ6ZTRltVANKupvxFZDZNEK3sQ3aaurJ',
+      password: 'iO2viciOFQQTVOz4aCc1OWgMuKJDTH3CUtRcDfLQh1XEVu4Bd4rw2p8IpghmIgRyNMuAVIpFAdMtdTAAxOSGfTz3Mns2VJLBwGoNaNkgbLcvZq7UEEsBFqbs9fMFWEqw',
+    },
+  },
+);
