@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import * as usersActions from 'redux/modules/users';
 import { Events, Event, Home, Posts, Post, Login } from 'pages';
 import Menu from 'components/Menu';
 import { SITE_NAME } from 'constants';
 import PrivateRoute from './PrivateRoute';
+import withAuth from './withAuth';
 
 const Container = styled.div`
   padding: 5px;
 `;
 
 class App extends Component {
+  componentWillMount() {
+    const { accessToken, user, UsersActions, done } = this.props;
+
+    if (accessToken && !user) {
+      UsersActions.getUser(accessToken).then(done, done);
+    } else {
+      done();
+    }
+  }
+
   render() {
+    const { user } = this.props;
     return (
       <div>
         <Helmet>
@@ -20,7 +36,7 @@ class App extends Component {
         </Helmet>
 
         <header>
-          <Menu />
+          <Menu user={user} />
         </header>
 
         <Container>
@@ -42,4 +58,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const ConnectedApp = connect(
+  state => ({
+    user: state.users.user,
+  }),
+  dispatch => ({
+    UsersActions: bindActionCreators(usersActions, dispatch),
+  }),
+)(App);
+
+export default withDone(withRouter(withAuth(ConnectedApp)));

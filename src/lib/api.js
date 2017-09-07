@@ -8,37 +8,65 @@ export function getErrorMessages(error, fieldName, context) {
   return _.get(error, prefix + fieldName);
 }
 
+const getConfig = accessToken => ({
+  headers: {
+    'Authorization': `Bearer ${accessToken}`,
+  },
+});
+
+
 // Events
 
-
-export function getEvents({ name, remark } = {}) {
+export function getEvents(accessToken, { name, remark } = {}) {
   const query = {
     'name__icontains': name,
     'remark__icontains': remark,
   };
-  return axios.get(`${API_HOST}/events/?${queryString.stringify(query)}`);
+  return axios.get(
+    `${API_HOST}/events/?${queryString.stringify(query)}`,
+    getConfig(accessToken),
+  );
 }
 
-export const getEvent = id => axios.get(`${API_HOST}/events/${id}`);
-export const updateEvent = (id, params) => axios.put(`${API_HOST}/events/${id}/`, params);
-export const insertEvent = params => axios.post(`${API_HOST}/events/`, params);
-export const deleteEvent = id => axios.delete(`${API_HOST}/events/${id}`);
+export const getEvent = (accessToken, id) =>
+  axios.get(`${API_HOST}/events/${id}`, getConfig(accessToken));
+
+export const updateEvent = (accessToken, id, params) =>
+  axios.put(`${API_HOST}/events/${id}/`, params, getConfig(accessToken));
+
+export const insertEvent = (accessToken, params) =>
+  axios.post(`${API_HOST}/events/`, params, getConfig(accessToken));
+
+export const deleteEvent = (accessToken, id) =>
+  axios.delete(`${API_HOST}/events/${id}`, getConfig(accessToken));
 
 
 // Posts
 
-export function getPosts({ name } = {}) {
+export function getPosts(accessToken, { name } = {}) {
   const query = {
     'performances__event__name__icontains': name,
   };
-  return axios.get(`${API_HOST}/posts/?${queryString.stringify(query)}`);
+  return axios.get(
+    `${API_HOST}/posts/?${queryString.stringify(query)}`,
+    getConfig(accessToken),
+  );
 }
 
-export const getPost = id => axios.get(`${API_HOST}/posts/${id}`);
-export const getMorePosts = next => axios.get(next);
-export const updatePost = (id, params) => axios.put(`${API_HOST}/posts/${id}/`, params);
-export const insertPost = (params) => axios.post(`${API_HOST}/posts/`, params);
-export const deletePost = id => axios.delete(`${API_HOST}/posts/${id}`);
+export const getPost = (accessToken, id) =>
+  axios.get(`${API_HOST}/posts/${id}`, getConfig(accessToken));
+
+export const getMorePosts = (accessToken, next) =>
+  axios.get(next, getConfig(accessToken));
+
+export const updatePost = (accessToken, id, params) =>
+  axios.put(`${API_HOST}/posts/${id}/`, params, getConfig(accessToken));
+
+export const insertPost = (accessToken, params) =>
+  axios.post(`${API_HOST}/posts/`, params, getConfig(accessToken));
+
+export const deletePost = (accessToken, id) =>
+  axios.delete(`${API_HOST}/posts/${id}`, getConfig(accessToken));
 
 
 // Users
@@ -52,8 +80,11 @@ export const login = ({ username, password }) => axios.post(
   }),
   {
     auth: {
-      username: '2PonmCBOuJ6ZTRltVANKupvxFZDZNEK3sQ3aaurJ',
-      password: 'iO2viciOFQQTVOz4aCc1OWgMuKJDTH3CUtRcDfLQh1XEVu4Bd4rw2p8IpghmIgRyNMuAVIpFAdMtdTAAxOSGfTz3Mns2VJLBwGoNaNkgbLcvZq7UEEsBFqbs9fMFWEqw',
+      username: 'Ta0Fuj8Wbk57Fs2cTr1wChevVKWz2nFnwqbrldMp',
+      password: 'ZkJrGc2cGL10cIjPTsuXbiTYByUH4bp68rjRPAWb8CGDWkOS7m4cUO679PalDHd83lnWwqyRORA4LySYdWalxwccvcAbE1oTEsIbEpd39aaNzMcuH8ZKBMsIipoaiiem',
     },
   },
 );
+
+export const getUser = (accessToken) =>
+  axios.get(`${API_HOST}/users/me/`, getConfig(accessToken));

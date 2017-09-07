@@ -1,17 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { SITE_NAME } from '../constants';
 
-const Home = () => {
+const Home = ({ user }) => {
   return (
     <div className="home">
       <Helmet>
         <title>{SITE_NAME}</title>
       </Helmet>
 
-      Welcome!
+      Welcome {user && user.username}!
     </div>
   );
 };
 
-export default Home;
+export default connect(
+  (state) => ({
+    user: state.users.user,
+  }),
+)(Home);

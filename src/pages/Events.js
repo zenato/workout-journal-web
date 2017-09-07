@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
 import { hasChangedLocation } from 'lib/location';
+import withAuth from 'shared/withAuth';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import EventItem from 'components/events/EventItem';
@@ -26,8 +27,9 @@ class Events extends Component {
   }
 
   fetchData({ location }) {
+    const { EventsActions, accessToken } = this.props;
     const query = queryString.parse(location.search);
-    return this.props.EventsActions.getEvents(query);
+    return EventsActions.getEvents(accessToken, query);
   }
 
   handleSearch = (values) => {
@@ -71,11 +73,11 @@ class Events extends Component {
   }
 }
 
-export default withDone(connect(
+export default withDone(withAuth(connect(
   (state) => ({
     items: state.events.items,
   }),
   (dispatch) => ({
     EventsActions: bindActionCreators(eventsActions, dispatch),
   }),
-)(Events));
+)(Events)));

@@ -1,41 +1,29 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Helmet } from 'react-helmet';
+import Cookies from 'js-cookie';
 import * as usersActions from 'redux/modules/users';
-import { LOGIN } from 'redux/modules/users'
+import { LOGIN, GET_USER } from 'redux/modules/users'
 import LoginForm from 'components/users/LoginForm';
 import { SITE_NAME } from '../constants';
 
-const defaultLocationState = {
-  from: { pathname: '/' },
-};
-
 class Login extends Component {
-  state = {
-    redirectToReferrer: false,
-  };
-
   handleSubmit = async (values) => {
-    this.props.UsersActions.login(values).then(() => {
-      this.setState({
-        redirectToReferrer: true,
-      });
-    });
+    const { UsersActions, location } = this.props;
+    const { data } = await UsersActions.login(values);
+
+    Cookies.set('accessToken', data['access_token'], { path: '/' });
+
+    let from = '/';
+    if (location.state && location.state.from) {
+      from = location.state.from.pathname + location.state.from.search;
+    }
+    window.location.replace(from);
   };
 
   render() {
     const { error, loading } = this.props;
-    const { from } = this.props.location.state || defaultLocationState;
-    const { redirectToReferrer } = this.state;
-
-    if (redirectToReferrer) {
-      return (
-        <Redirect to={from} />
-      )
-    }
-
     return (
       <div>
         {loading && (
@@ -59,8 +47,7 @@ class Login extends Component {
 export default connect(
   (state) => ({
     error: state.users.error,
-    user: state.users.user,
-    loading: state.pender.pending[LOGIN],
+    loading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
   }),
   (dispatch) => ({
     UsersActions: bindActionCreators(usersActions, dispatch),

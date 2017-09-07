@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as postsActions from 'redux/modules/posts';
 import { hasChangedLocation } from 'lib/location';
+import withAuth from 'shared/withAuth';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import PostItem from 'components/posts/PostItem';
@@ -26,8 +27,9 @@ class Posts extends Component {
   }
 
   fetchData({ location }) {
+    const { PostsActions, accessToken } = this.props;
     const query = queryString.parse(location.search);
-    return this.props.PostsActions.getPosts(query);
+    return PostsActions.getPosts(accessToken, query);
   }
 
   handleSearch = (values) => {
@@ -46,7 +48,8 @@ class Posts extends Component {
   };
 
   handleMorePosts = () => {
-    return this.props.PostsActions.getMorePosts(this.props.next);
+    const { PostsActions, accessToken } = this.props;
+    return PostsActions.getMorePosts(accessToken, this.props.next);
   };
 
   render() {
@@ -75,7 +78,7 @@ class Posts extends Component {
   }
 }
 
-export default withDone(connect(
+export default withDone(withAuth(connect(
   (state) => ({
     items: state.posts.items,
     next: state.posts.next,
@@ -83,4 +86,4 @@ export default withDone(connect(
   (dispatch) => ({
     PostsActions: bindActionCreators(postsActions, dispatch),
   }),
-)(Posts));
+)(Posts)));

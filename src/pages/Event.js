@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
 import { GET_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location';
+import withAuth from 'shared/withAuth';
 import EventForm from 'components/events/EventForm';
 import { SITE_NAME } from '../constants';
 
@@ -13,9 +14,9 @@ const isNew = ({ id }) => id === 'new';
 
 class Event extends Component {
   componentWillMount() {
-    const { EventsActions, item, done, match } = this.props;
+    const { EventsActions, item, done, match, accessToken } = this.props;
     if (!isNew(match.params) && !item) {
-      EventsActions.getEvent(match.params.id).then(done, done);
+      EventsActions.getEvent(accessToken, match.params.id).then(done, done);
     }
   }
 
@@ -30,23 +31,24 @@ class Event extends Component {
   }
 
   fetchData({ match }) {
-    this.props.EventsActions.getEvent(match.params.id);
+    const { EventsActions, accessToken } = this.props;
+    EventsActions.getEvent(accessToken, match.params.id);
   }
 
   handleSubmit = async (values) => {
-    const { match, location, history, EventsActions } = this.props;
+    const { match, location, history, EventsActions, accessToken } = this.props;
     if (isNew(match.params)) {
-      const { data } = await EventsActions.insertEvent(values);
+      const { data } = await EventsActions.insertEvent(accessToken, values);
       history.replace(`/events/${data.id}${location.search}`);
     } else {
-      await EventsActions.updateEvent(match.params.id, values);
+      await EventsActions.updateEvent(accessToken, match.params.id, values);
     }
   };
 
   handleDelete = async () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, EventsActions } = this.props;
-      await EventsActions.deleteEvent(match.params.id);
+      const { match, location, history, EventsActions, accessToken } = this.props;
+      await EventsActions.deleteEvent(accessToken, match.params.id);
       history.replace(`/events/${location.search}`);
     }
   };
@@ -82,7 +84,7 @@ class Event extends Component {
   }
 }
 
-export default withDone(connect(
+export default withDone(withAuth(connect(
   (state) => ({
     error: state.events.error,
     item: state.events.item,
@@ -91,4 +93,4 @@ export default withDone(connect(
   (dispatch) => ({
     EventsActions: bindActionCreators(eventsActions, dispatch),
   }),
-)(Event));
+)(Event)));

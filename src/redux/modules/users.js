@@ -4,9 +4,12 @@ import * as api from 'lib/api';
 
 export const LOGIN = 'users/LOGIN';
 
+export const GET_USER = 'users/GET_USER';
+
 const CLEAR_USER = 'users/CLEAR_USER';
 
 export const login = createAction(LOGIN, api.login);
+export const getUser = createAction(GET_USER, api.getUser);
 
 const initialState = {
   user: null,
@@ -16,6 +19,13 @@ const initialState = {
 export default handleActions({
   ...pender({
     type: LOGIN,
+    onSuccess: (state, action) => ({
+      ...state,
+      error: null,
+    }),
+  }),
+  ...pender({
+    type: GET_USER,
     onSuccess: (state, action) => ({
       ...state,
       error: null,
