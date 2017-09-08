@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { pender } from 'redux-pender';
 import * as api from 'lib/api';
+import createPrivateAction from '../utils/createPrivateAction';
 
 export const GET_POSTS = 'posts/GET_POSTS';
 export const GET_MORE_POSTS = 'posts/GET_MORE_POSTS';
@@ -12,42 +13,14 @@ export const DELETE_POST = 'posts/DELETE_POST';
 const CLEAR_POST = 'posts/CLEAR_POST';
 export const GET_POST_EVENTS = 'posts/GET_POST_EVENTS';
 
-export const getPosts = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(GET_POSTS, api.getPosts(accessToken))(...params));
-};
-
-export const getMorePosts = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(GET_MORE_POSTS, api.getMorePosts(accessToken))(...params));
-};
-
-export const getPost = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(GET_POST, api.getPost(accessToken))(...params));
-};
-
-export const getPostEvents = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(GET_POST_EVENTS, api.getEvents(accessToken))(...params));
-};
-
+export const getPosts = createPrivateAction(GET_POSTS, api.getPosts);
+export const getMorePosts = createPrivateAction(GET_MORE_POSTS, api.getMorePosts);
+export const getPost = createPrivateAction(GET_POST, api.getPost);
+export const getPostEvents = createPrivateAction(GET_POST_EVENTS, api.getEvents);
 export const clearPost = createAction(CLEAR_POST);
-
-export const updatePost = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(UPDATE_POST, api.updatePost(accessToken))(...params));
-};
-
-export const insertPost = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(INSERT_POST, api.insertPost(accessToken))(...params));
-};
-
-export const deletePost = (...params) => (dispatch, getState) => {
-  const { accessToken } = getState();
-  return dispatch(createAction(DELETE_POST, api.deletePost(accessToken))(...params));
-};
+export const updatePost = createPrivateAction(UPDATE_POST, api.updatePost);
+export const insertPost = createPrivateAction(INSERT_POST, api.insertPost);
+export const deletePost = createPrivateAction(DELETE_POST, api.deletePost);
 
 const initialState = {
   events: [],
