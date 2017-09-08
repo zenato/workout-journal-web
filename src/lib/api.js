@@ -17,7 +17,7 @@ const getConfig = accessToken => ({
 
 // Events
 
-export function getEvents(accessToken, { name, remark } = {}) {
+export const getEvents = accessToken => ({ name, remark } = {}) => {
   const query = {
     'name__icontains': name,
     'remark__icontains': remark,
@@ -26,24 +26,24 @@ export function getEvents(accessToken, { name, remark } = {}) {
     `${API_HOST}/events/?${queryString.stringify(query)}`,
     getConfig(accessToken),
   );
-}
+};
 
-export const getEvent = (accessToken, id) =>
+export const getEvent = accessToken => id =>
   axios.get(`${API_HOST}/events/${id}`, getConfig(accessToken));
 
-export const updateEvent = (accessToken, id, params) =>
+export const updateEvent = accessToken => (id, params) =>
   axios.put(`${API_HOST}/events/${id}/`, params, getConfig(accessToken));
 
-export const insertEvent = (accessToken, params) =>
+export const insertEvent = accessToken => params =>
   axios.post(`${API_HOST}/events/`, params, getConfig(accessToken));
 
-export const deleteEvent = (accessToken, id) =>
+export const deleteEvent = accessToken => id =>
   axios.delete(`${API_HOST}/events/${id}`, getConfig(accessToken));
 
 
 // Posts
 
-export function getPosts(accessToken, { name } = {}) {
+export const getPosts = accessToken => ({ name } = {}) => {
   const query = {
     'performances__event__name__icontains': name,
   };
@@ -51,27 +51,27 @@ export function getPosts(accessToken, { name } = {}) {
     `${API_HOST}/posts/?${queryString.stringify(query)}`,
     getConfig(accessToken),
   );
-}
+};
 
-export const getPost = (accessToken, id) =>
+export const getPost = accessToken => id =>
   axios.get(`${API_HOST}/posts/${id}`, getConfig(accessToken));
 
-export const getMorePosts = (accessToken, next) =>
+export const getMorePosts = accessToken => next =>
   axios.get(next, getConfig(accessToken));
 
-export const updatePost = (accessToken, id, params) =>
+export const updatePost = accessToken => (id, params) =>
   axios.put(`${API_HOST}/posts/${id}/`, params, getConfig(accessToken));
 
-export const insertPost = (accessToken, params) =>
+export const insertPost = accessToken => params =>
   axios.post(`${API_HOST}/posts/`, params, getConfig(accessToken));
 
-export const deletePost = (accessToken, id) =>
+export const deletePost = accessToken => id =>
   axios.delete(`${API_HOST}/posts/${id}`, getConfig(accessToken));
 
 
 // Users
 
-export const login = ({ username, password }) => axios.post(
+export const login = accessToken => ({ username, password }) => axios.post(
   `${API_HOST}/o/token/`,
   queryString.stringify({
     'grant_type': 'password',
@@ -86,5 +86,5 @@ export const login = ({ username, password }) => axios.post(
   },
 );
 
-export const getUser = (accessToken) =>
+export const getUser = accessToken => () =>
   axios.get(`${API_HOST}/users/me/`, getConfig(accessToken));

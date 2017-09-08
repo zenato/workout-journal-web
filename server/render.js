@@ -9,7 +9,11 @@ const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), { 
 
 module.exports = (ctx) => {
   const location = ctx.path;
-  return render(location, ctx.cookies.get('accessToken')).then(({ html, state, helmet, style }) => {
+  const params = {
+    location,
+    accessToken: ctx.cookies.get('accessToken'),
+  };
+  return render(params).then(({ html, state, helmet, style }) => {
     const page = template
       .replace(
         '<div id="root"></div>',

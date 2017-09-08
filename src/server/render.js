@@ -6,19 +6,16 @@ import configureStore from 'redux/configureStore';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import App from 'shared/App';
-import AuthProvider from 'shared/AuthProvider';
 
-const render = async (location, accessToken) => {
-  const store = configureStore();
+const render = async ({ location, accessToken }) => {
+  const store = configureStore({ accessToken });
   const sheet = new ServerStyleSheet();
 
   const { html } = await renderToString(
     <StaticRouter location={location}>
       <Provider store={store}>
         <StyleSheetManager sheet={sheet.instance}>
-          <AuthProvider accessToken={accessToken}>
-            <App/>
-          </AuthProvider>
+          <App/>
         </StyleSheetManager>
       </Provider>
     </StaticRouter>

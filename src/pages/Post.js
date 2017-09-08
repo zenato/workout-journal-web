@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import * as postsActions from 'redux/modules/posts';
 import { GET_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
 import { hasChangedLocation } from 'lib/location';
-import withAuth from 'shared/withAuth';
 import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
 import { SITE_NAME } from '../constants';
@@ -15,10 +14,10 @@ const isNew = ({ id }) => id === 'new';
 
 class Post extends Component {
   componentWillMount() {
-    const { PostsActions, done, match, accessToken } = this.props;
-    const promises = [PostsActions.getPostEvents(accessToken)];
+    const { PostsActions, done, match } = this.props;
+    const promises = [PostsActions.getPostEvents()];
     if (!isNew(match.params)) {
-      promises.push(PostsActions.getPost(accessToken, match.params.id));
+      promises.push(PostsActions.getPost(match.params.id));
     }
     Promise.all(promises).then(done, done);
   }
@@ -34,24 +33,23 @@ class Post extends Component {
   }
 
   fetchData({ match }) {
-    const { PostsActions, accessToken } = this.props;
-    PostsActions.getPost(accessToken, match.params.id);
+    this.props.PostsActions.getPost(match.params.id);
   }
 
   handleSubmit = async (values) => {
-    const { match, location, history, PostsActions, accessToken } = this.props;
+    const { match, location, history, PostsActions } = this.props;
     if (isNew(match.params)) {
-      const { data } = await PostsActions.insertPost(accessToken, values);
+      const { data } = await PostsActions.insertPost(values);
       history.replace(`/posts/${data.id}${location.search}`);
     } else {
-      await PostsActions.updatePost(accessToken, match.params.id, values);
+      await PostsActions.updatePost(match.params.id, values);
     }
   };
 
   handleDelete = async () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, PostsActions, accessToken } = this.props;
-      await PostsActions.deletePost(accessToken, match.params.id);
+      const { match, location, history, PostsActions } = this.props;
+      await PostsActions.deletePost(match.params.id);
       history.replace(`/posts/${location.search}`);
     }
   };
@@ -88,7 +86,7 @@ class Post extends Component {
   }
 }
 
-export default withDone(withAuth(connect(
+export default withDone(connect(
   (state) => ({
     error: state.posts.error,
     item: state.posts.item,
@@ -103,4 +101,4 @@ export default withDone(withAuth(connect(
   (dispatch) => ({
     PostsActions: bindActionCreators(postsActions, dispatch),
   }),
-)(Post)));
+)(Post));

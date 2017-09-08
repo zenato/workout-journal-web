@@ -9,7 +9,11 @@ export const GET_USER = 'users/GET_USER';
 const CLEAR_USER = 'users/CLEAR_USER';
 
 export const login = createAction(LOGIN, api.login);
-export const getUser = createAction(GET_USER, api.getUser);
+
+export const getUser = () => (dispatch, getState) => {
+  const { accessToken } = getState();
+  return dispatch(createAction(GET_USER, api.getUser(accessToken))());
+};
 
 const initialState = {
   user: null,
@@ -26,11 +30,13 @@ export default handleActions({
   }),
   ...pender({
     type: GET_USER,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      user: action.payload.data,
-    }),
+    onSuccess: (state, action) => {
+      return ({
+        ...state,
+        error: null,
+        user: action.payload.data,
+      })
+    },
   }),
   [CLEAR_USER]: (state, action) => ({
     ...state,

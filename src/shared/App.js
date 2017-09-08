@@ -10,7 +10,6 @@ import { Events, Event, Home, Posts, Post, Login } from 'pages';
 import Menu from 'components/Menu';
 import { SITE_NAME } from 'constants';
 import PrivateRoute from './PrivateRoute';
-import withAuth from './withAuth';
 
 const Container = styled.div`
   padding: 5px;
@@ -19,9 +18,8 @@ const Container = styled.div`
 class App extends Component {
   componentWillMount() {
     const { accessToken, user, UsersActions, done } = this.props;
-
     if (accessToken && !user) {
-      UsersActions.getUser(accessToken).then(done, done);
+      UsersActions.getUser().then(done, done);
     } else {
       done();
     }
@@ -60,6 +58,7 @@ class App extends Component {
 
 const ConnectedApp = connect(
   state => ({
+    accessToken: state.accessToken,
     user: state.users.user,
   }),
   dispatch => ({
@@ -67,4 +66,4 @@ const ConnectedApp = connect(
   }),
 )(App);
 
-export default withDone(withRouter(withAuth(ConnectedApp)));
+export default withDone(withRouter(ConnectedApp));
