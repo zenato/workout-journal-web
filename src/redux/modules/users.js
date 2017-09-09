@@ -7,8 +7,6 @@ export const LOGIN = 'users/LOGIN';
 
 export const GET_USER = 'users/GET_USER';
 
-const CLEAR_USER = 'users/CLEAR_USER';
-
 export const login = createAction(LOGIN, api.login);
 export const getUser = createPrivateAction(GET_USER, api.getUser);
 
@@ -24,7 +22,12 @@ export default handleActions({
       ...state,
       error: null,
     }),
+    onFailure: (state, action) => ({
+      ...state,
+      error: action.payload.response,
+    }),
   }),
+
   ...pender({
     type: GET_USER,
     onSuccess: (state, action) => {
@@ -34,10 +37,10 @@ export default handleActions({
         user: action.payload.data,
       })
     },
+    onFailure: (state, action) => ({
+      ...state,
+      error: action.payload.response,
+    }),
   }),
-  [CLEAR_USER]: (state, action) => ({
-    ...state,
-    user: null,
-    error: null,
-  }),
+
 }, initialState);

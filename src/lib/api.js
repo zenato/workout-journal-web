@@ -71,7 +71,7 @@ export const deletePost = accessToken => id =>
 
 // Users
 
-export const login = accessToken => ({ username, password }) => axios.post(
+export const login = ({ username, password }) => axios.post(
   `${API_HOST}/o/token/`,
   queryString.stringify({
     'grant_type': 'password',
