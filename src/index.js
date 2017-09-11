@@ -7,7 +7,7 @@ import configureStore from 'redux/configureStore';
 import Root from './client/Root';
 import './index.scss';
 
-if (process.env.NODE_ENV === 'development') {
+if (!window.__PRELOADED_STATE__) {
   const accessToken = Cookies.get('accessToken');
   window.__PRELOADED_STATE__ = { accessToken };
 }
