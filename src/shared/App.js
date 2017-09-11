@@ -7,7 +7,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import * as usersActions from 'redux/modules/users';
 import { Events, Event, Home, Posts, Post, Login } from 'pages';
-import Menu from 'components/Menu';
+import Nav from 'components/Nav';
 import { SITE_NAME } from 'constants';
 import PrivateRoute from './PrivateRoute';
 
@@ -33,9 +33,7 @@ class App extends Component {
           <title>{SITE_NAME}</title>
         </Helmet>
 
-        <header>
-          <Menu user={user} />
-        </header>
+        <Nav user={user} />
 
         <Container>
           <Route exact path="/" component={Home} />

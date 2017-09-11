@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Menu from '../Menu';
+import Nav from '../Nav';
 
 
 it('renders without crashing', () => {
-  const wrapper = shallow(<Menu />);
+  const wrapper = shallow(<Nav />);
   expect(wrapper).toMatchSnapshot();
 });

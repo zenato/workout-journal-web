@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import classNames from 'classnames/bind';
-import styles from './Menu.scss';
+import styles from './Nav.scss';
 
 const cx = classNames.bind(styles);
 
@@ -12,9 +12,9 @@ const logout = (e) => {
   window.location.href = '/';
 };
 
-const Menu = ({ user }) => {
+const Nav = ({ user }) => {
   return (
-    <div className={cx('menu')}>
+    <nav className={cx('nav')}>
       <div className={cx('main')}>
         <ul>
           <li><NavLink exact to="/" activeClassName={cx('active')}>Home</NavLink></li>
@@ -22,13 +22,13 @@ const Menu = ({ user }) => {
           <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
         </ul>
       </div>
-      <div className={cx('tool')}>
+      <aside className={cx('tool')}>
         {user && (
           <a href="/logout" onClick={logout}>Logout</a>
         )}
-      </div>
-    </div>
+      </aside>
+    </nav>
   );
 };
 
-export default Menu;
+export default Nav;
