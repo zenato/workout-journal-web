@@ -53,7 +53,9 @@ class Events extends Component {
           <title>{`Events | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <Button value="Add Event" onClick={this.handleForm} className="primary" />
+        <section>
+          <Button value="Add Event" onClick={this.handleForm} className="primary" />
+        </section>
 
         <SearchForm
           location={location}
@@ -61,11 +63,13 @@ class Events extends Component {
           placeholder="Input event name."
         />
 
-        <ul>
-          {items.map(item => (
-            <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
-          ))}
-        </ul>
+        <article>
+          <ul>
+            {items.map(item => (
+              <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
+            ))}
+          </ul>
+        </article>
       </div>
     );
   }
