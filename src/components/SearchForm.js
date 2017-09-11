@@ -37,17 +37,19 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSearch} className={cx('search-form')}>
-        <Input
-          type="text"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleInputChange}
-          placeholder={this.props.placeholder}
-          className={cx('field')}
-        />
-        <Button type="submit" value="Search" />
-      </form>
+      <section>
+        <form onSubmit={this.handleSearch} className={cx('search-form')}>
+          <Input
+            type="text"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleInputChange}
+            placeholder={this.props.placeholder}
+            className={cx('field')}
+          />
+          <Button type="submit" value="Search" />
+        </form>
+      </section>
     );
   }
 }
