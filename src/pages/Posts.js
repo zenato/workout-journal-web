@@ -57,19 +57,25 @@ class Posts extends Component {
           <title>{`Posts | ${SITE_NAME}`}</title>
         </Helmet>
 
-        <Button value="Add Post" onClick={this.handleForm} className="primary" />
+        <section>
+          <Button value="Add Post" onClick={this.handleForm} className="primary" />
+        </section>
 
         <SearchForm location={location} onSubmit={this.handleSearch} placeholder="Input post name." />
 
-        <ul>
-          {items.map(item => (
-            <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
-          ))}
-        </ul>
+        <article>
+          <ul>
+            {items.map(item => (
+              <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
+            ))}
+          </ul>
+        </article>
 
-        {next && (
-          <Button onClick={this.handleMorePosts} value="More" />
-        )}
+        <aside>
+          {next && (
+            <Button onClick={this.handleMorePosts} value="More" />
+          )}
+        </aside>
       </div>
     );
   }
