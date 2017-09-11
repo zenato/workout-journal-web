@@ -39,7 +39,7 @@ export default handleActions({
     },
     onFailure: (state, action) => ({
       ...state,
-      error: action.payload.response,
+      // Skip error for unauthorization.
     }),
   }),
 
