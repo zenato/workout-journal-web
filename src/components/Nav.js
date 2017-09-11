@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import classNames from 'classnames/bind';
@@ -29,6 +30,12 @@ const Nav = ({ user }) => {
       </aside>
     </nav>
   );
+};
+
+Nav.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string,
+  }),
 };
 
 export default Nav;
