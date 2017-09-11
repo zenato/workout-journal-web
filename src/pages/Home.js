@@ -10,7 +10,9 @@ const Home = ({ user }) => {
         <title>{SITE_NAME}</title>
       </Helmet>
 
-      Welcome {user && user.username}!
+      <article>
+        Welcome {user && user.username}!
+      </article>
     </div>
   );
 };

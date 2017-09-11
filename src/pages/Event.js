@@ -64,7 +64,7 @@ class Event extends Component {
         )}
 
         {(isNew(match.params) || item) && (
-          <div>
+          <article>
             <Helmet>
               <title>{`${item ? item.name : 'New Event'} | ${SITE_NAME}`}</title>
             </Helmet>
@@ -75,7 +75,7 @@ class Event extends Component {
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
             />
-          </div>
+          </article>
         )}
       </div>
     );

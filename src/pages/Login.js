@@ -30,7 +30,7 @@ class Login extends Component {
           <span>Now loading...</span>
         )}
 
-        <div>
+        <article>
           <Helmet>
             <title>{`Login | ${SITE_NAME}`}</title>
           </Helmet>
@@ -38,7 +38,7 @@ class Login extends Component {
             error={error}
             onSubmit={this.handleSubmit}
           />
-        </div>
+        </article>
       </div>
     );
   }

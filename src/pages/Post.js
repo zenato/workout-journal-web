@@ -67,7 +67,7 @@ class Post extends Component {
         )}
 
         {(isNew(match.params) || item) && (
-          <div>
+          <article>
             <Helmet>
               <title>{`${item ? formatDate(item.workout_date) : 'New Post'} | ${SITE_NAME}`}</title>
             </Helmet>
@@ -79,7 +79,7 @@ class Post extends Component {
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
             />
-          </div>
+          </article>
         )}
       </div>
     );
