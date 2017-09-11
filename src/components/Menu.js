@@ -15,16 +15,18 @@ const logout = (e) => {
 const Menu = ({ user }) => {
   return (
     <div className={cx('menu')}>
-      <ul>
-        <li><NavLink exact to="/" activeClassName={cx('active')}>Home</NavLink></li>
-        <li><NavLink to="/events" activeClassName={cx('active')}>Events</NavLink></li>
-        <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
+      <div className={cx('main')}>
+        <ul>
+          <li><NavLink exact to="/" activeClassName={cx('active')}>Home</NavLink></li>
+          <li><NavLink to="/events" activeClassName={cx('active')}>Events</NavLink></li>
+          <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
+        </ul>
+      </div>
+      <div className={cx('tool')}>
         {user && (
-          <li>
-            <a href="/logout" onClick={logout}>Logout</a>
-          </li>
+          <a href="/logout" onClick={logout}>Logout</a>
         )}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -3,11 +3,28 @@
 .menu {
   $color: #f2f2f2;
 
+  display: flex;
   background-color: #323232;
   color: $color;
   padding: 10px;
   maring: 0;
   font-size: 1.2rem;
+
+  .main {
+    flex: 1;
+  }
+
+  .tool {
+    display: flex;
+    width: 200px;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    a {
+      font-size: 0.8em;
+    }
+  }
+
 
   a {
     color: $color;
