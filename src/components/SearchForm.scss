@@ -1,15 +1,13 @@
 @import 'common';
 
 .search-form {
-  form {
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
-    .field {
-      flex: 1;
-      margin-right: 3px;
-    }
+  .field {
+    flex: 1;
+    margin-right: 3px;
   }
 }
 
