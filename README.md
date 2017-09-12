@@ -16,7 +16,7 @@ React based workout journal web client toy project.
 ### Production build
 `yarn run build`
 
-You may need to `constants.js`.
+You may need to modify `packages.json`. (homepage, proxy settings..)
 
 
 ## Related project
