@@ -4,11 +4,10 @@ const path = require('path');
 const webpack = require('webpack');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
-const publicUrl = '';
-const env = getClientEnvironment(publicUrl);
+const getClientEnvironment = require('./env');
+const env = getClientEnvironment(paths.publicUrl);
 
 module.exports = {
   entry: paths.serverRenderJs,
