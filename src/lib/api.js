@@ -2,7 +2,11 @@ import _ from 'lodash';
 import axios from 'axios';
 import queryString from 'query-string';
 
-const API_URL = `${process.env.PUBLIC_URL}/api`;
+let API_URL = '/api';
+
+if (process.env.APP_ENV === 'server') {
+  API_URL = 'http://0.0.0.0:3001' + API_URL;
+}
 
 export function getErrorMessages(error, fieldName, context) {
   const prefix = context ? `${context}.` : '';
@@ -30,7 +34,8 @@ export const getEvents = accessToken => ({ name, remark } = {}) => {
 };
 
 export const getEvent = accessToken => id =>
-  axios.get(`${API_URL}/events/${id}`, getConfig(accessToken));
+  axios.get(`${API_URL}/events/${id}/`, getConfig(accessToken));
+
 
 export const updateEvent = accessToken => (id, params) =>
   axios.put(`${API_URL}/events/${id}/`, params, getConfig(accessToken));
@@ -39,7 +44,7 @@ export const insertEvent = accessToken => params =>
   axios.post(`${API_URL}/events/`, params, getConfig(accessToken));
 
 export const deleteEvent = accessToken => id =>
-  axios.delete(`${API_URL}/events/${id}`, getConfig(accessToken));
+  axios.delete(`${API_URL}/events/${id}/`, getConfig(accessToken));
 
 
 // Posts
@@ -55,7 +60,7 @@ export const getPosts = accessToken => ({ name } = {}) => {
 };
 
 export const getPost = accessToken => id =>
-  axios.get(`${API_URL}/posts/${id}`, getConfig(accessToken));
+  axios.get(`${API_URL}/posts/${id}/`, getConfig(accessToken));
 
 export const getMorePosts = accessToken => next =>
   axios.get(next, getConfig(accessToken));
@@ -67,7 +72,7 @@ export const insertPost = accessToken => params =>
   axios.post(`${API_URL}/posts/`, params, getConfig(accessToken));
 
 export const deletePost = accessToken => id =>
-  axios.delete(`${API_URL}/posts/${id}`, getConfig(accessToken));
+  axios.delete(`${API_URL}/posts/${id}/`, getConfig(accessToken));
 
 
 // Users
@@ -81,13 +86,11 @@ export const login = ({ username, password }) => axios.post(
   }),
   {
     auth: {
-      username: 'Ta0Fuj8Wbk57Fs2cTr1wChevVKWz2nFnwqbrldMp',
-      password: 'ZkJrGc2cGL10cIjPTsuXbiTYByUH4bp68rjRPAWb8CGDWkOS7m4cUO679PalDHd83lnWwqyRORA4LySYdWalxwccvcAbE1oTEsIbEpd39aaNzMcuH8ZKBMsIipoaiiem',
+      username: process.env.REACT_APP_API_CLIENT_ID,
+      password: process.env.REACT_APP_API_CLIENT_SECRET,
     },
   },
 );
 
-export const getUser = accessToken => () => {
-  console.log('url', `${API_URL}/users/me/`);
-  return axios.get(`${API_URL}/users/me/`, getConfig(accessToken));
-};
+export const getUser = accessToken => () =>
+  axios.get(`${API_URL}/users/me/`, getConfig(accessToken));
