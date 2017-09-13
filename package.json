@@ -117,11 +117,12 @@
   },
   "proxy": {
     "/api": {
-      "target": "http://localhost:8000",
+      "secure": true,
+      "changeOrigin": true,
+      "target": "https://workout-journal-server-iqdwnrkqdr.now.sh",
       "pathRewrite": {
-        "^/api": "/"
+        "^/api": ""
       }
     }
-  },
-  "homepage": "http://localhost:3001"
+  }
 }
