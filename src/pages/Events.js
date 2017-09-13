@@ -9,7 +9,6 @@ import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import EventItem from 'components/events/EventItem';
-import { SITE_NAME } from '../constants';
 
 class Events extends Component {
   componentWillMount() {
@@ -50,7 +49,7 @@ class Events extends Component {
     return (
       <div>
         <Helmet>
-          <title>{`Events | ${SITE_NAME}`}</title>
+          <title>{`Events | ${process.env.REACT_APP_SITE_NAME}`}</title>
         </Helmet>
 
         <section>

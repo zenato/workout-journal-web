@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import * as usersActions from 'redux/modules/users';
 import { Events, Event, Home, Posts, Post, Login } from 'pages';
 import Nav from 'components/Nav';
-import { SITE_NAME } from 'constants';
 import PrivateRoute from './PrivateRoute';
 
 const Container = styled.div`
@@ -30,7 +29,7 @@ class App extends Component {
     return (
       <div>
         <Helmet>
-          <title>{SITE_NAME}</title>
+          <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
 
         <Nav user={user} />

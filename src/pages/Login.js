@@ -6,7 +6,6 @@ import Cookies from 'js-cookie';
 import * as usersActions from 'redux/modules/users';
 import { LOGIN, GET_USER } from 'redux/modules/users'
 import LoginForm from 'components/users/LoginForm';
-import { SITE_NAME } from '../constants';
 
 class Login extends Component {
   handleSubmit = async (values) => {
@@ -32,7 +31,7 @@ class Login extends Component {
 
         <article>
           <Helmet>
-            <title>{`Login | ${SITE_NAME}`}</title>
+            <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
           </Helmet>
           <LoginForm
             error={error}

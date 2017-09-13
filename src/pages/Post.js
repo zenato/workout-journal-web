@@ -8,7 +8,6 @@ import { GET_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modul
 import { hasChangedLocation } from 'lib/location';
 import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
-import { SITE_NAME } from '../constants';
 
 const isNew = ({ id }) => id === 'new';
 
@@ -69,7 +68,7 @@ class Post extends Component {
         {(isNew(match.params) || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? formatDate(item.workout_date) : 'New Post'} | ${SITE_NAME}`}</title>
+              <title>{`${item ? formatDate(item.workout_date) : 'New Post'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
             </Helmet>
             <PostForm
               item={item}

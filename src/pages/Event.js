@@ -7,7 +7,6 @@ import * as eventsActions from 'redux/modules/events';
 import { GET_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location';
 import EventForm from 'components/events/EventForm';
-import { SITE_NAME } from '../constants';
 
 const isNew = ({ id }) => id === 'new';
 
@@ -66,7 +65,7 @@ class Event extends Component {
         {(isNew(match.params) || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? item.name : 'New Event'} | ${SITE_NAME}`}</title>
+              <title>{`${item ? item.name : 'New Event'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
             </Helmet>
             <EventForm
               item={item}
