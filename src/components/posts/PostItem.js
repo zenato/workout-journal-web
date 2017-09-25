@@ -10,8 +10,8 @@ const EventItem = ({ item, onDetail }) => (
   <li key={item.id} className={cx('list-item')}>
     <a href="" onClick={(e) => onDetail(e, item.id)}>
       <div className={cx('info')}>
-        <span className={cx('name')}>{moment(item.workout_date).format('YYYY-MM-DD')}</span>
-        <span className={cx('weekday')}>{moment(item.workout_date).format('ddd')}</span>
+        <span className={cx('name')}>{moment(item.workoutDate).format('YYYY-MM-DD')}</span>
+        <span className={cx('weekday')}>{moment(item.workoutDate).format('ddd')}</span>
         <div className={cx('remark')}>{item.performances.map(p => p.event.name).join(' / ')}</div>
       </div>
     </a>
@@ -20,8 +20,8 @@ const EventItem = ({ item, onDetail }) => (
 
 EventItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    workout_date: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    workoutDate: PropTypes.string.isRequired,
     performances: PropTypes.arrayOf(PropTypes.shape({
       event: PropTypes.shape({
         name: PropTypes.string.isRequired,

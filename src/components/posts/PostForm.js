@@ -29,7 +29,11 @@ class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    const { error, id, performances, ...props } = this.state;
+    this.props.onSubmit({
+      performances: performances.map(({ event, ...prop }) => ({ event: event.id, ...prop })),
+      ...props,
+    });
   };
 
   handleDelete = (e) => {
@@ -77,11 +81,11 @@ class PostForm extends Component {
             <Input
               id="post-workout-date"
               type="date"
-              name="workout_date"
-              value={formatDate(this.state.workout_date)}
+              name="workoutDate"
+              value={formatDate(this.state.workoutDate)}
               onChange={this.handleChangeInput}
             />
-            <ErrorMessage error={error} name="workout_date" />
+            <ErrorMessage error={error} name="workoutDate" />
           </div>
         </div>
 

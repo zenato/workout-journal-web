@@ -119,7 +119,7 @@
     "/api": {
       "secure": true,
       "changeOrigin": true,
-      "target": "https://workout-journal-server-iqdwnrkqdr.now.sh",
+      "target": "https://workout-journal-server-xklwurtcup.now.sh",
       "pathRewrite": {
         "^/api": ""
       }

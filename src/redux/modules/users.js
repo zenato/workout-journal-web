@@ -34,7 +34,7 @@ export default handleActions({
       return ({
         ...state,
         error: null,
-        user: action.payload.data,
+        user: action.payload,
       })
     },
     onFailure: (state, action) => ({

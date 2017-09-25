@@ -27,11 +27,13 @@ const initialState = {
 export default handleActions({
   ...pender({
     type: GET_EVENTS,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      items: action.payload.data,
-    }),
+    onSuccess: (state, action) => {
+      return ({
+        ...state,
+        error: null,
+        items: action.payload,
+      })
+    },
   }),
 
   ...pender({
@@ -39,7 +41,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload.data,
+      item: action.payload,
     }),
   }),
   ...pender({
@@ -47,7 +49,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload.data,
+      item: action.payload,
     }),
     onFailure: (state, action) => ({
       ...state,
@@ -59,7 +61,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload.data,
+      item: action.payload,
     }),
     onFailure: (state, action) => ({
       ...state,

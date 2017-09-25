@@ -36,8 +36,8 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      items: action.payload.data.results,
-      next: action.payload.data.next,
+      items: action.payload,
+      next: action.payload.next,
     }),
   }),
   ...pender({
@@ -47,9 +47,9 @@ export default handleActions({
       error: null,
       items: [
         ...state.items,
-        ...action.payload.data.results,
+        ...action.payload,
       ],
-      next: action.payload.data.next,
+      next: action.payload,
     }),
   }),
 
@@ -58,7 +58,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload.data,
+      item: action.payload,
     }),
   }),
   ...pender({
@@ -66,13 +66,13 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      events: action.payload.data,
+      events: action.payload,
     }),
   }),
   ...pender({
     type: UPDATE_POST,
     onSuccess: (state, action) => {
-      const item = action.payload.data;
+      const item = action.payload;
       return ({
         ...state,
         error: null,
@@ -90,9 +90,9 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload.data,
+      item: action.payload,
       items: [
-        action.payload.data,
+        action.payload,
         ...state.items,
       ],
     }),

@@ -28,7 +28,8 @@ class EventForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    const { error, id, ...props } = this.state;
+    this.props.onSubmit({ ...props });
   };
 
   handleDelete = (e) => {

@@ -35,8 +35,8 @@ class Event extends Component {
   handleSubmit = async (values) => {
     const { match, location, history, EventsActions } = this.props;
     if (isNew(match.params)) {
-      const { data } = await EventsActions.insertEvent(values);
-      history.replace(`/events/${data.id}${location.search}`);
+      const item = await EventsActions.insertEvent(values);
+      history.replace(`/events/${item.id}${location.search}`);
     } else {
       await EventsActions.updateEvent(match.params.id, values);
     }

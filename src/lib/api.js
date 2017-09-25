@@ -13,66 +13,270 @@ export function getErrorMessages(error, fieldName, context) {
   return _.get(error, prefix + fieldName);
 }
 
-const getConfig = accessToken => ({
-  headers: {
-    'Authorization': `Bearer ${accessToken}`,
+const api = (accessToken, query, variables) => axios.post(
+  `${API_URL}/graphql`,
+  {
+    query,
+    variables,
   },
+  {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+    },
+})
+.then(r => {
+  if (r.error) throw r.error;
+  return r.data.data;
 });
 
 
 // Events
 
-export const getEvents = accessToken => ({ name, remark } = {}) => {
-  const query = {
-    'name__icontains': name,
-    'remark__icontains': remark,
-  };
-  return axios.get(
-    `${API_URL}/events/?${queryString.stringify(query)}`,
-    getConfig(accessToken),
-  );
-};
+export const getEvents = accessToken => params => api(
+  accessToken,
+  `
+    query QueryEventForName($name: String) {
+      events(name: $name) {
+        id
+        name
+        unit
+        value
+        remark
+      }
+    }
+  `,
+  params,
+).then(r => r.events);
 
-export const getEvent = accessToken => id =>
-  axios.get(`${API_URL}/events/${id}/`, getConfig(accessToken));
+export const getEvent = accessToken => id => api(
+  accessToken,
+  `
+    query QueryEventForId($id: ID!) {
+      event(id: $id) {
+        id
+        name
+        unit
+        value
+        remark
+      }
+    }
+  `,
+  { id },
+).then(r => r.event);
 
 
-export const updateEvent = accessToken => (id, params) =>
-  axios.put(`${API_URL}/events/${id}/`, params, getConfig(accessToken));
+export const updateEvent = accessToken => (id, params) => api(
+  accessToken,
+  `
+    mutation UpdateEventForId($id: ID!, $params: EventInput!) {
+      updateEvent(id: $id, data: $params) {
+        event {
+          id
+          name
+          unit
+          value
+          remark
+        }
+      }
+    }
+  `,
+  {
+    id,
+    params,
+  },
+).then(r => r.updateEvent.event);
 
-export const insertEvent = accessToken => params =>
-  axios.post(`${API_URL}/events/`, params, getConfig(accessToken));
+export const insertEvent = accessToken => params => api(
+  accessToken,
+  `
+    mutation CreateEvent($params: EventInput!) {
+      createEvent(data: $params) {
+        event {
+          id
+          name
+          unit
+          value
+          remark
+        }
+      }
+    }
+  `,
+  { params },
+).then(r => r.createEvent.event);
 
-export const deleteEvent = accessToken => id =>
-  axios.delete(`${API_URL}/events/${id}/`, getConfig(accessToken));
+export const deleteEvent = accessToken => id => api(
+  accessToken,
+  `
+    mutation DeleteEventForId($id: ID!) {
+      deleteEvent(id: $id) {
+        success
+      }
+    }
+  `,
+  { id },
+);
 
 
 // Posts
 
-export const getPosts = accessToken => ({ name } = {}) => {
-  const query = {
-    'performances__event__name__icontains': name,
-  };
-  return axios.get(
-    `${API_URL}/posts/?${queryString.stringify(query)}`,
-    getConfig(accessToken),
-  );
-};
+export const getPosts = accessToken => params => api(
+  accessToken,
+  `
+    query QueryPostForName($name: String) {
+      posts(name: $name) {
+        id
+        workoutDate
+        performances {
+          id
+          event {
+            id
+            name
+            unit
+          }
+          value
+          set1
+          set2
+          set3
+          set4
+          set5
+        }
+        remark
+      }
+    }
+  `,
+  params,
+).then(r => r.posts);
 
-export const getPost = accessToken => id =>
-  axios.get(`${API_URL}/posts/${id}/`, getConfig(accessToken));
+export const getPost = accessToken => id => api(
+  accessToken,
+  `
+    query QueryPostForId($id: ID!) {
+      post(id: $id) {
+        id
+        workoutDate
+        performances {
+          event {
+            id
+            name
+            unit
+          }
+          value
+          set1
+          set2
+          set3
+          set4
+          set5
+        }
+        remark
+      }
+    }
+  `,
+  { id },
+).then(r => r.post);
 
-export const getMorePosts = accessToken => next =>
-  axios.get(next, getConfig(accessToken));
+export const getMorePosts = accessToken => next => api(
+  accessToken,
+  `
+    query NextPostsFrom($next: ID!) {
+      nextPosts(next: $next) {
+        id
+        workoutDate
+        performances {
+          id
+          event {
+            id
+            name
+            unit
+          }
+          value
+          set1
+          set2
+          set3
+          set4
+          set5
+        }
+        remark
+      }
+    }
+  `,
+  { next },
+).then(r => r.nextPosts);
 
-export const updatePost = accessToken => (id, params) =>
-  axios.put(`${API_URL}/posts/${id}/`, params, getConfig(accessToken));
+export const updatePost = accessToken => (id, { performances, ...data }) => api(
+  accessToken,
+  `
+    mutation UpdatePostForId($id: ID!, $data: PostInput!, $performances: [PerformanceInput]) {
+      updatePost(id: $id, data: $data, performances: $performances) {
+        post {
+          id
+          workoutDate
+          performances {
+            event {
+              id
+              name
+              unit
+            }
+            value
+            set1
+            set2
+            set3
+            set4
+            set5
+          }
+          remark
+        }
+      }
+    }
+  `,
+  {
+    id,
+    data,
+    performances,
+  },
+).then(r => r.updatePost.post);
 
-export const insertPost = accessToken => params =>
-  axios.post(`${API_URL}/posts/`, params, getConfig(accessToken));
+export const insertPost = accessToken => ({ performances, ...data }) => api(
+  accessToken,
+  `
+    mutation CreatePostForId($data: PostInput!, $performances: [PerformanceInput]) {
+      createPost(data: $data, performances: $performances) {
+        post {
+          id
+          workoutDate
+          performances {
+            event {
+              id
+              name
+              unit
+            }
+            value
+            set1
+            set2
+            set3
+            set4
+            set5
+          }
+        }
+      }
+    }
+  `,
+  {
+    data,
+    performances,
+  },
+).then(r => r.createPost.post);
 
-export const deletePost = accessToken => id =>
-  axios.delete(`${API_URL}/posts/${id}/`, getConfig(accessToken));
+export const deletePost = accessToken => id => api(
+  accessToken,
+  `
+    mutation DeletePostForId($id: ID!) {
+      deletePost(id: $id) {
+        success
+      }
+    }
+  `,
+  { id },
+);
 
 
 // Users
@@ -92,5 +296,12 @@ export const login = ({ username, password }) => axios.post(
   },
 );
 
-export const getUser = accessToken => () =>
-  axios.get(`${API_URL}/users/me/`, getConfig(accessToken));
+export const getUser = accessToken => () => api(
+  accessToken,
+  `{
+    user {
+      username
+      email
+    }
+  }`,
+).then(r => r.user);

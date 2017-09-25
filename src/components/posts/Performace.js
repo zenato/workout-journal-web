@@ -17,9 +17,11 @@ class Performance extends Component {
     const performance = {...item};
 
     if (name === 'event') {
-      const event = _.head(events.filter(e => e.id === Number(value)));
+      const event = _.head(events.filter(e => e.id === value));
       performance['event'] = event;
-      performance['value'] = _.get(event, 'last_performance.value', event.value)
+
+      // performance['value'] = _.get(event, 'last_performance.value', event.value)
+      performance['value'] = value;
     } else {
       performance[name] = value;
     }
@@ -118,7 +120,7 @@ Performance.propTypes = {
   idx: PropTypes.number.isRequired,
   item: PropTypes.shape({
     event: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       unit: PropTypes.string.isRequired,
     }),
     value: PropTypes.number,
@@ -129,7 +131,7 @@ Performance.propTypes = {
     set5: PropTypes.number,
   }).isRequired,
   events: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     last_performace: PropTypes.shape({
       value: PropTypes.number.isRequired,

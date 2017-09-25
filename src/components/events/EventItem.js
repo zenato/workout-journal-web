@@ -21,7 +21,7 @@ const EventItem = ({ item, onDetail }) => (
 
 EventItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     unit: PropTypes.string.isRequired,
