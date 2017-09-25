@@ -72,6 +72,8 @@ export default handleActions({
     type: DELETE_EVENT,
     onSuccess: (state, action) => ({
       ...state,
+      item: null,
+      items: state.items.filter(i => i.id !== state.item.id),
       error: null,
     }),
   }),
