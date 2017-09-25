@@ -20,5 +20,5 @@ You may need to modify `packages.json`. (homepage, proxy settings..)
 
 
 ## Related project
-* [REST API Server](https://github.com/zenato/workout-journal-server) - Python based REST API server toy project.
+* [API Server](https://github.com/zenato/workout-journal-server) - Python based API server toy project.
 * [Mobile client] - Progressive.
