@@ -64,8 +64,10 @@ class EventForm extends Component {
           <div className={cx('field')}>
             <Input
               id="event-value"
-              type="text"
+              type="number"
               name="value"
+              min={1}
+              max={999}
               value={this.state.value || ''}
               onChange={this.handleChangeInput}
             />

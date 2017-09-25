@@ -11,6 +11,11 @@ export function getValue (e) {
       break;
     case 'number':
       v = _.toNumber(value);
+      if (e.target.min && _.toNumber(e.target.min) > v) {
+        v = _.toNumber(e.target.min);
+      } else if (e.target.max && _.toNumber(e.target.max) < v) {
+        v = _.toNumber(e.target.max);
+      }
       break;
     case 'date':
       v = moment(value).toISOString();
