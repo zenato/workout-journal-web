@@ -50,6 +50,7 @@ export default handleActions({
       ...state,
       error: null,
       item: action.payload,
+      items: state.items.map(i => i.id === state.item.id ? { ...i, ...action.payload } : i),
     }),
     onFailure: (state, action) => ({
       ...state,
