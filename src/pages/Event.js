@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
-import { GET_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
+import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location';
 import EventForm from 'components/events/EventForm';
 
@@ -69,7 +69,7 @@ class Event extends Component {
             </Helmet>
             <EventForm
               item={item}
-              error={error}
+              error={!loading && error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
@@ -85,7 +85,12 @@ export default withDone(connect(
   (state) => ({
     error: state.events.error,
     item: state.events.item,
-    loading: state.pender.pending[GET_EVENT] || state.pender.pending[UPDATE_EVENT] || state.pender.pending[DELETE_EVENT],
+    loading: (
+      state.pender.pending[GET_EVENT] ||
+      state.pender.pending[INSERT_EVENT] ||
+      state.pender.pending[UPDATE_EVENT] ||
+      state.pender.pending[DELETE_EVENT]
+    ),
   }),
   (dispatch) => ({
     EventsActions: bindActionCreators(eventsActions, dispatch),
