@@ -19,9 +19,7 @@ class Performance extends Component {
     if (name === 'event') {
       const event = _.head(events.filter(e => e.id === value));
       performance['event'] = event;
-
-      // performance['value'] = _.get(event, 'last_performance.value', event.value)
-      performance['value'] = value;
+      performance['value'] = _.get(event, 'lastPerformance.value', event.value)
     } else {
       performance[name] = value;
     }

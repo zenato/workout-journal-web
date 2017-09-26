@@ -119,6 +119,29 @@ export const deleteEvent = accessToken => id => api(
 
 // Posts
 
+export const getPostEvents = accessToken => params => api(
+  accessToken,
+  `
+    query {
+      events {
+        id
+        name
+        unit
+        value
+        lastPerformance {
+          value
+          set1
+          set2
+          set3
+          set4
+          set5
+        }
+      }
+    }
+  `,
+  params,
+).then(r => r.events);
+
 export const getPosts = accessToken => params => api(
   accessToken,
   `
