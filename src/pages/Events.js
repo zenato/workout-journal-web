@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
+import { GET_EVENTS } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
@@ -45,7 +46,7 @@ class Events extends Component {
   };
 
   render() {
-    const { items, location } = this.props;
+    const { items, location, loading } = this.props;
     return (
       <div>
         <Helmet>
@@ -63,6 +64,10 @@ class Events extends Component {
         />
 
         <article>
+          {loading && (
+            <span>Now loading...</span>
+          )}
+
           <ul>
             {items.map(item => (
               <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
@@ -77,6 +82,7 @@ class Events extends Component {
 export default withDone(connect(
   (state) => ({
     items: state.events.items,
+    loading: state.pender.pending[GET_EVENTS],
   }),
   (dispatch) => ({
     EventsActions: bindActionCreators(eventsActions, dispatch),
