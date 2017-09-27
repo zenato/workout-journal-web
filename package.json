@@ -25,6 +25,7 @@
     "react-router-server": "^4.2.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "redux-form": "^7.0.4",
     "redux-pender": "^1.1.6",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
@@ -119,7 +120,7 @@
     "/api": {
       "secure": true,
       "changeOrigin": true,
-      "target": "https://workout-journal-server-bkuqtqbplt.now.sh",
+      "target": "http://localhost:8000",
       "pathRewrite": {
         "^/api": ""
       }

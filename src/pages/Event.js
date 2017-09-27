@@ -9,6 +9,12 @@ import EventForm from 'components/events/EventForm';
 
 const isNew = ({ id }) => id === 'new';
 
+const InitializedEventForm = connect(
+  state => ({
+    initialValues: state.events.item,
+  }),
+)(EventForm);
+
 class Event extends Component {
   componentWillMount() {
     const { EventsActions, item, done, match } = this.props;
@@ -56,8 +62,8 @@ class Event extends Component {
             <Helmet>
               <title>{`${item ? item.name : 'New Event'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
             </Helmet>
-            <EventForm
-              item={item}
+            <InitializedEventForm
+              enableReinitialize={true}
               error={loading ? null : error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}

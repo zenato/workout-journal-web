@@ -1,102 +1,47 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
-import { createChangeHandler } from 'lib/form';
-import { Input, Button, ErrorMessage } from 'components/form';
+import { Button } from 'components/form';
 import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
 class EventForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: '',
-      unit: 'Kg',
-      value: 1,
-      remark: '',
-      ...props.item,
-    };
-
-    this.handleChange = createChangeHandler(this);
-  }
-
-  componentWillReceiveProps({ item }) {
-    this.setState({ ...item, });
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit(this.state);
-  };
-
-  handleDelete = (e) => {
-    e.preventDefault();
+  handleDelete = () => {
     this.props.onDelete();
   };
 
-  handleMoveList = (e) => {
-    e.preventDefault();
+  handleMoveList = () => {
     this.props.onMoveList();
   };
 
   render() {
-    const { error } = this.props;
+    const { error, handleSubmit, initialValues } = this.props;
     return (
-      <form onSubmit={this.handleSubmit} className={cx('event-form')}>
+      <form onSubmit={handleSubmit} className={cx('event-form')}>
         <div className={cx('item')}>
-          <label htmlFor="event-name">Name</label>
+          <label htmlFor="name">Name</label>
           <div className={cx('field')}>
-            <Input
-              id="event-name"
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="name" />
+            <Field type="text" name="name" component="input" className={cx('form-control')} />
           </div>
         </div>
         <div className={cx('item')}>
-          <label htmlFor="event-value">Value</label>
+          <label htmlFor="value">Value</label>
           <div className={cx('field')}>
-            <Input
-              id="event-value"
-              type="number"
-              name="value"
-              min={1}
-              max={999}
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="value" />
+            <Field type="text" name="value" component="input" className={cx('form-control')} />
           </div>
         </div>
         <div className={cx('item')}>
-          <label htmlFor="event-unit">Unit</label>
+          <label htmlFor="unit">Unit</label>
           <div className={cx('field')}>
-            <Input
-              id="event-unit"
-              type="text"
-              name="unit"
-              value={this.state.unit}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="unit" />
+            <Field type="text" name="unit" component="input" className={cx('form-control')} />
           </div>
         </div>
         <div className={cx('item')}>
-          <label htmlFor="event-remark">Remark</label>
+          <label htmlFor="remark">Remark</label>
           <div className={cx('field')}>
-            <Input
-              id="event-remark"
-              type="text"
-              name="remark"
-              value={this.state.remark}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="remark" />
+            <Field type="text" name="remark" component="input" className={cx('form-control')} />
           </div>
         </div>
 
@@ -109,7 +54,7 @@ class EventForm extends Component {
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
           <Button value="List" onClick={this.handleMoveList} />
-          {this.state.id && (
+          {initialValues && (
             <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
@@ -119,11 +64,12 @@ class EventForm extends Component {
 }
 
 EventForm.propTypes = {
-  item: PropTypes.object,
   error: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,
 };
 
-export default EventForm;
+export default reduxForm({
+  form: 'eventForm',
+})(EventForm);
