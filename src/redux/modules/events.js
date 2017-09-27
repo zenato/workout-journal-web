@@ -62,6 +62,7 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
+      items: [ action.payload, ...state.items ],
       item: action.payload,
     }),
     onFailure: (state, action) => ({
