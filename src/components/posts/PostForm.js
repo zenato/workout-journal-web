@@ -20,13 +20,14 @@ class PostForm extends Component {
     const { performances, ...item } = this.props.item;
 
     this.state = {
-      performances: performances.map(performance => ({
-        ...performance,
+      performances: performances.map(perf => ({
         id: getUniqueKey(),
+        ...perf,
       })),
+      workoutDate: new Date().getTime(),
+      remark: '',
       ...item,
     };
-
     this.handleChange = createChangeHandler(this);
   }
 
@@ -35,7 +36,7 @@ class PostForm extends Component {
     if (this.props.item !== item) {
       this.setState({
         ...props,
-        performances: performances.map(p => ({ ...p, id: getUniqueKey() }))
+        performances: performances.map(perf => ({ ...perf, id: getUniqueKey() }))
       });
     }
   }
@@ -104,7 +105,7 @@ class PostForm extends Component {
               id="post-workout-date"
               type="date"
               name="workoutDate"
-              value={formatDate(this.state.workoutDate || new Date())}
+              value={formatDate(this.state.workoutDate)}
               onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="workoutDate" />
