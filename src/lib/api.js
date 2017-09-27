@@ -280,7 +280,7 @@ export const insertPost = accessToken => ({ performances, ...data }) => api(
     }
   `,
   {
-    data,
+    input: data,
     performances,
   },
 ).then(r => r.createPost.post);
