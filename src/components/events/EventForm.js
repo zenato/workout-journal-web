@@ -7,6 +7,34 @@ import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
+const validate = ({ name, unit, value }) => {
+  const errors = {};
+
+  if (!name) {
+    errors.name = 'Required';
+  }
+  if (!unit) {
+    errors.unit = 'Required';
+  }
+  if (!value) {
+    errors.value = 'Required';
+  } else if (!/^[0-9]{1,3}$/.test(value)) {
+    errors.value = 'Must be a number, 0-999';
+  }
+
+  return errors;
+};
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div className={cx('item')}>
+    <label>{label}</label>
+    <div className={cx('field')}>
+      <input {...input} placeholder={label} type={type} className={cx('form-control')}/>
+      {touched && error && <span className={cx('error')}>{error}</span>}
+    </div>
+  </div>
+);
+
 class EventForm extends Component {
   handleDelete = () => {
     this.props.onDelete();
@@ -20,30 +48,10 @@ class EventForm extends Component {
     const { error, handleSubmit, initialValues } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('event-form')}>
-        <div className={cx('item')}>
-          <label htmlFor="name">Name</label>
-          <div className={cx('field')}>
-            <Field type="text" name="name" component="input" className={cx('form-control')} />
-          </div>
-        </div>
-        <div className={cx('item')}>
-          <label htmlFor="value">Value</label>
-          <div className={cx('field')}>
-            <Field type="text" name="value" component="input" className={cx('form-control')} />
-          </div>
-        </div>
-        <div className={cx('item')}>
-          <label htmlFor="unit">Unit</label>
-          <div className={cx('field')}>
-            <Field type="text" name="unit" component="input" className={cx('form-control')} />
-          </div>
-        </div>
-        <div className={cx('item')}>
-          <label htmlFor="remark">Remark</label>
-          <div className={cx('field')}>
-            <Field type="text" name="remark" component="input" className={cx('form-control')} />
-          </div>
-        </div>
+        <Field type="text" name="name" label="Name" component={renderField} />
+        <Field type="text" name="unit" label="Unit" component={renderField} />
+        <Field type="text" name="value" label="Value" component={renderField} />
+        <Field type="text" name="remark" label="Remark" component={renderField} />
 
         {error && (
           <div className={cx('error')}>
@@ -72,4 +80,5 @@ EventForm.propTypes = {
 
 export default reduxForm({
   form: 'eventForm',
+  validate,
 })(EventForm);
