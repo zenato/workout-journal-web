@@ -69,7 +69,7 @@ class Event extends Component {
             </Helmet>
             <EventForm
               item={item}
-              error={!loading && error}
+              error={loading ? null : error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
