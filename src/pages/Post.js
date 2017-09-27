@@ -9,13 +9,11 @@ import { hasChangedLocation } from 'lib/location';
 import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
 
-const isNew = ({ id }) => id === 'new';
-
 class Post extends Component {
   componentWillMount() {
     const { PostsActions, done, match } = this.props;
     const promises = [PostsActions.getPostEvents()];
-    if (!isNew(match.params)) {
+    if (!this.isNew()) {
       promises.push(PostsActions.getPost(match.params.id));
     }
     Promise.all(promises).then(done, done);
@@ -35,9 +33,11 @@ class Post extends Component {
     this.props.PostsActions.getPost(match.params.id);
   }
 
+  isNew = () => this.props.match.params.id === 'new';
+
   handleSubmit = async (values) => {
     const { match, location, history, PostsActions } = this.props;
-    if (isNew(match.params)) {
+    if (this.isNew()) {
       const item = await PostsActions.insertPost(values);
       history.replace(`/posts/${item.id}${location.search}`);
     } else {
@@ -58,14 +58,14 @@ class Post extends Component {
   };
 
   render() {
-    const { match, item, events, error, loading } = this.props;
+    const { item, events, error, loading } = this.props;
     return (
       <div>
         {loading && (
           <span>Now loading...</span>
         )}
 
-        {(isNew(match.params) || item) && (
+        {(this.isNew() || item) && (
           <article>
             <Helmet>
               <title>{`${item ? formatDate(item.workout_date) : 'New Post'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
