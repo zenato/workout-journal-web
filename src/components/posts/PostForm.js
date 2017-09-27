@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -14,11 +15,10 @@ class PostForm extends Component {
     super(props);
 
     this.state = {
-      performances: [],
-      item: props.item,
+      ...props.item,
     };
 
-    this.handleChangeInput = createChangeInputHandler(this, 'item');
+    this.handleChangeInput = createChangeInputHandler(this);
   }
 
   componentWillReceiveProps({ item }) {
@@ -29,13 +29,13 @@ class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { error, id, performances, ...props } = this.state;
+    const { performances, ...item } = this.state;
     this.props.onSubmit({
+      ...(_.omit(item, ['id'])),
       performances: performances.map(({ event, ...others }) => ({
         ...others,
-        event: event ? event.id : null,
+        event: _.get(event, 'id'),
       })),
-      ...props,
     });
   };
 
@@ -57,26 +57,30 @@ class PostForm extends Component {
 
   handleAddPerformance = (e) => {
     e.preventDefault();
-    const performances = [...this.state.performances, {
-      event: null,
-      value: 0,
-      set1: 0,
-      set2: 0,
-      set3: 0,
-      set4: 0,
-      set5: 0,
-    }];
-    this.setState({ performances });
+    this.setState({
+      performances: [
+        ...this.state.performances,
+        {
+          event: null,
+          value: 0,
+          set1: 0,
+          set2: 0,
+          set3: 0,
+          set4: 0,
+          set5: 0,
+        },
+      ],
+    });
   };
 
   handleDeletePerformance = (idx) => {
-    const performances = [...this.state.performances];
-    this.setState({ performances: performances.filter((p, i) => i !== idx) });
+    this.setState({
+      performances: this.state.performances.filter((p, i) => i !== idx),
+    });
   };
 
   render() {
     const { loading, error, events } = this.props;
-    const { item, performances } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className={cx('post-form')}>
         <div className={cx('item')}>
@@ -86,7 +90,7 @@ class PostForm extends Component {
               id="post-workout-date"
               type="date"
               name="workoutDate"
-              value={formatDate(item.workoutDate || new Date())}
+              value={formatDate(this.state.workoutDate || new Date())}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="workoutDate" />
@@ -127,7 +131,7 @@ class PostForm extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {performances.map((item, idx) => (
+                {this.state.performances.map((item, idx) => (
                   <Performance
                     key={`performance-${idx}`}
                     events={events}
@@ -151,7 +155,7 @@ class PostForm extends Component {
               id="post-remark"
               type="text"
               name="remark"
-              value={item.remark || ''}
+              value={this.state.remark || ''}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="remark" />
@@ -167,7 +171,7 @@ class PostForm extends Component {
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
           <Button value="List" onClick={this.handleMoveList} />
-          {item && (
+          {this.state.id && (
             <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
