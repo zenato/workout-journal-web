@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import classNames from 'classnames/bind';
-import { createChangeInputHandler } from 'lib/form';
+import { createChangeHandler } from 'lib/form';
 import { Input, Button } from 'components/form';
 import styles from './SearchForm.scss';
 
@@ -16,7 +16,7 @@ class SearchForm extends Component {
       name: '',
       ...queryString.parse(props.location.search),
     };
-    this.handleInputChange = createChangeInputHandler(this);
+    this.handleChange = createChangeHandler(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,7 +44,7 @@ class SearchForm extends Component {
             type="text"
             name="name"
             value={this.state.name}
-            onChange={this.handleInputChange}
+            onChange={this.handleChange}
             placeholder={this.props.placeholder}
             className={cx('field')}
           />

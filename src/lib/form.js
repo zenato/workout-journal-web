@@ -26,7 +26,7 @@ export function getValue (e) {
   return v;
 }
 
-export const createChangeInputHandler = (ctx, propName) => (e) => new Promise((res) => {
+export const createChangeHandler = (ctx, propName) => (e) => new Promise((res) => {
   const changeProps = {
     [e.target.name]: getValue(e),
   };

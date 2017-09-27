@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { createChangeInputHandler } from 'lib/form';
+import { createChangeHandler } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import styles from './EventForm.scss';
 
@@ -15,7 +15,7 @@ class EventForm extends Component {
       ...props.item,
     };
 
-    this.handleChangeInput = createChangeInputHandler(this);
+    this.handleChange = createChangeHandler(this);
   }
 
   componentWillReceiveProps({ item }) {
@@ -49,7 +49,7 @@ class EventForm extends Component {
               type="text"
               name="name"
               value={this.state.name}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="name" />
           </div>
@@ -64,7 +64,7 @@ class EventForm extends Component {
               min={1}
               max={999}
               value={this.state.value}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="value" />
           </div>
@@ -77,7 +77,7 @@ class EventForm extends Component {
               type="text"
               name="unit"
               value={this.state.unit}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="unit" />
           </div>
@@ -90,7 +90,7 @@ class EventForm extends Component {
               type="text"
               name="remark"
               value={this.state.remark}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="remark" />
           </div>

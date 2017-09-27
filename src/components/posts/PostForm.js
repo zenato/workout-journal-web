@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { createChangeInputHandler } from 'lib/form';
+import { createChangeHandler } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import Performance from 'components/posts/Performace';
 import { formatDate } from 'lib/date'
@@ -27,7 +27,7 @@ class PostForm extends Component {
       ...item,
     };
 
-    this.handleChangeInput = createChangeInputHandler(this);
+    this.handleChange = createChangeHandler(this);
   }
 
   componentWillReceiveProps({ item }) {
@@ -105,7 +105,7 @@ class PostForm extends Component {
               type="date"
               name="workoutDate"
               value={formatDate(this.state.workoutDate || new Date())}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="workoutDate" />
           </div>
@@ -169,7 +169,7 @@ class PostForm extends Component {
               type="text"
               name="remark"
               value={this.state.remark || ''}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="remark" />
           </div>

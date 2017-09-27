@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { createChangeInputHandler } from 'lib/form';
+import { createChangeHandler } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import styles from './LoginForm.scss';
 
@@ -16,7 +16,7 @@ class LoginForm extends Component {
       password: '',
     };
 
-    this.handleChangeInput = createChangeInputHandler(this);
+    this.handleChange = createChangeHandler(this);
   }
 
   handleSubmit = (e) => {
@@ -36,7 +36,7 @@ class LoginForm extends Component {
               type="text"
               name="username"
               value={this.state.username}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="username" />
           </div>
@@ -49,7 +49,7 @@ class LoginForm extends Component {
               type="password"
               name="password"
               value={this.state.password}
-              onChange={this.handleChangeInput}
+              onChange={this.handleChange}
             />
             <ErrorMessage error={error} name="password" />
           </div>
