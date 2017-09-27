@@ -9,19 +9,13 @@ const cx = classNames.bind(styles);
 
 class LoginForm extends Component {
   state = {
-    error: null,
     username: '',
     password: '',
   };
 
   constructor(props) {
     super(props);
-
     this.handleChangeInput = createChangeInputHandler(this);
-  }
-
-  componentWillReceiveProps({ error }) {
-    this.setState({ error });
   }
 
   handleSubmit = (e) => {
@@ -30,7 +24,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { error } = this.state;
+    const { error } = this.props;
     return (
       <form onSubmit={this.handleSubmit} className={cx('login-form')}>
         <div className={cx('item')}>
@@ -40,7 +34,7 @@ class LoginForm extends Component {
               id="login-username"
               type="text"
               name="username"
-              value={this.state.username || ''}
+              value={this.state.username}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="username" />
@@ -53,7 +47,7 @@ class LoginForm extends Component {
               id="login-password"
               type="password"
               name="password"
-              value={this.state.password || ''}
+              value={this.state.password}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="password" />
