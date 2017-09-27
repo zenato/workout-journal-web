@@ -17,37 +17,28 @@ class PostForm extends Component {
   constructor(props) {
     super(props);
 
-    const { performances, ...item } = this.props.item;
+    const { performances = [], ...item } = this.props.item || {};
 
     this.state = {
+      workoutDate: formatDate(new Date()),
+      remark: '',
+      ...item,
+
       performances: performances.map(perf => ({
         id: getUniqueKey(),
         ...perf,
       })),
-      workoutDate: new Date().getTime(),
-      remark: '',
-      ...item,
     };
     this.handleChange = createChangeHandler(this);
-  }
-
-  componentWillReceiveProps({ item }) {
-    const { performances, ...props } = item;
-    if (this.props.item !== item) {
-      this.setState({
-        ...props,
-        performances: performances.map(perf => ({ ...perf, id: getUniqueKey() }))
-      });
-    }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { performances, ...item } = this.state;
     this.props.onSubmit({
-      ..._.omit(item, ['id']),
-      performances: performances.map(({ id, event, ...others }) => ({
-        ...others,
+      ...item,
+      performances: performances.map(({ id, event, ...pref }) => ({
+        ...pref,
         event: _.get(event, 'id'),
       })),
     });
