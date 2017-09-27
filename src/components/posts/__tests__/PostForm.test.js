@@ -2,19 +2,23 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import PostForm from '../PostForm';
 
+const events = [
+  {
+    id: '1',
+    name: 'test',
+    value: 10,
+    unit: 'g',
+    remark: 'test',
+  },
+];
+
 const item = {
   id: 1,
-  workout_date: new Date().getTime(),
+  workoutDate: new Date().getTime(),
   remark: 'test',
   performances: [
     {
-      event: {
-        id: 1,
-        name: 'test',
-        value: 10,
-        unit: 'g',
-        remark: 'test',
-      },
+      event: events[0],
       value: 20,
       set1: 1,
       set2: 2,
@@ -25,28 +29,16 @@ const item = {
   ],
 };
 
-const events = [
-  {
-    id: 1,
-    name: 'test',
-    value: 10,
-    unit: 'g',
-    remark: 'test',
-  },
-];
-
 it('renders without errors', () => {
   shallow(
     <PostForm
       events={events}
       item={item}
       error={null}
-      onSubmit={() => {
-      }}
-      onDelete={() => {
-      }}
-      onMoveList={() => {
-      }}
+      loading={false}
+      onSubmit={() => {}}
+      onDelete={() => {}}
+      onMoveList={() => {}}
     />
   );
 });
@@ -58,6 +50,7 @@ it('simulate submit after change form', () => {
       events={events}
       item={item}
       error={null}
+      loading={false}
       onSubmit={onSubmit}
       onDelete={() => {}}
       onMoveList={() => {}}
@@ -65,9 +58,9 @@ it('simulate submit after change form', () => {
   );
 
   // Changed input form
-  wrapper.find('input[name="workout_date"]').simulate('change', {
+  wrapper.find('input[name="workoutDate"]').simulate('change', {
     target: {
-      name: 'workout_date',
+      name: 'workoutDate',
       value: '2017-08-08',
     },
   });
@@ -83,26 +76,19 @@ it('simulate submit after change form', () => {
   });
 
   expect(onSubmit).toBeCalledWith({
-    id: 1,
     performances: [
       {
-        event: {
-          id: 1,
-          name: 'test',
-          remark: 'test',
-          unit: 'g',
-          value: 10,
-        },
+        event: '1',
         set1: 1,
         set2: 2,
         set3: 3,
         set4: 4,
         set5: 5,
-        value: 20
-      }
+        value: 20,
+      },
     ],
     remark: 'test',
-    workout_date: '2017-08-08',
+    workoutDate: '2017-08-08',
   });
 });
 
@@ -114,6 +100,7 @@ it('simulate move list click', () => {
       events={events}
       item={item}
       error={null}
+      loading={false}
       onSubmit={() => {}}
       onDelete={() => {}}
       onMoveList={onMoveList}
@@ -135,6 +122,7 @@ it('simulate delete click', () => {
       events={events}
       item={item}
       error={null}
+      loading={false}
       onSubmit={() => {}}
       onDelete={onDelete}
       onMoveList={() => {}}

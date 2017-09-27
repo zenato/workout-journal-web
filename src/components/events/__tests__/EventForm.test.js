@@ -15,12 +15,9 @@ it('renders without errors', () => {
     <EventForm
       item={item}
       error={null}
-      onSubmit={() => {
-      }}
-      onDelete={() => {
-      }}
-      onMoveList={() => {
-      }}
+      onSubmit={() => {}}
+      onDelete={() => {}}
+      onMoveList={() =>{}}
     />
   );
 });
@@ -68,12 +65,11 @@ it('simulate submit after change form', () => {
   });
 
   expect(onSubmit).toBeCalledWith({
-    error: null,
     id: 1,
     name: 'changed name',
-    value: 20,
-    unit: 'kg',
     remark: 'changed remark',
+    unit: 'kg',
+    value: 20,
   });
 });
 

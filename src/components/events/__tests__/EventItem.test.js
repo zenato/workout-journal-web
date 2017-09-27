@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import EventItem from '../EventItem';
 
 const item = {
-  id: 1,
+  id: '1',
   name: 'test name',
   value: 10,
   unit: 'KG',
@@ -30,5 +30,5 @@ it('simulate click link', () => {
     />
   );
   wrapper.find('a').simulate('click');
-  expect(detailId).toEqual(1);
+  expect(detailId).toEqual('1');
 });

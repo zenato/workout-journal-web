@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import PostItem from '../PostItem';
 
 const item = {
-  id: 1,
-  workout_date: '2017-08-18T05:54:17.061Z',
+  id: '1',
+  workoutDate: '2017-08-18T05:54:17.061Z',
   remark: 'test',
   performances: [
     {
@@ -33,5 +33,5 @@ it('simulate click link', () => {
     />
   );
   wrapper.find('a').simulate('click');
-  expect(detailId).toEqual(1);
+  expect(detailId).toEqual('1');
 });

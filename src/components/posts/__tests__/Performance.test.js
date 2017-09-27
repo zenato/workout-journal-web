@@ -4,7 +4,7 @@ import Performance from '../Performace';
 
 const events = [
   {
-    id: 1,
+    id: '1',
     name: 'test',
     value: 10,
     unit: 'g',
@@ -104,12 +104,8 @@ it('simulate change form', () => {
   });
 
   expect(performance).toEqual({
-    id: 1,
-    name: 'test',
     value: 10,
-    unit: 'g',
-    remark: 'test',
-    event: { id: 1, name: 'test', value: 10, unit: 'g', remark: 'test' },
+    event: { id: '1', name: 'test', value: 10, unit: 'g', remark: 'test' },
     set1: 1,
     set2: 2,
     set3: 3,

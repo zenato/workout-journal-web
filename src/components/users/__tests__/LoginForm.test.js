@@ -39,7 +39,6 @@ it('simulate submit after change form', () => {
   });
 
   expect(onSubmit).toBeCalledWith({
-    error: null,
     username: 'changed username',
     password: 'changed password',
   });
