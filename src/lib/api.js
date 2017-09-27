@@ -35,7 +35,7 @@ const api = (accessToken, query, variables) => axios.post(
 export const getEvents = accessToken => params => api(
   accessToken,
   `
-    query QueryEventForName($name: String) {
+    query ($name: String) {
       events(name: $name) {
         id
         name
@@ -51,7 +51,7 @@ export const getEvents = accessToken => params => api(
 export const getEvent = accessToken => id => api(
   accessToken,
   `
-    query QueryEventForId($id: ID!) {
+    query ($id: ID!) {
       event(id: $id) {
         id
         name
@@ -68,8 +68,8 @@ export const getEvent = accessToken => id => api(
 export const updateEvent = accessToken => (id, params) => api(
   accessToken,
   `
-    mutation UpdateEventForId($id: ID!, $params: EventInput!) {
-      updateEvent(id: $id, data: $params) {
+    mutation ($input: UpdateEventInput!) {
+      updateEvent(input: $input) {
         event {
           id
           name
@@ -80,17 +80,14 @@ export const updateEvent = accessToken => (id, params) => api(
       }
     }
   `,
-  {
-    id,
-    params,
-  },
+  { input: params },
 ).then(r => r.updateEvent.event);
 
 export const insertEvent = accessToken => params => api(
   accessToken,
   `
-    mutation CreateEvent($params: EventInput!) {
-      createEvent(data: $params) {
+    mutation ($input: CreateEventInput!) {
+      createEvent(input: $input) {
         event {
           id
           name
@@ -101,13 +98,13 @@ export const insertEvent = accessToken => params => api(
       }
     }
   `,
-  { params },
+  { input: params },
 ).then(r => r.createEvent.event);
 
 export const deleteEvent = accessToken => id => api(
   accessToken,
   `
-    mutation DeleteEventForId($id: ID!) {
+    mutation ($id: ID!) {
       deleteEvent(id: $id) {
         success
       }
@@ -145,7 +142,7 @@ export const getPostEvents = accessToken => params => api(
 export const getPosts = accessToken => params => api(
   accessToken,
   `
-    query QueryPostForName($name: String) {
+    query ($name: String) {
       posts(name: $name) {
         id
         workoutDate
@@ -173,7 +170,7 @@ export const getPosts = accessToken => params => api(
 export const getPost = accessToken => id => api(
   accessToken,
   `
-    query QueryPostForId($id: ID!) {
+    query ($id: ID!) {
       post(id: $id) {
         id
         workoutDate
@@ -200,7 +197,7 @@ export const getPost = accessToken => id => api(
 export const getMorePosts = accessToken => next => api(
   accessToken,
   `
-    query NextPostsFrom($next: ID!) {
+    query ($next: ID!) {
       nextPosts(next: $next) {
         id
         workoutDate
@@ -228,8 +225,8 @@ export const getMorePosts = accessToken => next => api(
 export const updatePost = accessToken => (id, { performances, ...data }) => api(
   accessToken,
   `
-    mutation UpdatePostForId($id: ID!, $data: PostInput!, $performances: [PerformanceInput]) {
-      updatePost(id: $id, data: $data, performances: $performances) {
+    mutation ($input: UpdatePostInput!, $performances: [PerformanceInput]) {
+      updatePost(input: $input, performances: $performances) {
         post {
           id
           workoutDate
@@ -252,8 +249,7 @@ export const updatePost = accessToken => (id, { performances, ...data }) => api(
     }
   `,
   {
-    id,
-    data,
+    input: data,
     performances,
   },
 ).then(r => r.updatePost.post);
@@ -261,8 +257,8 @@ export const updatePost = accessToken => (id, { performances, ...data }) => api(
 export const insertPost = accessToken => ({ performances, ...data }) => api(
   accessToken,
   `
-    mutation CreatePostForId($data: PostInput!, $performances: [PerformanceInput]) {
-      createPost(data: $data, performances: $performances) {
+    mutation ($input: CreatePostInput!, $performances: [PerformanceInput]) {
+      createPost(input: $input, performances: $performances) {
         post {
           id
           workoutDate
@@ -292,7 +288,7 @@ export const insertPost = accessToken => ({ performances, ...data }) => api(
 export const deletePost = accessToken => id => api(
   accessToken,
   `
-    mutation DeletePostForId($id: ID!) {
+    mutation ($id: ID!) {
       deletePost(id: $id) {
         success
       }
