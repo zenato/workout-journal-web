@@ -119,7 +119,7 @@
     "/api": {
       "secure": true,
       "changeOrigin": true,
-      "target": "http://localhost:8000",
+      "target": "https://workout-journal-server-bkuqtqbplt.now.sh",
       "pathRewrite": {
         "^/api": ""
       }
