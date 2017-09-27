@@ -24,9 +24,9 @@ const api = (accessToken, query, variables) => axios.post(
       'Authorization': `Bearer ${accessToken}`,
     },
 })
-.then(r => {
-  if (r.error) throw r.error;
-  return r.data.data;
+.then(({ data }) => {
+  if (data.errors) throw data;
+  return data.data;
 });
 
 

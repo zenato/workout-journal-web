@@ -31,7 +31,10 @@ class PostForm extends Component {
     e.preventDefault();
     const { error, id, performances, ...props } = this.state;
     this.props.onSubmit({
-      performances: performances.map(({ event, ...prop }) => ({ event: event.id, ...prop })),
+      performances: performances.map(({ event, ...others }) => ({
+        ...others,
+        event: event ? event.id : null,
+      })),
       ...props,
     });
   };

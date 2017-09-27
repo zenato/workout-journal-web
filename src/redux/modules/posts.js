@@ -82,7 +82,7 @@ export default handleActions({
     },
     onFailure: (state, action) => ({
       ...state,
-      error: action.payload.response,
+      error: action.payload.errors || action.payload.response,
     }),
   }),
   ...pender({
@@ -98,7 +98,7 @@ export default handleActions({
     }),
     onFailure: (state, action) => ({
       ...state,
-      error: action.payload.response,
+      error: action.payload.errors || action.payload.response,
     }),
   }),
   ...pender({
