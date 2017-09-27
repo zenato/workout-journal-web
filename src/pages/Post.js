@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
 import * as postsActions from 'redux/modules/posts';
-import { GET_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
+import { GET_POST, INSERT_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
 import { hasChangedLocation } from 'lib/location';
 import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
@@ -93,6 +93,7 @@ export default withDone(connect(
     loading: (
       state.pender.pending[GET_POST_EVENTS]
       || state.pender.pending[GET_POST]
+      || state.pender.pending[INSERT_POST]
       || state.pender.pending[UPDATE_POST]
       || state.pender.pending[DELETE_POST]
     ),
