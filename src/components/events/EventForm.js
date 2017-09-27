@@ -12,6 +12,10 @@ class EventForm extends Component {
     super(props);
 
     this.state = {
+      name: '',
+      unit: 'Kg',
+      value: 1,
+      remark: '',
       ...props.item,
     };
 
