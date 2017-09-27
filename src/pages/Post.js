@@ -91,7 +91,7 @@ export default withDone(connect(
     error: state.posts.error,
     item: state.posts.item,
     events: state.posts.events,
-    loading: (
+    loading: !!(
       state.pender.pending[GET_POST_EVENTS]
       || state.pender.pending[GET_POST]
       || state.pender.pending[INSERT_POST]
