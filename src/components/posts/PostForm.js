@@ -85,7 +85,7 @@ class PostForm extends Component {
               id="post-workout-date"
               type="date"
               name="workoutDate"
-              value={formatDate(this.state.workoutDate)}
+              value={formatDate(this.state.workoutDate || new Date())}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="workoutDate" />
