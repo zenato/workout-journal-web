@@ -10,20 +10,33 @@ import styles from './PostForm.scss';
 
 const cx = classNames.bind(styles);
 
+let performanceIndex = 0;
+const getUniqueKey = () => ++performanceIndex;
+
 class PostForm extends Component {
   constructor(props) {
     super(props);
 
+    const { performances, ...item } = this.props.item;
+
     this.state = {
-      ...props.item,
+      performances: performances.map(performance => ({
+        ...performance,
+        id: getUniqueKey(),
+      })),
+      ...item,
     };
 
     this.handleChangeInput = createChangeInputHandler(this);
   }
 
   componentWillReceiveProps({ item }) {
+    const { performances, ...props } = item;
     if (this.props.item !== item) {
-      this.setState({ ...item });
+      this.setState({
+        ...props,
+        performances: performances.map(p => ({ ...p, id: getUniqueKey() }))
+      });
     }
   }
 
@@ -32,7 +45,7 @@ class PostForm extends Component {
     const { performances, ...item } = this.state;
     this.props.onSubmit({
       ...(_.omit(item, ['id'])),
-      performances: performances.map(({ event, ...others }) => ({
+      performances: performances.map(({ id, event, ...others }) => ({
         ...others,
         event: _.get(event, 'id'),
       })),
@@ -49,9 +62,9 @@ class PostForm extends Component {
     this.props.onMoveList();
   };
 
-  handleChangePerformance = (idx, performance) => {
-    const performances = [...this.state.performances];
-    performances[idx] = performance;
+  handleChangePerformance = (id, state) => {
+    const current = _.find(this.state.performances, { id });
+    const performances = this.state.performances.map(p => p !== current ? p : { ...current, ...state });
     this.setState({ performances });
   };
 
@@ -61,6 +74,7 @@ class PostForm extends Component {
       performances: [
         ...this.state.performances,
         {
+          id: getUniqueKey(),
           event: null,
           value: 0,
           set1: 0,
@@ -73,9 +87,9 @@ class PostForm extends Component {
     });
   };
 
-  handleDeletePerformance = (idx) => {
+  handleDeletePerformance = (id) => {
     this.setState({
-      performances: this.state.performances.filter((p, i) => i !== idx),
+      performances: this.state.performances.filter(p => p.id !== id),
     });
   };
 
@@ -131,11 +145,10 @@ class PostForm extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.state.performances.map((item, idx) => (
+                {this.state.performances.map(item => (
                   <Performance
-                    key={`performance-${idx}`}
+                    key={`performance-${item.id}`}
                     events={events}
-                    idx={idx}
                     item={item}
                     error={error}
                     onChange={this.handleChangePerformance}
