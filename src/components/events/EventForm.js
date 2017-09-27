@@ -12,24 +12,19 @@ class EventForm extends Component {
     super(props);
 
     this.state = {
-      error: null,
       ...props.item,
     };
 
     this.handleChangeInput = createChangeInputHandler(this);
   }
 
-  componentWillReceiveProps({ error, item }) {
-    this.setState({
-      error,
-      ...item,
-    });
+  componentWillReceiveProps({ item }) {
+    this.setState({ ...item, });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { error, id, ...props } = this.state;
-    this.props.onSubmit({ ...props });
+    this.props.onSubmit(this.state);
   };
 
   handleDelete = (e) => {
@@ -43,7 +38,7 @@ class EventForm extends Component {
   };
 
   render() {
-    const { error } = this.state;
+    const { error } = this.props;
     return (
       <form onSubmit={this.handleSubmit} className={cx('event-form')}>
         <div className={cx('item')}>
@@ -53,7 +48,7 @@ class EventForm extends Component {
               id="event-name"
               type="text"
               name="name"
-              value={this.state.name || ''}
+              value={this.state.name}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="name" />
@@ -68,7 +63,7 @@ class EventForm extends Component {
               name="value"
               min={1}
               max={999}
-              value={this.state.value || ''}
+              value={this.state.value}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="value" />
@@ -81,7 +76,7 @@ class EventForm extends Component {
               id="event-unit"
               type="text"
               name="unit"
-              value={this.state.unit || ''}
+              value={this.state.unit}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="unit" />
@@ -94,7 +89,7 @@ class EventForm extends Component {
               id="event-remark"
               type="text"
               name="remark"
-              value={this.state.remark || ''}
+              value={this.state.remark}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="remark" />
