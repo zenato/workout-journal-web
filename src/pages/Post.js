@@ -5,7 +5,6 @@ import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
 import * as postsActions from 'redux/modules/posts';
 import { GET_POST, INSERT_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
-import { hasChangedLocation } from 'lib/location';
 import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
 
@@ -19,18 +18,8 @@ class Post extends Component {
     Promise.all(promises).then(done, done);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (hasChangedLocation(this.props.location, nextProps.location)) {
-      this.fetchData(nextProps);
-    }
-  }
-
   componentWillUnmount() {
     this.props.PostsActions.clearPost();
-  }
-
-  fetchData({ match }) {
-    this.props.PostsActions.getPost(match.params.id);
   }
 
   isNew = () => this.props.match.params.id === 'new';
