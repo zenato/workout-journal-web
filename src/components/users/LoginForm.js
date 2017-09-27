@@ -8,13 +8,14 @@ import styles from './LoginForm.scss';
 const cx = classNames.bind(styles);
 
 class LoginForm extends Component {
-  state = {
-    username: '',
-    password: '',
-  };
-
   constructor(props) {
     super(props);
+
+    this.state = {
+      username: '',
+      password: '',
+    };
+
     this.handleChangeInput = createChangeInputHandler(this);
   }
 
