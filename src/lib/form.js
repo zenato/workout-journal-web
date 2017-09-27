@@ -26,12 +26,19 @@ export function getValue (e) {
   return v;
 }
 
-export function handleChangeInput (ctx) {
-  return function (e) {
-    return new Promise((res) => {
-      this.setState({
-        [e.target.name]: getValue(e),
-      }, res);
-    });
-  }.bind(ctx);
-}
+export const createChangeInputHandler = (ctx, propName) => (e) => new Promise((res) => {
+  const changeProps = {
+    [e.target.name]: getValue(e),
+  };
+
+  if (propName) {
+    ctx.setState({
+      [propName]: {
+        ...ctx.state[propName],
+        ...changeProps,
+      },
+    }, res);
+  } else {
+    ctx.setState(changeProps, res);
+  }
+});

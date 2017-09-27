@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { handleChangeInput } from 'lib/form';
+import { createChangeInputHandler } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import styles from './EventForm.scss';
 
@@ -16,7 +16,7 @@ class EventForm extends Component {
       ...props.item,
     };
 
-    this.handleChangeInput = handleChangeInput(this);
+    this.handleChangeInput = createChangeInputHandler(this);
   }
 
   componentWillReceiveProps({ error, item }) {

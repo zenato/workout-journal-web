@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { handleChangeInput } from 'lib/form';
+import { createChangeInputHandler } from 'lib/form';
 import { Input, Button, ErrorMessage } from 'components/form';
 import Performance from 'components/posts/Performace';
 import { formatDate } from 'lib/date'
@@ -15,10 +15,10 @@ class PostForm extends Component {
 
     this.state = {
       performances: [],
-      props.item,
+      item: props.item,
     };
 
-    this.handleChangeInput = handleChangeInput(this);
+    this.handleChangeInput = createChangeInputHandler(this, 'item');
   }
 
   componentWillReceiveProps({ item }) {
@@ -75,7 +75,8 @@ class PostForm extends Component {
   };
 
   render() {
-    const { loading, error } = this.props;
+    const { loading, error, events } = this.props;
+    const { item, performances } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className={cx('post-form')}>
         <div className={cx('item')}>
@@ -85,7 +86,7 @@ class PostForm extends Component {
               id="post-workout-date"
               type="date"
               name="workoutDate"
-              value={formatDate(this.state.workoutDate || new Date())}
+              value={formatDate(item.workoutDate || new Date())}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="workoutDate" />
@@ -126,10 +127,10 @@ class PostForm extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.state.performances.map((item, idx) => (
+                {performances.map((item, idx) => (
                   <Performance
-                    key={idx}
-                    events={this.props.events}
+                    key={`performance-${idx}`}
+                    events={events}
                     idx={idx}
                     item={item}
                     error={error}
@@ -150,7 +151,7 @@ class PostForm extends Component {
               id="post-remark"
               type="text"
               name="remark"
-              value={this.state.remark || ''}
+              value={item.remark || ''}
               onChange={this.handleChangeInput}
             />
             <ErrorMessage error={error} name="remark" />
@@ -166,7 +167,7 @@ class PostForm extends Component {
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
           <Button value="List" onClick={this.handleMoveList} />
-          {this.state.id && (
+          {item && (
             <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
