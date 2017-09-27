@@ -5,7 +5,6 @@ import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
 import * as eventsActions from 'redux/modules/events';
 import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
-import { hasChangedLocation } from 'lib/location';
 import EventForm from 'components/events/EventForm';
 
 const isNew = ({ id }) => id === 'new';
@@ -18,18 +17,8 @@ class Event extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (hasChangedLocation(this.props.location, nextProps.location)) {
-      this.fetchData(nextProps);
-    }
-  }
-
   componentWillUnmount() {
     this.props.EventsActions.clearEvent();
-  }
-
-  fetchData({ match }) {
-    this.props.EventsActions.getEvent(match.params.id);
   }
 
   handleSubmit = async (values) => {
