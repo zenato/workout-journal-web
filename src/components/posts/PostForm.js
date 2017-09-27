@@ -15,7 +15,7 @@ class PostForm extends Component {
 
     this.state = {
       performances: [],
-      ...props.item,
+      props.item,
     };
 
     this.handleChangeInput = handleChangeInput(this);
@@ -75,7 +75,7 @@ class PostForm extends Component {
   };
 
   render() {
-    const { error } = this.props;
+    const { loading, error } = this.props;
     return (
       <form onSubmit={this.handleSubmit} className={cx('post-form')}>
         <div className={cx('item')}>
@@ -157,7 +157,7 @@ class PostForm extends Component {
           </div>
         </div>
 
-        {error && (
+        {!loading && error && (
           <div className={cx('error')}>
             <span>Oops, An expected error seems to have occurred.</span>
           </div>
@@ -178,6 +178,7 @@ class PostForm extends Component {
 PostForm.propTypes = {
   item: PropTypes.object,
   events: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

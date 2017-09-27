@@ -73,6 +73,7 @@ class Post extends Component {
             <PostForm
               item={item}
               events={events}
+              loading={loading}
               error={error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
