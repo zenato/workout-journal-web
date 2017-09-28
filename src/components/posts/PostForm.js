@@ -9,6 +9,53 @@ import styles from './PostForm.scss';
 
 const cx = classNames.bind(styles);
 
+const validate = ({ workoutDate, performances }) => {
+  const errors = {};
+
+  if (!workoutDate) {
+    errors.workoutDate = 'Required';
+  }
+
+  const performanceArrayErrors = [];
+  (performances || []).forEach((performance, idx) => {
+    const performanceErrors = {};
+    if (performance) {
+      if (!performance.event) {
+        performanceErrors.event = 'Required';
+      }
+      if (!performance.value) {
+        performanceErrors.value = 'Required';
+      } else if (!/^[0-9]{1,3}$/.test(performance.value)) {
+        performanceErrors.value = 'Must be numeric, 0-999';
+      }
+      if (performance.set1 && !/^[0-9]{1,3}$/.test(performance.set1)) {
+        performanceErrors.set1 = 'Must be numeric, 0-999';
+      }
+      if (performance.set2 && !/^[0-9]{1,3}$/.test(performance.set2)) {
+        performanceErrors.set2 = 'Must be numeric, 0-999';
+      }
+      if (performance.set3 && !/^[0-9]{1,3}$/.test(performance.set3)) {
+        performanceErrors.set3 = 'Must be numeric, 0-999';
+      }
+      if (performance.set4 && !/^[0-9]{1,3}$/.test(performance.set4)) {
+        performanceErrors.set4 = 'Must be numeric, 0-999';
+      }
+      if (performance.set5 && !/^[0-9]{1,3}$/.test(performance.set5)) {
+        performanceErrors.set5 = 'Must be numeric, 0-999';
+      }
+    }
+    if (Object.keys(performanceErrors).length) {
+      performanceArrayErrors[idx] = performanceErrors;
+    }
+  });
+
+  if (performanceArrayErrors.length > 0) {
+    errors.performances = performanceArrayErrors;
+  }
+
+  return errors;
+};
+
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div className={cx('item')}>
     <label>{label}</label>
@@ -25,7 +72,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-const renderPerformances = ({ events, formValues }) => ({ fields, meta: { touched, error, submitFailed } }) => (
+const renderPerformances = ({ fields, meta: { error, submitFailed }, events, formValues }) => (
   <div className={cx('item')}>
     <label>Perf.</label>
     <div className={cx('field')}>
@@ -57,12 +104,12 @@ const renderPerformances = ({ events, formValues }) => ({ fields, meta: { touche
         </tr>
         </thead>
         <tbody>
-        {fields.map((performance, index) => (
+        {fields.map((name, index) => (
           <Performance
             key={index}
-            name={performance}
-            values={formValues.performances[index] || {}}
+            name={name}
             events={events}
+            values={formValues.performances[index] || {}}
             onDelete={() => fields.remove(index)}
           />
         ))}
@@ -88,7 +135,7 @@ class PostForm extends Component {
     return (
       <form onSubmit={handleSubmit} className={cx('post-form')}>
         <Field type="date" name="workoutDate" label="Workout Date" component={renderField} />
-        <FieldArray name="performances" component={renderPerformances({ events, formValues })} />
+        <FieldArray name="performances" events={events} formValues={formValues} component={renderPerformances} />
         <Field type="text" name="remark" label="Remark" component={renderField} />
 
         {!loading && error && (
@@ -98,7 +145,7 @@ class PostForm extends Component {
         )}
 
         <div className={cx('tool')}>
-          <Button type="submit" value="Save" className="primary" />
+          <Button type="submit" value="Save" className={cx('primary')} />
           <Button value="List" onClick={this.handleMoveList} />
           {initialValues && (
             <Button value="Delete" onClick={this.handleDelete} />
@@ -123,5 +170,6 @@ PostForm.propTypes = {
 
 export default reduxForm({
   form: 'postForm',
+  validate,
 })(PostForm);
 

@@ -3,5 +3,11 @@
 .performance {
   td {
     vertical-align: top;
+
+    .error {
+      color: #f00;
+      font-size: 0.7rem;
+      padding: 5px;
+    }
   }
 }
