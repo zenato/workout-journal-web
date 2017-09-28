@@ -177,8 +177,6 @@ export const getPost = accessToken => id => api(
         performances {
           event {
             id
-            name
-            unit
           }
           value
           set1
@@ -222,19 +220,17 @@ export const getMorePosts = accessToken => next => api(
   { next },
 ).then(r => r.nextPosts);
 
-export const updatePost = accessToken => (id, { performances, ...data }) => api(
+export const updatePost = accessToken => data => api(
   accessToken,
   `
-    mutation ($input: UpdatePostInput!, $performances: [PerformanceInput]) {
-      updatePost(input: $input, performances: $performances) {
+    mutation ($input: UpdatePostInput!) {
+      updatePost(input: $input) {
         post {
           id
           workoutDate
           performances {
             event {
               id
-              name
-              unit
             }
             value
             set1
@@ -248,25 +244,20 @@ export const updatePost = accessToken => (id, { performances, ...data }) => api(
       }
     }
   `,
-  {
-    input: data,
-    performances,
-  },
+  { input: data },
 ).then(r => r.updatePost.post);
 
-export const insertPost = accessToken => ({ performances, ...data }) => api(
+export const insertPost = accessToken => data => api(
   accessToken,
   `
-    mutation ($input: CreatePostInput!, $performances: [PerformanceInput]) {
-      createPost(input: $input, performances: $performances) {
+    mutation ($input: CreatePostInput!) {
+      createPost(input: $input) {
         post {
           id
           workoutDate
           performances {
             event {
               id
-              name
-              unit
             }
             value
             set1
@@ -279,10 +270,7 @@ export const insertPost = accessToken => ({ performances, ...data }) => api(
       }
     }
   `,
-  {
-    input: data,
-    performances,
-  },
+  { input: data },
 ).then(r => r.createPost.post);
 
 export const deletePost = accessToken => id => api(

@@ -1,80 +1,64 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
-import { getValue } from 'lib/form';
-import { add } from 'lib/math';
-import { Input, Select, Button } from 'components/form';
+import { Button } from 'components/form';
 import styles from './Performance.scss';
 
 const cx = classNames.bind(styles);
 
-class Performance extends Component {
-  onChange = (e) => {
-    const { item, events, onChange } = this.props;
-    const name = e.target.name;
-    const value = getValue(e);
-    const state = {};
-
-    if (name === 'event') {
-      const event = _.head(events.filter(e => e.id === value));
-      state.event = event;
-      state.value = _.get(event, 'lastPerformance.value', event.value);
-    } else {
-      state[name] = value;
-    }
-    onChange(item.id, state);
-  };
-
-  onDelete = (e) => {
+const renderEvent = ({ events }) => ({ input, meta: { touched, error } }) => {
+  const onChange = (e) => {
     e.preventDefault();
-    this.props.onDelete(this.props.item.id);
+    const { id } = _.find(events, { id: e.target.value }) || {};
+    input.onChange(id ? { id } : null);
   };
+  return (
+    <td>
+      <select {...input} value={input.value.id} onChange={onChange} className={cx('form-control')}>
+        <option>Select event</option>
+        {events.map(e => (
+          <option key={e.id} value={e.id}>{e.name}</option>
+        ))}
+      </select>
+      {touched && error && <span className={cx('error')}>{error}</span>}
+    </td>
+  );
+};
 
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <td>
+    <input {...input} placeholder={label} type={type} className={cx('form-control')}/>
+    {touched && error && <span className={cx('error')}>{error}</span>}
+  </td>
+);
+
+class Performance extends Component {
   render() {
-    const { events, item } = this.props;
-    const total = add(item.set1, item.set2, item.set3, item.set4, item.set5);
-    const volume = total * item.value;
-
+    const { events, name, onDelete, values } = this.props;
+    const total = _.sum([
+      values.set1,
+      values.set2,
+      values.set3,
+      values.set4,
+      values.set5,
+    ].map(_.toNumber).filter(v => !_.isNaN(v)));
+    const volume = total * (isNaN(values.value) ? 0 : _.toNumber(values.value));
+    const selectedEvent = (values.event ? _.find(events, { id: values.event.id }) : null) || {};
     return (
       <tr className={cx('performance')}>
+        <Field name={`${name}.event`} component={renderEvent({ events })} />
+        <Field name={`${name}.value`} type="text" component={renderField} />
+        <td>{selectedEvent.unit}</td>
+        <Field name={`${name}.set1`} type="text" component={renderField} />
+        <Field name={`${name}.set2`} type="text" component={renderField} />
+        <Field name={`${name}.set3`} type="text" component={renderField} />
+        <Field name={`${name}.set4`} type="text" component={renderField} />
+        <Field name={`${name}.set5`} type="text" component={renderField} />
+        <td>{total} / {volume}</td>
         <td>
-          <Select name="event" value={item.event ? item.event.id : ''} onChange={this.onChange}>
-            <option>Select event</option>
-            {events.map(e => (
-              <option key={e.id} value={e.id}>{e.name}</option>
-            ))}
-          </Select>
-        </td>
-        <td>
-          <Input type="number" name="value" value={item.value} onChange={this.onChange} />
-        </td>
-        <td>
-          {item.event && item.event.unit}
-        </td>
-        <td>
-          <Input type="number" name="set1" value={item.set1} onChange={this.onChange} />
-        </td>
-        <td>
-          <Input type="number" name="set2" value={item.set2} onChange={this.onChange} />
-        </td>
-        <td>
-          <Input type="number" name="set3" value={item.set3} onChange={this.onChange} />
-        </td>
-        <td>
-          <Input type="number" name="set4" value={item.set4} onChange={this.onChange} />
-        </td>
-        <td>
-          <Input type="number" name="set5" value={item.set5} onChange={this.onChange} />
-        </td>
-        <td className="num">
-          {total}
-        </td>
-        <td className="num">
-          {volume}
-        </td>
-        <td>
-          <Button value="Del" onClick={this.onDelete} />
+          <Button value="Del" onClick={onDelete} />
         </td>
       </tr>
     );
@@ -82,18 +66,8 @@ class Performance extends Component {
 }
 
 Performance.propTypes = {
-  item: PropTypes.shape({
-    event: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      unit: PropTypes.string.isRequired,
-    }),
-    value: PropTypes.number,
-    set1: PropTypes.number,
-    set2: PropTypes.number,
-    set3: PropTypes.number,
-    set4: PropTypes.number,
-    set5: PropTypes.number,
-  }).isRequired,
+  name: PropTypes.string.isRequired,
+  values: PropTypes.object.isRequired,
   events: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
