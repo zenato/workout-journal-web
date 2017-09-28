@@ -34,7 +34,7 @@ class Login extends Component {
             <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
           </Helmet>
           <LoginForm
-            error={error}
+            error={loading ? null : error}
             onSubmit={this.handleSubmit}
           />
         </article>

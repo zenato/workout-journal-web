@@ -1,59 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
-import { createChangeHandler } from 'lib/form';
-import { Input, Button, ErrorMessage } from 'components/form';
+import { Button } from 'components/form';
 import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: '',
-      password: '',
-    };
-
-    this.handleChange = createChangeHandler(this);
+const validate = ({ username, password }) => {
+  const errors = {};
+  if (!username) {
+    errors.username = 'Required';
   }
+  if (!password) {
+    errors.password = 'Required';
+  }
+  return errors
+};
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit(this.state);
-  };
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div className={cx('item')}>
+    <label>{label}</label>
+    <div className={cx('field')}>
+      <input {...input} placeholder={label} type={type} className={cx('form-control')}/>
+      {touched && error && <span className={cx('error')}>{error}</span>}
+    </div>
+  </div>
+);
 
+class LoginForm extends Component {
   render() {
-    const { error } = this.props;
+    const { error, handleSubmit } = this.props;
     return (
-      <form onSubmit={this.handleSubmit} className={cx('login-form')}>
-        <div className={cx('item')}>
-          <label htmlFor="login-username">Username</label>
-          <div className={cx('field')}>
-            <Input
-              id="login-username"
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="username" />
-          </div>
-        </div>
-        <div className={cx('item')}>
-          <label htmlFor="login-password">Password</label>
-          <div className={cx('field')}>
-            <Input
-              id="login-password"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <ErrorMessage error={error} name="password" />
-          </div>
-        </div>
+      <form onSubmit={handleSubmit} className={cx('login-form')}>
+        <Field type="text" name="username" label="Username" component={renderField} />
+        <Field type="text" name="password" label="Password" component={renderField} />
 
         {error && (
           <div className={cx('error')}>
@@ -62,7 +43,7 @@ class LoginForm extends Component {
         )}
 
         <div className={cx('tool')}>
-          <Button type="submit" value="Login" className="primary" />
+          <Button type="submit" value="Login" className={cx('primary')} />
         </div>
       </form>
     );
@@ -74,4 +55,7 @@ LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+export default reduxForm({
+  form: 'loginForm',
+  validate,
+})(LoginForm);

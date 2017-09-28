@@ -47,6 +47,7 @@ class Events extends Component {
 
   render() {
     const { items, location, loading } = this.props;
+    const search = { ...queryString.parse(location.search) };
     return (
       <div>
         <Helmet>
@@ -58,7 +59,8 @@ class Events extends Component {
         </section>
 
         <SearchForm
-          location={location}
+          initialValues={search}
+          enableReinitialize={true}
           onSubmit={this.handleSearch}
           placeholder="Input event name."
         />

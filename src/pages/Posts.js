@@ -50,6 +50,7 @@ class Posts extends Component {
 
   render() {
     const { items, location, next } = this.props;
+    const search = { ...queryString.parse(location.search) };
     return (
       <div>
         <Helmet>
@@ -60,7 +61,12 @@ class Posts extends Component {
           <Button value="Add Post" onClick={this.handleForm} className="primary" />
         </section>
 
-        <SearchForm location={location} onSubmit={this.handleSearch} placeholder="Input post name." />
+        <SearchForm
+          initialValues={search}
+          enableReinitialize={true}
+          onSubmit={this.handleSearch}
+          placeholder="Input post name."
+        />
 
         <article>
           <ul>
