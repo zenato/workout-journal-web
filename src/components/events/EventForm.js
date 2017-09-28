@@ -36,16 +36,8 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 class EventForm extends Component {
-  handleDelete = () => {
-    this.props.onDelete();
-  };
-
-  handleMoveList = () => {
-    this.props.onMoveList();
-  };
-
   render() {
-    const { error, handleSubmit, initialValues } = this.props;
+    const { error, handleSubmit, initialValues, onDelete, onMoveList } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('event-form')}>
         <Field type="text" name="name" label="Name" component={renderField} />
@@ -61,9 +53,9 @@ class EventForm extends Component {
 
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className="primary" />
-          <Button value="List" onClick={this.handleMoveList} />
+          <Button value="List" onClick={onMoveList} />
           {initialValues && (
-            <Button value="Delete" onClick={this.handleDelete} />
+            <Button value="Delete" onClick={onDelete} />
           )}
         </div>
       </form>
