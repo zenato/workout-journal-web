@@ -28,21 +28,12 @@ const validate = ({ workoutDate, performances }) => {
       } else if (!/^[0-9]{1,3}$/.test(performance.value)) {
         performanceErrors.value = 'Must be numeric, 0-999';
       }
-      if (performance.set1 && !/^[0-9]{1,3}$/.test(performance.set1)) {
-        performanceErrors.set1 = 'Must be numeric, 0-999';
-      }
-      if (performance.set2 && !/^[0-9]{1,3}$/.test(performance.set2)) {
-        performanceErrors.set2 = 'Must be numeric, 0-999';
-      }
-      if (performance.set3 && !/^[0-9]{1,3}$/.test(performance.set3)) {
-        performanceErrors.set3 = 'Must be numeric, 0-999';
-      }
-      if (performance.set4 && !/^[0-9]{1,3}$/.test(performance.set4)) {
-        performanceErrors.set4 = 'Must be numeric, 0-999';
-      }
-      if (performance.set5 && !/^[0-9]{1,3}$/.test(performance.set5)) {
-        performanceErrors.set5 = 'Must be numeric, 0-999';
-      }
+      ['set1', 'set2', 'set3', 'set4', 'set5'].forEach(fieldName => {
+        const value = performance[fieldName];
+        if (value && !/^[0-9]{1,3}$/.test(value)) {
+          performanceErrors[fieldName] = 'Must be numeric, 0-999';
+        }
+      });
     }
     if (Object.keys(performanceErrors).length) {
       performanceArrayErrors[idx] = performanceErrors;
