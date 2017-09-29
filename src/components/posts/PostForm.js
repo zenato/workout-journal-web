@@ -4,7 +4,7 @@ import { Field, FieldArray, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
 import { formatDate } from 'lib/date';
 import { Button } from 'components/form';
-import Performance from 'components/posts/Performace';
+import Performance from 'components/posts/Performance';
 import styles from './PostForm.scss';
 
 const cx = classNames.bind(styles);
