@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
-import { Button } from 'components/form';
+import { Button, Input } from 'components/form';
 import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
@@ -25,25 +25,15 @@ const validate = ({ name, unit, value }) => {
   return errors;
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div className={cx('item')}>
-    <label>{label}</label>
-    <div className={cx('field')}>
-      <input {...input} placeholder={label} type={type} className={cx('form-control')}/>
-      {touched && error && <span className={cx('error')}>{error}</span>}
-    </div>
-  </div>
-);
-
 class EventForm extends Component {
   render() {
     const { error, handleSubmit, initialValues, onDelete, onMoveList } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('event-form')}>
-        <Field type="text" name="name" label="Name" component={renderField} />
-        <Field type="text" name="unit" label="Unit" component={renderField} />
-        <Field type="text" name="value" label="Value" component={renderField} />
-        <Field type="text" name="remark" label="Remark" component={renderField} />
+        <Field type="text" name="name" label="Name" component={Input} />
+        <Field type="text" name="unit" label="Unit" component={Input} />
+        <Field type="text" name="value" label="Value" component={Input} />
+        <Field type="text" name="remark" label="Remark" component={Input} />
 
         {error && (
           <div className={cx('error')}>
