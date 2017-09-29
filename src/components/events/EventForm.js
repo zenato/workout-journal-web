@@ -54,6 +54,7 @@ class EventForm extends Component {
 }
 
 EventForm.propTypes = {
+  initialValues: PropTypes.object,
   error: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
