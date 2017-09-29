@@ -1,6 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
+import configureStore from 'redux/configureStore';
 import PostForm from '../PostForm';
+
+const store = configureStore();
+
+const Test = (props) => (
+  <Provider store={store} {...props} />
+);
 
 const events = [
   {
@@ -12,8 +20,8 @@ const events = [
   },
 ];
 
-const item = {
-  id: 1,
+const initialValues = {
+  id: '1',
   workoutDate: new Date().getTime(),
   remark: 'test',
   performances: [
@@ -31,54 +39,60 @@ const item = {
 
 it('renders without errors', () => {
   shallow(
-    <PostForm
-      events={events}
-      item={item}
-      error={null}
-      loading={false}
-      onSubmit={() => {}}
-      onDelete={() => {}}
-      onMoveList={() => {}}
-    />
+    <Test>
+      <PostForm
+        events={events}
+        initialValues={initialValues}
+        error={null}
+        loading={false}
+        onSubmit={() => {}}
+        onDelete={() => {}}
+        onMoveList={() => {}}
+      />
+    </Test>
   );
 });
 
 it('simulate submit after change form', () => {
   const onSubmit = jest.fn();
-  const wrapper = mount(
-    <PostForm
-      events={events}
-      item={item}
-      error={null}
-      loading={false}
-      onSubmit={onSubmit}
-      onDelete={() => {}}
-      onMoveList={() => {}}
-    />
+  const component = mount(
+    <Test>
+      <PostForm
+        events={events}
+        initialValues={initialValues}
+        formValues={initialValues}
+        error={null}
+        loading={false}
+        onSubmit={onSubmit}
+        onDelete={() => {}}
+        onMoveList={() => {}}
+      />
+    </Test>
   );
 
   // Changed input form
-  wrapper.find('input[name="workoutDate"]').simulate('change', {
+  component.find('input[name="workoutDate"]').simulate('change', {
     target: {
       name: 'workoutDate',
       value: '2017-08-08',
     },
   });
-  wrapper.find('input[name="remark"]').simulate('change', {
+  component.find('input[name="remark"]').simulate('change', {
     target: {
       name: 'remark',
       value: 'test',
     },
   });
 
-  wrapper.find('form').simulate('submit', {
-    preventDefault: () => {},
-  });
+  component.find('form').simulate('submit', { preventDefault () {} });
 
-  expect(onSubmit).toBeCalledWith({
+  expect(onSubmit.mock.calls[0][0]).toEqual({
+    id: '1',
+    workoutDate: '2017-08-08',
+    remark: 'test',
     performances: [
       {
-        event: '1',
+        event: events[0],
         set1: 1,
         set2: 2,
         set3: 3,
@@ -87,51 +101,53 @@ it('simulate submit after change form', () => {
         value: 20,
       },
     ],
-    remark: 'test',
-    workoutDate: '2017-08-08',
   });
 });
 
 it('simulate move list click', () => {
   const onMoveList = jest.fn();
 
-  const wrapper = mount(
-    <PostForm
-      events={events}
-      item={item}
-      error={null}
-      loading={false}
-      onSubmit={() => {}}
-      onDelete={() => {}}
-      onMoveList={onMoveList}
-    />
+  const component = mount(
+    <Test>
+      <PostForm
+        events={events}
+        initialValues={initialValues}
+        formValues={initialValues}
+        error={null}
+        loading={false}
+        onSubmit={() => {}}
+        onDelete={() => {}}
+        onMoveList={onMoveList}
+      />
+    </Test>
   );
 
-  wrapper.find('input[type="button"][value="List"]').at(0).simulate('click', {
+  component.find('input[type="button"][value="List"]').at(0).simulate('click', {
     preventDefault: () => {},
   });
 
-  expect(onMoveList).toBeCalledWith();
+  expect(onMoveList).toBeCalled();
 });
 
 it('simulate delete click', () => {
   const onDelete = jest.fn();
 
-  const wrapper = mount(
-    <PostForm
-      events={events}
-      item={item}
-      error={null}
-      loading={false}
-      onSubmit={() => {}}
-      onDelete={onDelete}
-      onMoveList={() => {}}
-    />
+  const component = mount(
+    <Test>
+      <PostForm
+        events={events}
+        initialValues={initialValues}
+        formValues={initialValues}
+        error={null}
+        loading={false}
+        onSubmit={() => {}}
+        onDelete={onDelete}
+        onMoveList={() => {}}
+      />
+    </Test>
   );
 
-  wrapper.find('input[type="button"][value="Delete"]').at(0).simulate('click', {
-    preventDefault: () => {},
-  });
+  component.find('input[type="button"][value="Delete"]').at(0).simulate('click', { preventDefault () {} });
 
-  expect(onDelete).toBeCalledWith();
+  expect(onDelete).toBeCalled();
 });
