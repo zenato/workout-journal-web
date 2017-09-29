@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
-import { formatDate } from 'lib/date';
-import { Button } from 'components/form';
+import { Button, Input } from 'components/form';
 import Performance from 'components/posts/Performance';
 import styles from './PostForm.scss';
 
@@ -46,22 +45,6 @@ const validate = ({ workoutDate, performances }) => {
 
   return errors;
 };
-
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div className={cx('item')}>
-    <label>{label}</label>
-    <div className={cx('field')}>
-      <input
-        {...input}
-        type={type}
-        value={type === 'date' ? formatDate(input.value) : input.value}
-        placeholder={label}
-        className={cx('form-control')}
-      />
-      {touched && error && <span className={cx('error')}>{error}</span>}
-    </div>
-  </div>
-);
 
 const renderPerformances = ({ fields, meta: { error, submitFailed }, events, formValues }) => (
   <div className={cx('item')}>
@@ -125,9 +108,9 @@ class PostForm extends Component {
     const { initialValues, handleSubmit, loading, error, events, formValues } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('post-form')}>
-        <Field type="date" name="workoutDate" label="Workout Date" component={renderField} />
+        <Field type="date" name="workoutDate" label="Workout Date" component={Input} />
         <FieldArray name="performances" events={events} formValues={formValues} component={renderPerformances} />
-        <Field type="text" name="remark" label="Remark" component={renderField} />
+        <Field type="text" name="remark" label="Remark" component={Input} />
 
         {!loading && error && (
           <div className={cx('error')}>
