@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
-import { Button } from 'components/form';
+import { Button, Input } from 'components/form';
 import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
@@ -18,23 +18,13 @@ const validate = ({ username, password }) => {
   return errors
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div className={cx('item')}>
-    <label>{label}</label>
-    <div className={cx('field')}>
-      <input {...input} placeholder={label} type={type} className={cx('form-control')}/>
-      {touched && error && <span className={cx('error')}>{error}</span>}
-    </div>
-  </div>
-);
-
 class LoginForm extends Component {
   render() {
     const { error, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('login-form')}>
-        <Field type="text" name="username" label="Username" component={renderField} />
-        <Field type="text" name="password" label="Password" component={renderField} />
+        <Field type="text" name="username" label="Username" component={Input} />
+        <Field type="text" name="password" label="Password" component={Input} />
 
         {error && (
           <div className={cx('error')}>
