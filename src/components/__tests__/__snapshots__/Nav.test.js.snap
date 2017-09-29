@@ -10,87 +10,87 @@ ShallowWrapper {
   "length": 1,
   "node": <nav
     className="nav"
->
+  >
     <div
-        className="main"
+      className="main"
     >
-        <ul>
-            <li>
-                <NavLink
-                    activeClassName="active"
-                    ariaCurrent="true"
-                    exact={true}
-                    to="/"
-                >
-                    Home
-                </NavLink>
-            </li>
-            <li>
-                <NavLink
-                    activeClassName="active"
-                    ariaCurrent="true"
-                    to="/events"
-                >
-                    Events
-                </NavLink>
-            </li>
-            <li>
-                <NavLink
-                    activeClassName="active"
-                    ariaCurrent="true"
-                    to="/posts"
-                >
-                    Posts
-                </NavLink>
-            </li>
-        </ul>
+      <ul>
+        <li>
+          <NavLink
+            activeClassName="active"
+            ariaCurrent="true"
+            exact={true}
+            to="/"
+          >
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            activeClassName="active"
+            ariaCurrent="true"
+            to="/events"
+          >
+            Events
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            activeClassName="active"
+            ariaCurrent="true"
+            to="/posts"
+          >
+            Posts
+          </NavLink>
+        </li>
+      </ul>
     </div>
     <aside
-        className="tool"
+      className="tool"
     />
-</nav>,
+  </nav>,
   "nodes": Array [
     <nav
       className="nav"
->
+    >
       <div
-            className="main"
+        className="main"
       >
-            <ul>
-                  <li>
-                        <NavLink
-                              activeClassName="active"
-                              ariaCurrent="true"
-                              exact={true}
-                              to="/"
-                        >
-                              Home
-                        </NavLink>
-                  </li>
-                  <li>
-                        <NavLink
-                              activeClassName="active"
-                              ariaCurrent="true"
-                              to="/events"
-                        >
-                              Events
-                        </NavLink>
-                  </li>
-                  <li>
-                        <NavLink
-                              activeClassName="active"
-                              ariaCurrent="true"
-                              to="/posts"
-                        >
-                              Posts
-                        </NavLink>
-                  </li>
-            </ul>
+        <ul>
+          <li>
+            <NavLink
+              activeClassName="active"
+              ariaCurrent="true"
+              exact={true}
+              to="/"
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              activeClassName="active"
+              ariaCurrent="true"
+              to="/events"
+            >
+              Events
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              activeClassName="active"
+              ariaCurrent="true"
+              to="/posts"
+            >
+              Posts
+            </NavLink>
+          </li>
+        </ul>
       </div>
       <aside
-            className="tool"
+        className="tool"
       />
-</nav>,
+    </nav>,
   ],
   "options": Object {},
   "renderer": ReactShallowRenderer {
@@ -128,87 +128,87 @@ ShallowWrapper {
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <nav
           className="nav"
->
+        >
           <div
-                    className="main"
+            className="main"
           >
-                    <ul>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  exact={true}
-                                                  to="/"
-                                        >
-                                                  Home
-                                        </NavLink>
-                              </li>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  to="/events"
-                                        >
-                                                  Events
-                                        </NavLink>
-                              </li>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  to="/posts"
-                                        >
-                                                  Posts
-                                        </NavLink>
-                              </li>
-                    </ul>
+            <ul>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  exact={true}
+                  to="/"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  to="/events"
+                >
+                  Events
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  to="/posts"
+                >
+                  Posts
+                </NavLink>
+              </li>
+            </ul>
           </div>
           <aside
-                    className="tool"
+            className="tool"
           />
-</nav>,
+        </nav>,
         "_debugID": 2,
         "_renderedOutput": <nav
           className="nav"
->
+        >
           <div
-                    className="main"
+            className="main"
           >
-                    <ul>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  exact={true}
-                                                  to="/"
-                                        >
-                                                  Home
-                                        </NavLink>
-                              </li>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  to="/events"
-                                        >
-                                                  Events
-                                        </NavLink>
-                              </li>
-                              <li>
-                                        <NavLink
-                                                  activeClassName="active"
-                                                  ariaCurrent="true"
-                                                  to="/posts"
-                                        >
-                                                  Posts
-                                        </NavLink>
-                              </li>
-                    </ul>
+            <ul>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  exact={true}
+                  to="/"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  to="/events"
+                >
+                  Events
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  activeClassName="active"
+                  ariaCurrent="true"
+                  to="/posts"
+                >
+                  Posts
+                </NavLink>
+              </li>
+            </ul>
           </div>
           <aside
-                    className="tool"
+            className="tool"
           />
-</nav>,
+        </nav>,
       },
       "_renderedNodeType": 0,
       "_rootNodeID": 0,

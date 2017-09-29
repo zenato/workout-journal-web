@@ -1,6 +1,18 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { reduxForm } from 'redux-form'
 import { shallow, mount } from 'enzyme';
+import configureStore from 'redux/configureStore';
 import Performance from '../Performance';
+
+const store = configureStore();
+
+const Test = (props) => (
+  <Provider store={store} {...props} />
+);
+
+const Form = (props) => (<form {...props} />);
+const MockForm = reduxForm({ form: 'eventForm' })(Form);
 
 const events = [
   {
@@ -22,13 +34,17 @@ const values = {
 
 it('renders without errors', () => {
   shallow(
-    <Performance
-      key={0}
-      name={'performance[0]'}
-      events={events}
-      values={values}
-      onDelete={() => {}}
-    />
+    <Test>
+      <MockForm>
+        <Performance
+          key={0}
+          name={'performance[0]'}
+          events={events}
+          values={values}
+          onDelete={() => {}}
+        />
+      </MockForm>MockForm>
+    </Test>
   );
 });
 
@@ -36,18 +52,17 @@ it('simulate delete click', () => {
   const onDelete = jest.fn();
 
   const component = mount(
-    <table>
-      <tbody>
+    <Test>
+      <MockForm>
         <Performance
-          idx={1}
+          key={0}
+          name={'performance[0]'}
           events={events}
-          item={item}
-          error={null}
-          onChange={() => {}}
+          values={values}
           onDelete={onDelete}
         />
-      </tbody>
-    </table>
+      </MockForm>
+    </Test>
   );
 
   component.find('input[type="button"]').simulate('click', { preventDefault () {} });

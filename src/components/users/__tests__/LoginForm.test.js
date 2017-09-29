@@ -1,6 +1,12 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
+import configureStore from 'redux/configureStore';
 import LoginForm from '../LoginForm';
+
+const Test = (props) => (
+  <Provider store={configureStore()} {...props} />
+);
 
 it('renders without errors', () => {
   shallow(
@@ -13,32 +19,29 @@ it('renders without errors', () => {
 
 it('simulate submit after change form', () => {
   const onSubmit = jest.fn();
-  const wrapper = mount(
-    <LoginForm
-      error={null}
-      onSubmit={onSubmit}
-    />
+  const component = mount(
+    <Test>
+      <LoginForm error={null} onSubmit={onSubmit} />
+    </Test>
   );
 
   // Changed input form
-  wrapper.find('input[name="username"]').simulate('change', {
+  component.find('input[name="username"]').simulate('change', {
     target: {
       name: 'username',
       value: 'changed username',
     },
   });
-  wrapper.find('input[name="password"]').simulate('change', {
+  component.find('input[name="password"]').simulate('change', {
     target: {
       name: 'password',
       value: 'changed password',
     },
   });
 
-  wrapper.find('form').simulate('submit', {
-    preventDefault: () => {},
-  });
+  component.find('form').simulate('submit', { preventDefault () {} });
 
-  expect(onSubmit).toBeCalledWith({
+  expect(onSubmit.mock.calls[0][0]).toEqual({
     username: 'changed username',
     password: 'changed password',
   });
