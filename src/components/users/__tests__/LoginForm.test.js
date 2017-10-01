@@ -1,8 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { shallow, mount } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux/configureStore';
 import LoginForm from '../LoginForm';
+
+configure({ adapter: new Adapter()});
 
 const Test = (props) => (
   <Provider store={configureStore()} {...props} />
