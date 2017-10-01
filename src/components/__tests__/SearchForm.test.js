@@ -1,11 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import configureStore from 'redux/configureStore';
 import SearchForm from '../SearchForm';
-
-configure({ adapter: new Adapter()});
 
 const store = configureStore();
 

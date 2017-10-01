@@ -1,11 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { configure, shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow, mount } from 'enzyme';
 import configureStore from 'redux/configureStore';
 import PostForm from '../PostForm';
-
-configure({ adapter: new Adapter()});
 
 const store = configureStore();
 

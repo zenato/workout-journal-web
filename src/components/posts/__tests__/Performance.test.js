@@ -1,12 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { reduxForm } from 'redux-form'
-import { configure, shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow, mount } from 'enzyme';
 import configureStore from 'redux/configureStore';
 import Performance from '../Performance';
-
-configure({ adapter: new Adapter() });
 
 const store = configureStore();
 
