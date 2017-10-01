@@ -4,16 +4,18 @@ const path = require('path');
 const webpack = require('webpack');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const paths = require('./paths');
+const paths = require('react-scripts/config/paths');
 
-const getClientEnvironment = require('./env');
+const getClientEnvironment = require('react-scripts/config/env');
 const env = getClientEnvironment(paths.publicUrl);
 
+const localPaths = require('./paths');
+
 module.exports = {
-  entry: paths.serverRenderJs,
+  entry: localPaths.serverRenderJs,
   target: 'node',
   output: {
-    path: paths.server,
+    path: localPaths.server,
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
@@ -40,6 +42,7 @@ module.exports = {
         loader: require.resolve('babel-loader'),
         options: {
           cacheDirectory: true,
+          presets: 'react-app',
         },
       },
       {
@@ -57,7 +60,7 @@ module.exports = {
           {
             loader: require.resolve('sass-loader'),
             options: {
-              includePaths: [paths.styles],
+              includePaths: [localPaths.styles],
             },
           },
         ],

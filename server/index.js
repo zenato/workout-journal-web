@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const proxy = require('http-proxy-middleware');
-const paths = require('../config/paths');
+const paths = require('react-scripts/config/paths');
 const render = require('./render');
 
 const app = express();
@@ -43,5 +43,5 @@ app.listen(port, (err) => {
     console.log(err);
     return
   }
-  console.info(`Listening on ${port}.`);
+  console.info(`⚡  Listening on ${port}.`);
 });

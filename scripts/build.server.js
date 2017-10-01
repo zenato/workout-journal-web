@@ -9,11 +9,11 @@ process.on('unhandledRejection', err => {
 });
 
 
-require('../config/env');
+require('react-scripts/config/env');
 
 const webpack = require('webpack');
 const config = require('../config/webpack.config.server');
-const paths = require('../config/paths');
+const paths = require('../config/paths.js');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
