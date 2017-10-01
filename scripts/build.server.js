@@ -2,7 +2,7 @@
 
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
-process.env.APP_ENV = 'server';
+process.env.REACT_APP_ENV = 'server';
 
 process.on('unhandledRejection', err => {
   throw err;

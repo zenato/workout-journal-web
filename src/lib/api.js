@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 let API_URL = '/api';
 
-if (process.env.APP_ENV === 'server') {
+if (process.env.REACT_APP_ENV === 'server') {
   API_URL = 'http://0.0.0.0:3001' + API_URL;
 }
 
