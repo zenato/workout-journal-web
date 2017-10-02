@@ -56,6 +56,19 @@ module.exports = function override(config, env) {
 
   // Production
   if (env === 'production') {
+    if (config.entry.length !== 2) {
+      throw new Error('Changed entry config.');
+    }
+
+    config.entry = {
+      vendor: [
+        config.entry[0],
+        'react',
+        'react-dom',
+        'react-router-dom',
+      ],
+      app: config.entry[1],
+    };
     config.plugins.push(new webpack.NormalModuleReplacementPlugin(
       /^pages$/,
       'pages/index.async.js',
