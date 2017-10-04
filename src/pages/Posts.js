@@ -45,11 +45,11 @@ class Posts extends Component {
   };
 
   handleMorePosts = () => {
-    return this.props.PostsActions.getMorePosts(this.props.next);
+    return this.props.PostsActions.getMorePosts(this.props.pageInfo.endCursor);
   };
 
   render() {
-    const { items, location, next } = this.props;
+    const { items, location, pageInfo } = this.props;
     const search = { ...queryString.parse(location.search) };
     return (
       <div>
@@ -77,7 +77,7 @@ class Posts extends Component {
         </article>
 
         <aside>
-          {next && (
+          {pageInfo.hasNextPage && (
             <Button onClick={this.handleMorePosts} value="More" />
           )}
         </aside>
@@ -89,7 +89,7 @@ class Posts extends Component {
 export default withDone(connect(
   (state) => ({
     items: state.posts.items,
-    next: state.posts.next,
+    pageInfo: state.posts.pageInfo,
   }),
   (dispatch) => ({
     PostsActions: bindActionCreators(postsActions, dispatch),

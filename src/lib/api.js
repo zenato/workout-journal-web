@@ -37,32 +37,38 @@ export const getEvents = accessToken => params => api(
   `
     query ($name: String) {
       events(name: $name) {
-        id
-        name
-        unit
-        value
-        remark
+        edges {
+          node {
+            id
+            name
+            unit
+            value
+            remark
+          }
+        }
       }
     }
   `,
   params,
-).then(r => r.events);
+).then(r => r.events.edges.map(e => e.node));
 
 export const getEvent = accessToken => id => api(
   accessToken,
   `
     query ($id: ID!) {
-      event(id: $id) {
+      node(id: $id) {
         id
-        name
-        unit
-        value
-        remark
+        ... on Event {
+          name
+          unit
+          value
+          remark
+        }
       }
     }
   `,
   { id },
-).then(r => r.event);
+).then(r => r.node);
 
 
 export const updateEvent = accessToken => (id, params) => api(
@@ -121,104 +127,132 @@ export const getPostEvents = accessToken => params => api(
   `
     query {
       events {
-        id
-        name
-        unit
-        value
-        lastPerformance {
-          value
-          set1
-          set2
-          set3
-          set4
-          set5
+        edges {
+          node {
+            id
+            name
+            unit
+            value
+            lastPerformance {
+              value
+              set1
+              set2
+              set3
+              set4
+              set5
+            }
+          }
         }
       }
     }
   `,
   params,
-).then(r => r.events);
+).then(r => r.events.edges.map(e => e.node));
 
 export const getPosts = accessToken => params => api(
   accessToken,
   `
     query ($name: String) {
-      posts(name: $name) {
-        id
-        workoutDate
-        performances {
-          id
-          event {
+      posts(first: 10, performances_Event_Name_Icontains: $name) {
+        edges {
+          node {
             id
-            name
-            unit
+            workoutDate
+            performances {
+              id
+              event {
+                id
+                name
+                unit
+              }
+              value
+              set1
+              set2
+              set3
+              set4
+              set5
+            }
+            remark
           }
-          value
-          set1
-          set2
-          set3
-          set4
-          set5
         }
-        remark
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
       }
     }
   `,
   params,
-).then(r => r.posts);
+).then(({ posts: { edges, pageInfo } }) => ({
+  items: edges.map(e => e.node),
+  pageInfo,
+}));
 
 export const getPost = accessToken => id => api(
   accessToken,
   `
     query ($id: ID!) {
-      post(id: $id) {
+      node(id: $id) {
         id
-        workoutDate
-        performances {
-          event {
-            id
+        ... on Post {
+          workoutDate
+          performances {
+            event {
+              id
+            }
+            value
+            set1
+            set2
+            set3
+            set4
+            set5
           }
-          value
-          set1
-          set2
-          set3
-          set4
-          set5
+          remark
         }
-        remark
       }
     }
   `,
   { id },
-).then(r => r.post);
+).then(r => r.node);
 
-export const getMorePosts = accessToken => next => api(
+export const getMorePosts = accessToken => after => api(
   accessToken,
   `
-    query ($next: ID!) {
-      nextPosts(next: $next) {
-        id
-        workoutDate
-        performances {
-          id
-          event {
+    query ($name: String, $after: String) {
+      posts(first: 10, performances_Event_Name_Icontains: $name, after: $after) {
+        edges {
+          node {
             id
-            name
-            unit
+            workoutDate
+            performances {
+              id
+              event {
+                id
+                name
+                unit
+              }
+              value
+              set1
+              set2
+              set3
+              set4
+              set5
+            }
+            remark
           }
-          value
-          set1
-          set2
-          set3
-          set4
-          set5
+        },
+        pageInfo {
+          hasNextPage
+          endCursor
         }
-        remark
       }
     }
   `,
-  { next },
-).then(r => r.nextPosts);
+  { after },
+).then(({ posts: { edges, pageInfo } }) => ({
+  items: edges.map(e => e.node),
+  pageInfo,
+}));
 
 export const updatePost = accessToken => data => api(
   accessToken,

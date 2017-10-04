@@ -27,7 +27,10 @@ const initialState = {
   items: [],
   item: null,
   error: null,
-  next: null,
+  pageInfo: {
+    hasNextPage: false,
+    endCursor: null,
+  },
 };
 
 export default handleActions({
@@ -36,8 +39,8 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      items: action.payload,
-      next: action.payload.next,
+      items: action.payload.items,
+      pageInfo: action.payload.pageInfo,
     }),
   }),
   ...pender({
@@ -47,9 +50,9 @@ export default handleActions({
       error: null,
       items: [
         ...state.items,
-        ...action.payload,
+        ...action.payload.items,
       ],
-      next: action.payload,
+      pageInfo: action.payload.pageInfo,
     }),
   }),
 
