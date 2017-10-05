@@ -115,7 +115,7 @@ export const updateEvent = accessToken => params => {
       clientMutationId: getClientMutationID('updateEvent'),
     },
   };
-  return api(accessToken, query, query, vars).then(r => r.updateEvent.event);
+  return api(accessToken, query, vars).then(r => r.updateEvent.event);
 };
 
 export const deleteEvent = accessToken => id => {
