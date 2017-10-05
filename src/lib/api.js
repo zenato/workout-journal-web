@@ -4,6 +4,9 @@ import queryString from 'query-string';
 
 let API_URL = '/api';
 
+let MUTATION_ID = 0;
+const getClientMutationID = mutationName => `${mutationName}:${++MUTATION_ID}`;
+
 if (process.env.REACT_APP_ENV === 'server') {
   API_URL = 'http://0.0.0.0:3001' + API_URL;
 }
@@ -32,9 +35,8 @@ const api = (accessToken, query, variables) => axios.post(
 
 // Events
 
-export const getEvents = accessToken => params => api(
-  accessToken,
-  `
+export const getEvents = accessToken => params => {
+  const query = `
     query ($name: String) {
       events(name: $name) {
         edges {
@@ -48,13 +50,12 @@ export const getEvents = accessToken => params => api(
         }
       }
     }
-  `,
-  params,
-).then(r => r.events.edges.map(e => e.node));
+  `;
+  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node));
+};
 
-export const getEvent = accessToken => id => api(
-  accessToken,
-  `
+export const getEvent = accessToken => id => {
+  const query = `
     query ($id: ID!) {
       node(id: $id) {
         id
@@ -66,13 +67,13 @@ export const getEvent = accessToken => id => api(
         }
       }
     }
-  `,
-  { id },
-).then(r => r.node);
+  `;
+  const vars = { id };
+  return api(accessToken, query, vars).then(r => r.node);
+};
 
-export const insertEvent = accessToken => params => api(
-  accessToken,
-  `
+export const insertEvent = accessToken => params => {
+  const query = `
     mutation ($input: CreateEventInput!) {
       createEvent(input: $input) {
         event {
@@ -84,13 +85,18 @@ export const insertEvent = accessToken => params => api(
         }
       }
     }
-  `,
-  { input: params },
-).then(r => r.createEvent.event);
+  `;
+  const vars = {
+    input: {
+      ...params,
+      clientMutationId: getClientMutationID('createEvent'),
+    },
+  };
+  return api(accessToken, query, vars).then(r => r.createEvent.event);
+};
 
-export const updateEvent = accessToken => (id, params) => api(
-  accessToken,
-  `
+export const updateEvent = accessToken => (id, params) => {
+  const query = `
     mutation ($input: UpdateEventInput!) {
       updateEvent(input: $input) {
         event {
@@ -102,32 +108,38 @@ export const updateEvent = accessToken => (id, params) => api(
         }
       }
     }
-  `,
-  {
-    input: { ...params, clientMutationId: id },
-  },
-).then(r => r.updateEvent.event);
+  `;
+  const vars = {
+    input: {
+      ...params,
+      clientMutationId: getClientMutationID('updateEvent'),
+    },
+  };
+  return api(accessToken, query, query, vars).then(r => r.updateEvent.event);
+};
 
-export const deleteEvent = accessToken => id => api(
-  accessToken,
-  `
+export const deleteEvent = accessToken => id => {
+  const query = `
     mutation ($input: DeleteEventInput!) {
       deleteEvent(input: $input) {
-        success
+        id
       }
     }
-  `,
-  {
-    input: { clientMutationId: id },
-  },
-);
+  `;
+  const vars = {
+    input: {
+      id,
+      clientMutationId: getClientMutationID('deleteEvent'),
+    },
+  };
+  return api(accessToken, query, vars);
+};
 
 
 // Posts
 
-export const getPostEvents = accessToken => params => api(
-  accessToken,
-  `
+export const getPostEvents = accessToken => params => {
+  const query = `
     query {
       events {
         edges {
@@ -148,13 +160,12 @@ export const getPostEvents = accessToken => params => api(
         }
       }
     }
-  `,
-  params,
-).then(r => r.events.edges.map(e => e.node));
+  `;
+  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node));
+};
 
-export const getPosts = accessToken => params => api(
-  accessToken,
-  `
+export const getPosts = accessToken => params => {
+  const query = `
     query ($name: String) {
       posts(first: 10, performances_Event_Name_Icontains: $name) {
         edges {
@@ -184,16 +195,15 @@ export const getPosts = accessToken => params => api(
         }
       }
     }
-  `,
-  params,
-).then(({ posts: { edges, pageInfo } }) => ({
-  items: edges.map(e => e.node),
-  pageInfo,
-}));
+  `;
+  return api(accessToken, query, params).then(({ posts: { edges, pageInfo } }) => ({
+    items: edges.map(e => e.node),
+    pageInfo,
+  }));
+};
 
-export const getPost = accessToken => id => api(
-  accessToken,
-  `
+export const getPost = accessToken => id => {
+  const query = `
     query ($id: ID!) {
       node(id: $id) {
         id
@@ -214,13 +224,13 @@ export const getPost = accessToken => id => api(
         }
       }
     }
-  `,
-  { id },
-).then(r => r.node);
+  `;
+  const vars = { id };
+  return api(accessToken, query, vars).then(r => r.node);
+};
 
-export const getMorePosts = accessToken => after => api(
-  accessToken,
-  `
+export const getMorePosts = accessToken => after => {
+  const query = `
     query ($name: String, $after: String) {
       posts(first: 10, performances_Event_Name_Icontains: $name, after: $after) {
         edges {
@@ -250,16 +260,16 @@ export const getMorePosts = accessToken => after => api(
         }
       }
     }
-  `,
-  { after },
-).then(({ posts: { edges, pageInfo } }) => ({
-  items: edges.map(e => e.node),
-  pageInfo,
-}));
+  `;
+  const vars = { after };
+  return api(accessToken, query, vars).then(({ posts: { edges, pageInfo } }) => ({
+    items: edges.map(e => e.node),
+    pageInfo,
+  }));
+}
 
-export const insertPost = accessToken => data => api(
-  accessToken,
-  `
+export const insertPost = accessToken => data => {
+  const query = `
     mutation ($input: CreatePostInput!) {
       createPost(input: $input) {
         post {
@@ -280,13 +290,18 @@ export const insertPost = accessToken => data => api(
         }
       }
     }
-  `,
-  { input: data },
-).then(r => r.createPost.post);
+  `;
+  const vars = {
+    input: {
+      ...data,
+      clientMutationId: getClientMutationID('createPost'),
+    },
+  };
+  return api(accessToken, query, vars).then(r => r.createPost.post);
+};
 
-export const updatePost = accessToken => (id, params) => api(
-  accessToken,
-  `
+export const updatePost = accessToken => (id, params) => {
+  const query = `
     mutation ($input: UpdatePostInput!) {
       updatePost(input: $input) {
         post {
@@ -308,25 +323,32 @@ export const updatePost = accessToken => (id, params) => api(
         }
       }
     }
-  `,
-  {
-    input: { ...params, clientMutationId: id },
-  },
-).then(r => r.updatePost.post);
+  `;
+  const vars = {
+    input: {
+      ...params,
+      clientMutationId: getClientMutationID('updatePost'),
+    },
+  };
+  return api(accessToken, query, vars).then(r => r.updatePost.post);
+};
 
-export const deletePost = accessToken => id => api(
-  accessToken,
-  `
+export const deletePost = accessToken => id => {
+  const query = `
     mutation ($input: DeletePostInput!) {
       deletePost(input: $input) {
-        success
+        id
       }
     }
-  `,
-  {
-    input: { clientMutationId: id },
-  },
-);
+  `;
+  const vars = {
+    input: {
+      id,
+      clientMutationId: getClientMutationID('deletePost'),
+    },
+  };
+  return api(accessToken, query, vars);
+};
 
 
 // Users
@@ -346,12 +368,14 @@ export const login = ({ username, password }) => axios.post(
   },
 );
 
-export const getUser = accessToken => () => api(
-  accessToken,
-  `{
-    user {
-      username
-      email
+export const getUser = accessToken => () => {
+  const query = `
+    {
+      user {
+        username
+        email
+      }
     }
-  }`,
-).then(r => r.user);
+  `;
+  return api(accessToken, query).then(r => r.user);
+};
