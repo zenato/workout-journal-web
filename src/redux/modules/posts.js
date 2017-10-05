@@ -97,21 +97,24 @@ export default handleActions({
   }),
   ...pender({
     type: INSERT_POST,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      item: {
-        ...action.payload,
-        performances: action.payload.performances.map(p => ({
-          ...p,
-          event: { id: p.event.id },
-        })),
-      },
-      items: [
-        action.payload,
-        ...state.items,
-      ],
-    }),
+    onSuccess: (state, action) => {
+      const item = action.payload;
+      return ({
+        ...state,
+        error: null,
+        item: {
+          ...item,
+          performances: item.performances.map(p => ({
+            ...p,
+            event: { id: p.event.id },
+          })),
+        },
+        items: [
+          item,
+          ...state.items,
+        ],
+      })
+    },
     onFailure: (state, action) => ({
       ...state,
       error: action.payload.errors || action.payload.response,
