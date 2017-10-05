@@ -268,6 +268,7 @@ export const insertPost = accessToken => data => api(
           performances {
             event {
               id
+              name
             }
             value
             set1
@@ -294,6 +295,7 @@ export const updatePost = accessToken => (id, params) => api(
           performances {
             event {
               id
+              name
             }
             value
             set1

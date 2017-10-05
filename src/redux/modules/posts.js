@@ -79,7 +79,14 @@ export default handleActions({
       return ({
         ...state,
         error: null,
-        item,
+        item: {
+          ...item,
+          performances: item.performances.map(p => ({
+            ...p,
+            event: { id: p.event.id },
+          })),
+
+        },
         items: state.items.map(i => i.id === item.id ? item : i),
       });
     },
@@ -93,7 +100,13 @@ export default handleActions({
     onSuccess: (state, action) => ({
       ...state,
       error: null,
-      item: action.payload,
+      item: {
+        ...action.payload,
+        performances: action.payload.performances.map(p => ({
+          ...p,
+          event: { id: p.event.id },
+        })),
+      },
       items: [
         action.payload,
         ...state.items,
