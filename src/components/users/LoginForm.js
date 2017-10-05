@@ -24,7 +24,7 @@ class LoginForm extends Component {
     return (
       <form onSubmit={handleSubmit} className={cx('login-form')}>
         <Field type="text" name="username" label="Username" component={Input} />
-        <Field type="text" name="password" label="Password" component={Input} />
+        <Field type="password" name="password" label="Password" component={Input} />
 
         {error && (
           <div className={cx('error')}>
