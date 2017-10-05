@@ -121,7 +121,7 @@ class PostForm extends Component {
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className={cx('primary')} />
           <Button value="List" onClick={this.handleMoveList} />
-          {initialValues && (
+          {initialValues.id && (
             <Button value="Delete" onClick={this.handleDelete} />
           )}
         </div>
@@ -131,7 +131,7 @@ class PostForm extends Component {
 }
 
 PostForm.propTypes = {
-  initialValues: PropTypes.object,
+  initialValues: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   formValues: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired,

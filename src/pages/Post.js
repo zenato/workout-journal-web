@@ -10,6 +10,14 @@ import PostForm from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
 
 class Post extends Component {
+  constructor(props) {
+    super(props);
+
+    this.defaultItem = {
+      workoutDate: new Date(),
+    };
+  }
+
   componentWillMount() {
     const { PostsActions, done, match } = this.props;
     const promises = [PostsActions.getPostEvents()];
@@ -61,7 +69,7 @@ class Post extends Component {
               <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
             </Helmet>
             <PostForm
-              initialValues={item}
+              initialValues={item || this.defaultItem}
               enableReinitialize={true}
               formValues={formValues}
               events={events}
