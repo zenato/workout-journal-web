@@ -26,12 +26,12 @@ class Post extends Component {
   isNew = () => this.props.match.params.id === 'new';
 
   handleSubmit = async (values) => {
-    const { location, history, PostsActions } = this.props;
+    const { match, location, history, PostsActions } = this.props;
     if (this.isNew()) {
       const item = await PostsActions.insertPost(values);
       history.replace(`/posts/${item.id}${location.search}`);
     } else {
-      await PostsActions.updatePost(values);
+      await PostsActions.updatePost(match.params.id, values);
     }
   };
 

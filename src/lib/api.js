@@ -70,25 +70,6 @@ export const getEvent = accessToken => id => api(
   { id },
 ).then(r => r.node);
 
-
-export const updateEvent = accessToken => (id, params) => api(
-  accessToken,
-  `
-    mutation ($input: UpdateEventInput!) {
-      updateEvent(input: $input) {
-        event {
-          id
-          name
-          unit
-          value
-          remark
-        }
-      }
-    }
-  `,
-  { input: params },
-).then(r => r.updateEvent.event);
-
 export const insertEvent = accessToken => params => api(
   accessToken,
   `
@@ -107,16 +88,38 @@ export const insertEvent = accessToken => params => api(
   { input: params },
 ).then(r => r.createEvent.event);
 
+export const updateEvent = accessToken => (id, params) => api(
+  accessToken,
+  `
+    mutation ($input: UpdateEventInput!) {
+      updateEvent(input: $input) {
+        event {
+          id
+          name
+          unit
+          value
+          remark
+        }
+      }
+    }
+  `,
+  {
+    input: { ...params, clientMutationId: id },
+  },
+).then(r => r.updateEvent.event);
+
 export const deleteEvent = accessToken => id => api(
   accessToken,
   `
-    mutation ($id: ID!) {
-      deleteEvent(id: $id) {
+    mutation ($input: DeleteEventInput!) {
+      deleteEvent(input: $input) {
         success
       }
     }
   `,
-  { id },
+  {
+    input: { clientMutationId: id },
+  },
 );
 
 
@@ -254,33 +257,6 @@ export const getMorePosts = accessToken => after => api(
   pageInfo,
 }));
 
-export const updatePost = accessToken => data => api(
-  accessToken,
-  `
-    mutation ($input: UpdatePostInput!) {
-      updatePost(input: $input) {
-        post {
-          id
-          workoutDate
-          performances {
-            event {
-              id
-            }
-            value
-            set1
-            set2
-            set3
-            set4
-            set5
-          }
-          remark
-        }
-      }
-    }
-  `,
-  { input: data },
-).then(r => r.updatePost.post);
-
 export const insertPost = accessToken => data => api(
   accessToken,
   `
@@ -307,16 +283,47 @@ export const insertPost = accessToken => data => api(
   { input: data },
 ).then(r => r.createPost.post);
 
+export const updatePost = accessToken => (id, params) => api(
+  accessToken,
+  `
+    mutation ($input: UpdatePostInput!) {
+      updatePost(input: $input) {
+        post {
+          id
+          workoutDate
+          performances {
+            event {
+              id
+            }
+            value
+            set1
+            set2
+            set3
+            set4
+            set5
+          }
+          remark
+        }
+      }
+    }
+  `,
+  {
+    input: { ...params, clientMutationId: id },
+  },
+).then(r => r.updatePost.post);
+
 export const deletePost = accessToken => id => api(
   accessToken,
   `
-    mutation ($id: ID!) {
-      deletePost(id: $id) {
+    mutation ($input: DeletePostInput!) {
+      deletePost(input: $input) {
         success
       }
     }
   `,
-  { id },
+  {
+    input: { clientMutationId: id },
+  },
 );
 
 
