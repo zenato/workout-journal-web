@@ -95,7 +95,7 @@ export const insertEvent = accessToken => params => {
   return api(accessToken, query, vars).then(r => r.createEvent.event);
 };
 
-export const updateEvent = accessToken => (id, params) => {
+export const updateEvent = accessToken => params => {
   const query = `
     mutation ($input: UpdateEventInput!) {
       updateEvent(input: $input) {
@@ -300,7 +300,7 @@ export const insertPost = accessToken => data => {
   return api(accessToken, query, vars).then(r => r.createPost.post);
 };
 
-export const updatePost = accessToken => (id, params) => {
+export const updatePost = accessToken => params => {
   const query = `
     mutation ($input: UpdatePostInput!) {
       updatePost(input: $input) {

@@ -31,7 +31,7 @@ class Post extends Component {
       const item = await PostsActions.insertPost(values);
       history.replace(`/posts/${item.id}${location.search}`);
     } else {
-      await PostsActions.updatePost(match.params.id, values);
+      await PostsActions.updatePost(values);
     }
   };
 

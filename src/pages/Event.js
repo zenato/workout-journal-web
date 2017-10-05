@@ -27,7 +27,7 @@ class Event extends Component {
       const item = await EventsActions.insertEvent(values);
       history.replace(`/events/${item.id}${location.search}`);
     } else {
-      await EventsActions.updateEvent(match.params.id, values);
+      await EventsActions.updateEvent(values);
     }
   };
 
