@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders without crashing 1`] = `
+exports[`Render with \`user\` prop. 1`] = `
 <nav
   className="nav"
 >
@@ -40,6 +40,54 @@ exports[`renders without crashing 1`] = `
   </div>
   <aside
     className="tool"
-  />
+  >
+    <a
+      href=""
+      onClick={[Function]}
+    >
+      Logout
+    </a>
+  </aside>
+</nav>
+`;
+
+exports[`Render without \`user\` prop. 1`] = `
+<nav
+  className="nav"
+>
+  <div
+    className="main"
+  >
+    <ul>
+      <li>
+        <NavLink
+          activeClassName="active"
+          ariaCurrent="true"
+          exact={true}
+          to="/"
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          activeClassName="active"
+          ariaCurrent="true"
+          to="/events"
+        >
+          Events
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          activeClassName="active"
+          ariaCurrent="true"
+          to="/posts"
+        >
+          Posts
+        </NavLink>
+      </li>
+    </ul>
+  </div>
 </nav>
 `;
