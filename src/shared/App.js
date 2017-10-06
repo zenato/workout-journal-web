@@ -5,6 +5,7 @@ import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 import * as usersActions from 'redux/modules/users';
 import { Events, Event, Home, Posts, Post, Login } from 'pages';
 import Nav from 'components/Nav';
@@ -24,6 +25,12 @@ class App extends Component {
     }
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+    Cookies.remove('accessToken');
+    window.location.href = '/';
+  };
+
   render() {
     const { user } = this.props;
     return (
@@ -32,7 +39,7 @@ class App extends Component {
           <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
 
-        <Nav user={user} />
+        <Nav user={user} onLogout={this.handleLogout} />
 
         <Container>
           <Route exact path="/" component={Home} />

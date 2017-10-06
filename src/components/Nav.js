@@ -1,19 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import classNames from 'classnames/bind';
 import styles from './Nav.scss';
 
 const cx = classNames.bind(styles);
 
-const logout = (e) => {
-  e.preventDefault();
-  Cookies.remove('accessToken');
-  window.location.href = '/';
-};
-
-const Nav = ({ user }) => {
+const Nav = ({ user, onLogout }) => {
   return (
     <nav className={cx('nav')}>
       <div className={cx('main')}>
@@ -25,7 +18,7 @@ const Nav = ({ user }) => {
       </div>
       <aside className={cx('tool')}>
         {user && (
-          <a href="/logout" onClick={logout}>Logout</a>
+          <a href="/logout" onClick={onLogout}>Logout</a>
         )}
       </aside>
     </nav>
@@ -36,6 +29,7 @@ Nav.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
   }),
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default Nav;
