@@ -16,11 +16,11 @@ const Nav = ({ user, onLogout }) => {
           <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
         </ul>
       </div>
-      <aside className={cx('tool')}>
-        {user && (
-          <a href="" onClick={onLogout}>Logout</a>
-        )}
-      </aside>
+      {user && (
+        <aside className={cx('tool')}>
+            <a href="" onClick={onLogout}>Logout</a>
+        </aside>
+      )}
     </nav>
   );
 };
