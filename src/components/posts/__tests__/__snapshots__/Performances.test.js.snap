@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without errors 1`] = `
+<div
+  className="item"
+>
+  <label>
+    Perf.
+  </label>
+  <div
+    className="field"
+  >
+    <Button
+      onClick={[Function]}
+      value="Add"
+    />
+    <table>
+      <colgroup>
+        <col
+          width="*"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="5%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="8%"
+        />
+        <col
+          width="5%"
+        />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th
+            colSpan={2}
+          >
+            Val.
+          </th>
+          <th>
+            1
+          </th>
+          <th>
+            2
+          </th>
+          <th>
+            3
+          </th>
+          <th>
+            4
+          </th>
+          <th>
+            5
+          </th>
+          <th>
+            Tot. / Vol.
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <Performance
+          events={
+            Array [
+              Object {
+                "id": "key-1",
+                "name": "event-1",
+              },
+            ]
+          }
+          key="0"
+          name="performances[0]"
+          onDelete={[Function]}
+          values={Object {}}
+        />
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

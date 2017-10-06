@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import classNames from 'classnames/bind';
 import { Button, Input } from 'components/form';
-import Performance from 'components/posts/Performance';
+import Performances from './Performances';
 import styles from './PostForm.scss';
 
 const cx = classNames.bind(styles);
@@ -46,53 +46,6 @@ const validate = ({ workoutDate, performances }) => {
   return errors;
 };
 
-const renderPerformances = ({ fields, meta: { error, submitFailed }, events, formValues }) => (
-  <div className={cx('item')}>
-    <label>Perf.</label>
-    <div className={cx('field')}>
-      <Button onClick={() => fields.push({})} value="Add" />
-      <table>
-        <colgroup>
-          <col width="*" />
-          <col width="8%" />
-          <col width="5%" />
-          <col width="8%" />
-          <col width="8%" />
-          <col width="8%" />
-          <col width="8%" />
-          <col width="8%" />
-          <col width="8%" />
-          <col width="5%" />
-        </colgroup>
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th colSpan={2}>Val.</th>
-          <th>1</th>
-          <th>2</th>
-          <th>3</th>
-          <th>4</th>
-          <th>5</th>
-          <th>Tot. / Vol.</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {fields.map((name, index) => (
-          <Performance
-            key={index}
-            name={name}
-            events={events}
-            values={formValues.performances[index] || {}}
-            onDelete={() => fields.remove(index)}
-          />
-        ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-);
-
 class PostForm extends Component {
   handleDelete = (e) => {
     e.preventDefault();
@@ -109,7 +62,7 @@ class PostForm extends Component {
     return (
       <form onSubmit={handleSubmit} className={cx('post-form')}>
         <Field type="date" name="workoutDate" label="Workout Date" component={Input} />
-        <FieldArray name="performances" events={events} formValues={formValues} component={renderPerformances} />
+        <FieldArray name="performances" events={events} formValues={formValues} component={Performances} />
         <Field type="text" name="remark" label="Remark" component={Input} />
 
         {!loading && error && (
