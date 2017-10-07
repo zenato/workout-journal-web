@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render without errors. 1`] = `
+<form
+  className="event-form"
+  onSubmit={[Function]}
+>
+  <Field
+    component={[Function]}
+    label="Name"
+    name="name"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Unit"
+    name="unit"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Value"
+    name="value"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Remark"
+    name="remark"
+    type="text"
+  />
+  <div
+    className="tool"
+  >
+    <Button
+      className="primary"
+      type="submit"
+      value="Save"
+    />
+    <Button
+      onClick={[Function]}
+      value="List"
+    />
+    <Button
+      onClick={[Function]}
+      value="Delete"
+    />
+  </div>
+</form>
+`;
