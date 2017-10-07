@@ -3,11 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
+import { reduxForm } from 'redux-form'
 import * as eventsActions from 'redux/modules/events';
 import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
-import EventForm from 'components/events/EventForm';
+import Form, { validate } from 'components/events/EventForm';
 
 const isNew = ({ id }) => id === 'new';
+
+const EventForm = reduxForm({
+  form: 'eventForm',
+  validate: validate,
+})(Form);
 
 class Event extends Component {
   componentWillMount() {

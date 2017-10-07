@@ -1,122 +1,16 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { shallow, mount } from 'enzyme';
-import configureStore from 'redux/configureStore';
+import { shallow } from 'enzyme';
 import EventForm from '../EventForm';
 
-const store = configureStore();
-
-const Test = (props) => (
-  <Provider store={store} {...props} />
-);
-
-const initialValues = {
-  id: '1',
-  name: 'test',
-  value: 10,
-  unit: 'g',
-  remark: 'test',
+const props = {
+  handleSubmit: jest.fn(),
+  initialValues: {},
+  error: null,
+  onDelete: jest.fn(),
+  onMoveList: jest.fn(),
 };
 
-it('renders without errors', () => {
-  shallow(
-    <EventForm
-      initialValues={initialValues}
-      error={null}
-      onSubmit={() => {}}
-      onDelete={() => {}}
-      onMoveList={() =>{}}
-    />
-  );
-});
-
-it('simulate submit after change form', () => {
-  const onSubmit = jest.fn();
-  const component = mount(
-    <Test>
-      <EventForm
-        initialValues={initialValues}
-        error={null}
-        onSubmit={onSubmit}
-        onDelete={() => {}}
-        onMoveList={() => {}}
-      />
-    </Test>
-  );
-
-  // Changed input form
-  component.find('input[name="name"]').simulate('change', {
-    target: {
-      name: 'name',
-      value: 'changed name',
-    },
-  });
-  component.find('input[name="value"]').simulate('change', {
-    target: {
-      name: 'value',
-      value: 20,
-    },
-  });
-  component.find('input[name="unit"]').simulate('change', {
-    target: {
-      name: 'unit',
-      value: 'kg',
-    },
-  });
-  component.find('input[name="remark"]').simulate('change', {
-    target: {
-      name: 'remark',
-      value: 'changed remark',
-    },
-  });
-
-  component.find('form').simulate('submit', { preventDefault () {} });
-
-  expect(onSubmit.mock.calls[0][0]).toEqual({
-    id: '1',
-    name: 'changed name',
-    remark: 'changed remark',
-    unit: 'kg',
-    value: 20,
-  });
-});
-
-it('simulate move list click', () => {
-  const onMoveList = jest.fn();
-
-  const wrapper = mount(
-    <Test>
-      <EventForm
-        initialValues={initialValues}
-        error={null}
-        onSubmit={() => {}}
-        onDelete={() => {}}
-        onMoveList={onMoveList}
-      />
-    </Test>
-  );
-
-  wrapper.find('input[type="button"]').at(0).simulate('click', { preventDefault () {} });
-
-  expect(onMoveList).toBeCalled()
-});
-
-it('simulate delete click', () => {
-  const onDelete = jest.fn();
-
-  const wrapper = mount(
-    <Test>
-      <EventForm
-        initialValues={initialValues}
-        error={null}
-        onSubmit={() => {}}
-        onDelete={onDelete}
-        onMoveList={() => {}}
-      />
-    </Test>
-  );
-
-  wrapper.find('input[type="button"]').at(1).simulate('click', { preventDefault () {} });
-
-  expect(onDelete).toBeCalled();
+it('Render without errors.', () => {
+  const component = shallow(<EventForm {...props} />);
+  expect(component).toMatchSnapshot();
 });

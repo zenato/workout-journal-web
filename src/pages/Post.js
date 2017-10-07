@@ -4,10 +4,16 @@ import { bindActionCreators } from 'redux';
 import { formValueSelector } from 'redux-form';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
+import { reduxForm } from 'redux-form'
 import * as postsActions from 'redux/modules/posts';
 import { GET_POST, INSERT_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
-import PostForm from 'components/posts/PostForm';
+import Form, { validate } from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
+
+const PostForm  = reduxForm({
+  form: 'postForm',
+  validate,
+})(Form);
 
 class Post extends Component {
   constructor(props) {
