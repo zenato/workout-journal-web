@@ -22,7 +22,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
 };
 
