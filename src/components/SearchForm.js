@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
 import { Button } from 'components/form';
 import styles from './SearchForm.scss';
