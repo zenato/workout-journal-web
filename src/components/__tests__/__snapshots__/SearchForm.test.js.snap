@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render without error. 1`] = `
+exports[`SearchForm should render without error. 1`] = `
 <section>
   <form
     className="search-form"

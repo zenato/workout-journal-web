@@ -2,7 +2,19 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SearchForm from '../SearchForm';
 
-it('Render without error.', () => {
-  const component = shallow(<SearchForm handleSubmit={() => {}} />);
-  expect(component).toMatchSnapshot();
+describe('SearchForm', () => {
+  const props = {
+    handleSubmit: jest.fn(),
+  };
+
+  it('should render without error.', () => {
+    const component = shallow(<SearchForm {...props} />);
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should call `handleSubmit` when submit form.', () => {
+    const component = shallow(<SearchForm {...props} />);
+    component.find('form').simulate('submit');
+    expect(props.handleSubmit).toBeCalled();
+  });
 });
