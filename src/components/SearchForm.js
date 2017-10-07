@@ -30,7 +30,4 @@ SearchForm.defaultProps = {
   placeholder: 'Input search text.',
 };
 
-export default reduxForm({
-  form: 'searchForm',
-})(SearchForm);
-
+export default SearchForm;

@@ -4,12 +4,17 @@ import { withDone } from 'react-router-server';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { reduxForm } from 'redux-form'
 import * as eventsActions from 'redux/modules/events';
 import { GET_EVENTS } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import EventItem from 'components/events/EventItem';
+
+const EventSearchForm = reduxForm({
+  form: 'eventSearchForm',
+})(SearchForm);
 
 class Events extends Component {
   componentWillMount() {
@@ -58,7 +63,7 @@ class Events extends Component {
           <Button value="Add Event" onClick={this.handleForm} className="primary" />
         </section>
 
-        <SearchForm
+        <EventSearchForm
           initialValues={search}
           enableReinitialize={true}
           onSubmit={this.handleSearch}

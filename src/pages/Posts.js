@@ -4,11 +4,16 @@ import { withDone } from 'react-router-server';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { reduxForm } from 'redux-form'
 import * as postsActions from 'redux/modules/posts';
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
 import PostItem from 'components/posts/PostItem';
+
+const PostSearchForm = reduxForm({
+  form: 'postSearchForm',
+})(SearchForm);
 
 class Posts extends Component {
   componentWillMount() {
@@ -61,7 +66,7 @@ class Posts extends Component {
           <Button value="Add Post" onClick={this.handleForm} className="primary" />
         </section>
 
-        <SearchForm
+        <PostSearchForm
           initialValues={search}
           enableReinitialize={true}
           onSubmit={this.handleSearch}

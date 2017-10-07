@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render without error. 1`] = `
+<section>
+  <form
+    className="search-form"
+    onSubmit={[Function]}
+  >
+    <Field
+      className="form-control"
+      component="input"
+      name="name"
+      placeholder="Input search text."
+      type="text"
+    />
+    <Button
+      type="submit"
+      value="Search"
+    />
+  </form>
+</section>
+`;
