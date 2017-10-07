@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render with \`user\` prop. 1`] = `
+exports[`Nav should render logout button if not empty \`user\` prop. 1`] = `
 <nav
   className="nav"
 >
@@ -48,46 +48,5 @@ exports[`Render with \`user\` prop. 1`] = `
       Logout
     </a>
   </aside>
-</nav>
-`;
-
-exports[`Render without \`user\` prop. 1`] = `
-<nav
-  className="nav"
->
-  <div
-    className="main"
-  >
-    <ul>
-      <li>
-        <NavLink
-          activeClassName="active"
-          ariaCurrent="true"
-          exact={true}
-          to="/"
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          activeClassName="active"
-          ariaCurrent="true"
-          to="/events"
-        >
-          Events
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          activeClassName="active"
-          ariaCurrent="true"
-          to="/posts"
-        >
-          Posts
-        </NavLink>
-      </li>
-    </ul>
-  </div>
 </nav>
 `;

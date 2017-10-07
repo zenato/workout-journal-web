@@ -2,26 +2,20 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Nav from '../Nav';
 
-const props = {
-  user: null,
-  onLogout: () => {},
-};
+describe('Nav', () => {
+  const props = {
+    user: null,
+    onLogout: jest.fn(),
+  };
 
-it('Render without `user` prop.', () => {
-  const component = shallow(<Nav {...props} />);
-  expect(component).toMatchSnapshot();
-});
+  it('should render logout button if not empty `user` prop.', () => {
+    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />);
+    expect(component).toMatchSnapshot();
+  });
 
-it('Render with `user` prop.', () => {
-  const user = { username: 'username' };
-  const component = shallow(<Nav {...props} user={user} />);
-  expect(component).toMatchSnapshot();
-});
-
-it('Call `logout` prop when click logout link.', () => {
-  const onLogout = jest.fn();
-  const user = { username: 'username' };
-  const component = shallow(<Nav {...props} user={user} onLogout={onLogout} />);
-  component.find('aside a').simulate('click');
-  expect(onLogout).toBeCalled();
+  it('call `logout` props when click logout link.', () => {
+    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />);
+    component.find('aside a').simulate('click');
+    expect(props.onLogout).toBeCalled();
+  });
 });
