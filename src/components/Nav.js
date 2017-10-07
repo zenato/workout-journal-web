@@ -18,7 +18,7 @@ const Nav = ({ user, onLogout }) => {
       </div>
       {user && (
         <aside className={cx('tool')}>
-            <a href="" onClick={onLogout}>Logout</a>
+          <a href="" onClick={onLogout}>Logout</a>
         </aside>
       )}
     </nav>
