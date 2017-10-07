@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render without errors. 1`] = `
+exports[`EventForm should render delete button if not empty \`initialValues\` props. 1`] = `
 <form
   className="event-form"
   onSubmit={[Function]}
@@ -44,6 +44,58 @@ exports[`Render without errors. 1`] = `
     <Button
       onClick={[Function]}
       value="Delete"
+    />
+  </div>
+</form>
+`;
+
+exports[`EventForm should render error message if not empty \`error\` props. 1`] = `
+<form
+  className="event-form"
+  onSubmit={[Function]}
+>
+  <Field
+    component={[Function]}
+    label="Name"
+    name="name"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Unit"
+    name="unit"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Value"
+    name="value"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Remark"
+    name="remark"
+    type="text"
+  />
+  <div
+    className="error"
+  >
+    <span>
+      Oops, An expected error seems to have occurred.
+    </span>
+  </div>
+  <div
+    className="tool"
+  >
+    <Button
+      className="primary"
+      type="submit"
+      value="Save"
+    />
+    <Button
+      onClick={[Function]}
+      value="List"
     />
   </div>
 </form>
