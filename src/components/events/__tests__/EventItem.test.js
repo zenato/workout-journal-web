@@ -2,33 +2,26 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import EventItem from '../EventItem';
 
-const item = {
-  id: '1',
-  name: 'test name',
-  value: 10,
-  unit: 'KG',
-  remark: 'test mock data',
-};
+describe('EventItem', () => {
+  const props = {
+    item: {
+      id: '1',
+      name: 'test name',
+      value: null,
+      unit: 'KG',
+      remark: 'test mock data',
+    },
+    onDetail: jest.fn(),
+  };
 
-it('renders without error', () => {
-  shallow(
-    <EventItem
-      key={item.id}
-      item={item}
-      onDetail={() => {}}
-    />
-  );
-});
+  it('should render value and unit if not empty `value` props.', () => {
+    const component = shallow(<EventItem {...props} value={10} />);
+    expect(component).toMatchSnapshot()
+  });
 
-it('simulate click link', () => {
-  let detailId = -1;
-  const wrapper = shallow(
-    <EventItem
-      key={item.id}
-      item={item}
-      onDetail={(e, id) => detailId = id}
-    />
-  );
-  wrapper.find('a').simulate('click');
-  expect(detailId).toEqual('1');
+  it('should call `onDetail` if click link.', () => {
+    const component = shallow(<EventItem {...props} />);
+    component.find('a').simulate('click', { preventDefault: () => {} });
+    expect(props.onDetail).toBeCalled();
+  });
 });

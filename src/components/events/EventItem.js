@@ -29,7 +29,7 @@ EventItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.number,
     unit: PropTypes.string.isRequired,
     remark: PropTypes.string,
   }),
