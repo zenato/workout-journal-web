@@ -36,7 +36,6 @@
     "build": "cross-env NODE_PATH=src react-app-rewired build",
     "build:server": "cross-env NODE_PATH=src node scripts/build.server.js",
     "test": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom",
-    "test:updateSnapshot": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom --updateSnapshot",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
