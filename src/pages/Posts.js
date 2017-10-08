@@ -39,8 +39,7 @@ class Posts extends Component {
     history.push((`${match.path}?${queryString.stringify(values)}`));
   };
 
-  handleDetail = (e, id) => {
-    e.preventDefault();
+  handleDetail = (id) => {
     const { history, match, location, } = this.props;
     history.push((`${match.path}/${id}${location.search}`));
   };
