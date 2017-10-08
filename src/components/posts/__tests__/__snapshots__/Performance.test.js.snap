@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Performance should render without errors. 1`] = `
+<tr
+  className="performance"
+>
+  <Field
+    component={[Function]}
+    name="performance[0].event"
+  />
+  <Field
+    component={[Function]}
+    name="performance[0].value"
+    type="text"
+  />
+  <td>
+    g
+  </td>
+  <Field
+    component={[Function]}
+    name="performance[0].set1"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    name="performance[0].set2"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    name="performance[0].set3"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    name="performance[0].set4"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    name="performance[0].set5"
+    type="text"
+  />
+  <td>
+    0
+     / 
+    0
+  </td>
+  <td>
+    <Button
+      onClick={[Function]}
+      value="Del"
+    />
+  </td>
+</tr>
+`;

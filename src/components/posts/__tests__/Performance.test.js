@@ -1,71 +1,34 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { reduxForm } from 'redux-form'
-import { shallow, mount } from 'enzyme';
-import configureStore from 'redux/configureStore';
+import { shallow } from 'enzyme';
 import Performance from '../Performance';
 
-const store = configureStore();
+describe('Performance', () => {
+  const props = {
+    name: 'performance[0]',
+    events: [
+      {
+        id: '1',
+        name: 'test',
+        value: 10,
+        unit: 'g',
+        remark: 'test',
+      },
+    ],
+    values: {
+      id: 1,
+      event: {
+        id: '1',
+        name: 'test',
+        unit: 'g',
+      },
+      value: 11,
+    },
+    onDelete: jest.fn(),
+  };
 
-const Test = (props) => (
-  <Provider store={store} {...props} />
-);
-
-const Form = (props) => (<form {...props} />);
-const MockForm = reduxForm({ form: 'eventForm' })(Form);
-
-const events = [
-  {
-    id: '1',
-    name: 'test',
-    value: 10,
-    unit: 'g',
-    remark: 'test',
-  },
-];
-
-const values = {
-  id: 1,
-  name: 'test',
-  value: 10,
-  unit: 'g',
-  remark: 'test',
-};
-
-it('renders without errors', () => {
-  shallow(
-    <Test>
-      <MockForm>
-        <Performance
-          key={0}
-          name={'performance[0]'}
-          events={events}
-          values={values}
-          onDelete={() => {}}
-        />
-      </MockForm>MockForm>
-    </Test>
-  );
+  it('should render without errors.', () => {
+    const component = shallow(<Performance {...props} />);
+    expect(component).toMatchSnapshot();
+  });
 });
 
-it('simulate delete click', () => {
-  const onDelete = jest.fn();
-
-  const component = mount(
-    <Test>
-      <MockForm>
-        <Performance
-          key={0}
-          name={'performance[0]'}
-          events={events}
-          values={values}
-          onDelete={onDelete}
-        />
-      </MockForm>
-    </Test>
-  );
-
-  component.find('input[type="button"]').simulate('click', { preventDefault () {} });
-
-  expect(onDelete).toBeCalled();
-});
