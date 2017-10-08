@@ -22,7 +22,7 @@ const PostItem = ({ item, onDetail }) => {
       </a>
     </li>
   );
-}
+};
 
 PostItem.propTypes = {
   item: PropTypes.shape({
