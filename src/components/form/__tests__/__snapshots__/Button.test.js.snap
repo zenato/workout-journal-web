@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders error 1`] = `
+exports[`Button should render passed props. 1`] = `
 <input
   className="btn"
-  type="button"
-  value="button"
+  onClick={[Function]}
+  type="submit"
+  value="test"
 />
 `;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render wrapped input field 1`] = `
+exports[`Input should render passed props. 1`] = `
 <div
   className="item"
 >
