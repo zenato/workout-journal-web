@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Helmet } from 'react-helmet';
+import { reduxForm } from 'redux-form'
 import Cookies from 'js-cookie';
 import * as usersActions from 'redux/modules/users';
 import { LOGIN, GET_USER } from 'redux/modules/users'
-import LoginForm from 'components/users/LoginForm';
+import Form, { validate } from 'components/users/LoginForm';
+
+const LoginForm = reduxForm({
+  form: 'loginForm',
+  validate,
+})(Form);
 
 class Login extends Component {
   handleSubmit = async (values) => {

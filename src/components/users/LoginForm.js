@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form'
+
+import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
 import { Button, Input } from 'components/form';
 import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
-
-const validate = ({ username, password }) => {
-  const errors = {};
-  if (!username) {
-    errors.username = 'Required';
-  }
-  if (!password) {
-    errors.password = 'Required';
-  }
-  return errors
-};
 
 class LoginForm extends Component {
   render() {
@@ -42,10 +32,18 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   error: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
-export default reduxForm({
-  form: 'loginForm',
-  validate,
-})(LoginForm);
+export const validate = ({ username, password }) => {
+  const errors = {};
+  if (!username) {
+    errors.username = 'Required';
+  }
+  if (!password) {
+    errors.password = 'Required';
+  }
+  return errors
+};
+
+export default LoginForm;
