@@ -30,5 +30,11 @@ describe('Performance', () => {
     const component = shallow(<Performance {...props} />);
     expect(component).toMatchSnapshot();
   });
+
+  it('passes `onDelete` to delete button component.', () => {
+    const component = shallow(<Performance {...props} />);
+    const button = component.find('Button[value="Del"]').get(0);
+    expect(button.props.onClick).toBe(props.onDelete);
+  });
 });
 
