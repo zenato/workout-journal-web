@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm should render error if not empty \`error\` props. 1`] = `
+<form
+  className="login-form"
+  onSubmit={[Function]}
+>
+  <Field
+    component={[Function]}
+    label="Username"
+    name="username"
+    type="text"
+  />
+  <Field
+    component={[Function]}
+    label="Password"
+    name="password"
+    type="password"
+  />
+  <div
+    className="error"
+  >
+    <span>
+      Oops, An expected error seems to have occurred.
+    </span>
+  </div>
+  <div
+    className="tool"
+  >
+    <Button
+      className="primary"
+      type="submit"
+      value="Login"
+    />
+  </div>
+</form>
+`;

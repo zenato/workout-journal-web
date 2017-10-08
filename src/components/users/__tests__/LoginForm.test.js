@@ -1,48 +1,21 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { shallow, mount } from 'enzyme';
-import configureStore from 'redux/configureStore';
+import { shallow } from 'enzyme';
 import LoginForm from '../LoginForm';
 
-const Test = (props) => (
-  <Provider store={configureStore()} {...props} />
-);
+describe('LoginForm', () => {
+  const props = {
+    error: null,
+    handleSubmit: jest.fn(),
+  };
 
-it('renders without errors', () => {
-  shallow(
-    <LoginForm
-      error={null}
-      onSubmit={() => {}}
-    />
-  );
-});
-
-it('simulate submit after change form', () => {
-  const onSubmit = jest.fn();
-  const component = mount(
-    <Test>
-      <LoginForm error={null} onSubmit={onSubmit} />
-    </Test>
-  );
-
-  // Changed input form
-  component.find('input[name="username"]').simulate('change', {
-    target: {
-      name: 'username',
-      value: 'changed username',
-    },
-  });
-  component.find('input[name="password"]').simulate('change', {
-    target: {
-      name: 'password',
-      value: 'changed password',
-    },
+  it('should render error if not empty `error` props.', () => {
+    const component = shallow(<LoginForm {...props} error={['error']} />);
+    expect(component).toMatchSnapshot();
   });
 
-  component.find('form').simulate('submit', { preventDefault () {} });
-
-  expect(onSubmit.mock.calls[0][0]).toEqual({
-    username: 'changed username',
-    password: 'changed password',
+  it('should call `onSubmit` if submit form.', () => {
+    const component = shallow(<LoginForm {...props} />);
+    component.find('form').simulate('submit');
+    expect(props.handleSubmit).toBeCalled();
   });
 });
