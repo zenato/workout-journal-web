@@ -2,28 +2,23 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Performances from '../Performances';
 
-const events = [
-  { id: 'key-1', name: 'event-1' },
-];
+describe('Performances', () => {
+  const props = {
+    events: [
+      { id: '1', name: 'event' },
+    ],
+    fields: {
+      map: fn => [fn('performances[0]', 0)],
+      remove: () => {}
+    },
+    meta: {},
+    formValues: {
+      performances: [],
+    },
+  };
 
-const fields = {
-  map: func => [func('performances[0]', 0)],
-  remove: () => {}
-};
-
-const formValues = {
-  performances: [],
-};
-
-it('renders without errors', () => {
-  const wrapper = shallow(
-    <Performances
-      key={0}
-      fields={fields}
-      events={events}
-      meta={{}}
-      formValues={formValues}
-    />
-  );
-  expect(wrapper).toMatchSnapshot();
+  it('should render without errors.', () => {
+    const component = shallow(<Performances {...props} />);
+    expect(component).toMatchSnapshot();
+  });
 });
