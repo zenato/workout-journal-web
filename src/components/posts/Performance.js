@@ -34,36 +34,30 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </td>
 );
 
-class Performance extends Component {
-  render() {
-    const { events, name, onDelete, values } = this.props;
-    const total = _.sum([
-      values.set1,
-      values.set2,
-      values.set3,
-      values.set4,
-      values.set5,
-    ].map(_.toNumber).filter(v => !_.isNaN(v)));
-    const volume = total * (isNaN(values.value) ? 0 : _.toNumber(values.value));
-    const selectedEvent = (values.event ? _.find(events, { id: values.event.id }) : null) || {};
-    return (
-      <tr className={cx('performance')}>
-        <Field name={`${name}.event`} component={renderEvent({ events })} />
-        <Field name={`${name}.value`} type="text" component={renderField} />
-        <td>{selectedEvent.unit}</td>
-        <Field name={`${name}.set1`} type="text" component={renderField} />
-        <Field name={`${name}.set2`} type="text" component={renderField} />
-        <Field name={`${name}.set3`} type="text" component={renderField} />
-        <Field name={`${name}.set4`} type="text" component={renderField} />
-        <Field name={`${name}.set5`} type="text" component={renderField} />
-        <td>{total} / {volume}</td>
-        <td>
-          <Button value="Del" onClick={onDelete} />
-        </td>
-      </tr>
-    );
-  }
-}
+const Performance = ({ events, name, onDelete, values }) => {
+  const total = _.sum(_.range(1, 6).map((i) => {
+    const value = _.toNumber(values[`set${i}`]);
+    return isNaN(value) ? 0 : value;
+  }));
+  const volume = total * (isNaN(values.value) ? 0 : _.toNumber(values.value));
+  const selectedEvent = (values.event ? _.find(events, { id: values.event.id }) : null) || {};
+  return (
+    <tr className={cx('performance')}>
+      <Field name={`${name}.event`} component={renderEvent({ events })} />
+      <Field name={`${name}.value`} type="text" component={renderField} />
+      <td>{selectedEvent.unit}</td>
+      <Field name={`${name}.set1`} type="text" component={renderField} />
+      <Field name={`${name}.set2`} type="text" component={renderField} />
+      <Field name={`${name}.set3`} type="text" component={renderField} />
+      <Field name={`${name}.set4`} type="text" component={renderField} />
+      <Field name={`${name}.set5`} type="text" component={renderField} />
+      <td>{total} / {volume}</td>
+      <td>
+        <Button value="Del" onClick={onDelete} />
+      </td>
+    </tr>
+  );
+};
 
 Performance.propTypes = {
   name: PropTypes.string.isRequired,

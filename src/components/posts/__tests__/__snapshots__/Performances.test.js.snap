@@ -83,8 +83,8 @@ exports[`Performances should render without errors. 1`] = `
           events={
             Array [
               Object {
-                "id": "key-1",
-                "name": "event-1",
+                "id": "1",
+                "name": "event",
               },
             ]
           }
