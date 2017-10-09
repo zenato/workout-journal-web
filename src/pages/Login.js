@@ -32,7 +32,7 @@ class Login extends Component {
     return (
       <div>
         {loading && (
-          <span>Now loading...</span>
+          <span className="loading">Now loading...</span>
         )}
 
         <article>
@@ -49,6 +49,9 @@ class Login extends Component {
   }
 }
 
+const mergeProps = (stateProps, dispatchProps, ownProps) =>
+  Object.assign({}, stateProps, dispatchProps, ownProps);
+
 export default connect(
   (state) => ({
     error: state.users.error,
@@ -57,4 +60,5 @@ export default connect(
   (dispatch) => ({
     UsersActions: bindActionCreators(usersActions, dispatch),
   }),
+  mergeProps,
 )(Login);
