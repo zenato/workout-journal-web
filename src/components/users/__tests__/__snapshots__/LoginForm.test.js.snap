@@ -5,18 +5,24 @@ exports[`LoginForm should render error if not empty \`error\` props. 1`] = `
   className="login-form"
   onSubmit={[Function]}
 >
-  <Field
-    component={[Function]}
+  <FormGroup
     label="Username"
-    name="username"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="username"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Password"
-    name="password"
-    type="password"
-  />
+  >
+    <Field
+      component={[Function]}
+      name="password"
+      type="password"
+    />
+  </FormGroup>
   <div
     className="error"
   >

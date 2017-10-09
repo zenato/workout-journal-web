@@ -2,17 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
-import { Button, Input } from 'components/form';
+import { FormGroup, Button, Input } from 'components/form';
 import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
 const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList }) => (
   <form onSubmit={handleSubmit} className={cx('event-form')}>
-    <Field type="text" name="name" label="Name" component={Input} />
-    <Field type="text" name="unit" label="Unit" component={Input} />
-    <Field type="text" name="value" label="Value" component={Input} />
-    <Field type="text" name="remark" label="Remark" component={Input} />
+    <FormGroup label="Name">
+      <Field type="text" name="name" component={Input} />
+    </FormGroup>
+    <FormGroup label="Unit">
+      <Field type="text" name="unit" component={Input} />
+    </FormGroup>
+    <FormGroup label="Value">
+      <Field type="text" name="value" component={Input} />
+    </FormGroup>
+    <FormGroup label="Remark">
+      <Field type="text" name="remark" component={Input} />
+    </FormGroup>
 
     {error && (
       <div className={cx('error')}>

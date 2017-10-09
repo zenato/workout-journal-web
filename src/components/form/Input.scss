@@ -1,26 +1,7 @@
 @import 'common';
 
-.item {
-  display: flex;
-  margin-bottom: 5px;
-  align-items: center;
-
-  label {
-    flex: 2;
-    text-align: right;
-    font-weight: bold;
-    margin-right: 5px;
-  }
-
-  .field {
-    flex: 10;
-    padding-right: 10px;
-    vertical-align: middle;
-  }
-
-  .error {
-    color: #f00;
-    font-size: 0.7rem;
-    padding: 5px;
-  }
+.error {
+  color: #f00;
+  font-size: 0.7rem;
+  padding: 5px;
 }

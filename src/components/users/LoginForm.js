@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
-import { Button, Input } from 'components/form';
+import { FormGroup, Button, Input } from 'components/form';
 import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
@@ -13,8 +12,12 @@ class LoginForm extends Component {
     const { error, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('login-form')}>
-        <Field type="text" name="username" label="Username" component={Input} />
-        <Field type="password" name="password" label="Password" component={Input} />
+        <FormGroup label="Username">
+          <Field type="text" name="username" component={Input} />
+        </FormGroup>
+        <FormGroup label="Password">
+          <Field type="password" name="password" component={Input} />
+        </FormGroup>
 
         {error && (
           <div className={cx('error')}>

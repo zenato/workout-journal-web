@@ -5,12 +5,15 @@ exports[`Renders without errors. 1`] = `
   className="post-form"
   onSubmit={[Function]}
 >
-  <Field
-    component={[Function]}
+  <FormGroup
     label="Workout Date"
-    name="workoutDate"
-    type="date"
-  />
+  >
+    <Field
+      component={[Function]}
+      name="workoutDate"
+      type="date"
+    />
+  </FormGroup>
   <FieldArray
     component={[Function]}
     events={
@@ -23,12 +26,15 @@ exports[`Renders without errors. 1`] = `
     }
     name="performances"
   />
-  <Field
-    component={[Function]}
+  <FormGroup
     label="Remark"
-    name="remark"
-    type="text"
-  />
+  >
+    <Field
+      component={[Function]}
+      name="remark"
+      type="text"
+    />
+  </FormGroup>
   <div
     className="tool"
   >

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form'
 import classNames from 'classnames/bind';
-import { Button, Input } from 'components/form';
+import { FormGroup, Button, Input } from 'components/form';
 import Performances from './Performances';
 import styles from './PostForm.scss';
 
@@ -23,9 +23,13 @@ class PostForm extends Component {
     const { initialValues, handleSubmit, loading, error, events, formValues } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('post-form')}>
-        <Field type="date" name="workoutDate" label="Workout Date" component={Input} />
+        <FormGroup label="Workout Date">
+          <Field type="date" name="workoutDate" component={Input} />
+        </FormGroup>
         <FieldArray name="performances" events={events} formValues={formValues} component={Performances} />
-        <Field type="text" name="remark" label="Remark" component={Input} />
+        <FormGroup label="Remark">
+          <Field type="text" name="remark" component={Input} />
+        </FormGroup>
 
         {!loading && error && (
           <div className={cx('error')}>

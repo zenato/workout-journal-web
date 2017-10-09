@@ -5,30 +5,42 @@ exports[`EventForm should render delete button if not empty \`initialValues\` pr
   className="event-form"
   onSubmit={[Function]}
 >
-  <Field
-    component={[Function]}
+  <FormGroup
     label="Name"
-    name="name"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="name"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Unit"
-    name="unit"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="unit"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Value"
-    name="value"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="value"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Remark"
-    name="remark"
-    type="text"
-  />
+  >
+    <Field
+      component={[Function]}
+      name="remark"
+      type="text"
+    />
+  </FormGroup>
   <div
     className="tool"
   >
@@ -54,30 +66,42 @@ exports[`EventForm should render error message if not empty \`error\` props. 1`]
   className="event-form"
   onSubmit={[Function]}
 >
-  <Field
-    component={[Function]}
+  <FormGroup
     label="Name"
-    name="name"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="name"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Unit"
-    name="unit"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="unit"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Value"
-    name="value"
-    type="text"
-  />
-  <Field
-    component={[Function]}
+  >
+    <Field
+      component={[Function]}
+      name="value"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup
     label="Remark"
-    name="remark"
-    type="text"
-  />
+  >
+    <Field
+      component={[Function]}
+      name="remark"
+      type="text"
+    />
+  </FormGroup>
   <div
     className="error"
   >

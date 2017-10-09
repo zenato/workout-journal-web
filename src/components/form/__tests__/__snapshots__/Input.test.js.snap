@@ -1,27 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Input should render passed props. 1`] = `
-<div
-  className="item"
->
-  <label>
-    test
-  </label>
-  <div
-    className="field"
+<div>
+  <input
+    className="form-control"
+    name="test"
+    placeholder="test"
+    type="text"
+    value="test"
+  />
+  <span
+    className="error"
   >
-    <input
-      className="form-control"
-      name="test"
-      placeholder="test"
-      type="text"
-      value="test"
-    />
-    <span
-      className="error"
-    >
-      test
-    </span>
-  </div>
+    test
+  </span>
 </div>
 `;
