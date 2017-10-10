@@ -23,7 +23,7 @@ const EventItem = ({ item, onDetail }) => {
       </a>
     </li>
   );
-}
+};
 
 EventItem.propTypes = {
   item: PropTypes.shape({
