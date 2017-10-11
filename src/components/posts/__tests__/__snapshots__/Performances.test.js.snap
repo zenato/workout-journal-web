@@ -10,6 +10,7 @@ exports[`Performances should render without errors. 1`] = `
   />
   <div
     className="performance"
+    key="0"
   >
     <div
       className="index"
