@@ -3,6 +3,14 @@
   "version": "0.2.0",
   "author": "Yeongjin Lee <yeongjinnn@gmail.com>",
   "private": true,
+  "scripts": {
+    "start": "cross-env NODE_PATH=src react-app-rewired start",
+    "start:server": "node server",
+    "build": "cross-env NODE_PATH=src react-app-rewired build",
+    "build:server": "cross-env NODE_PATH=src node scripts/build.server.js",
+    "test": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "classnames": "^2.2.5",
@@ -29,14 +37,6 @@
     "redux-thunk": "^2.2.0",
     "serialize-javascript": "^1.4.0",
     "styled-components": "^2.2.0"
-  },
-  "scripts": {
-    "start": "cross-env NODE_PATH=src react-app-rewired start",
-    "start:server": "node server",
-    "build": "cross-env NODE_PATH=src react-app-rewired build",
-    "build:server": "cross-env NODE_PATH=src node scripts/build.server.js",
-    "test": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "autoprefixer": ">=7.1.4",
