@@ -49,9 +49,10 @@ module.exports = function override(config, env) {
 
   // Development
   if (env === 'development') {
-    config.entry.unshift('react-hot-loader/patch');
-    // Path react hot loader
-    modules.filter(o => o.loader && o.loader.includes('babel-loader'))[0].options.plugins = ['react-hot-loader/babel'];
+    // TODO: Uncomment after fixes async arrow function bugs.
+    //config.entry.unshift('react-hot-loader/patch');
+    // Patch react hot loader
+    //modules.filter(o => o.loader && o.loader.includes('babel-loader'))[0].options.plugins = ['react-hot-loader/babel'];
   }
 
   // Production
