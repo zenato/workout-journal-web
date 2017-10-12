@@ -1,6 +1,6 @@
-import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatDate } from 'lib/date';
 import classNames from 'classnames/bind';
 import styles from './PostItem.scss';
 
@@ -15,8 +15,8 @@ const PostItem = ({ item, onDetail }) => {
     <li key={item.id} className={cx('list-item')}>
       <a href="" onClick={handleClick}>
         <div className={cx('info')}>
-          <span className={cx('name')}>{moment(item.workoutDate).format('YYYY-MM-DD')}</span>
-          <span className={cx('weekday')}>{moment(item.workoutDate).format('ddd')}</span>
+          <span className={cx('name')}>{formatDate(item.workoutDate)}</span>
+          <span className={cx('weekday')}>{formatDate(item.workoutDate, 'ddd')}</span>
           <div className={cx('remark')}>{item.performances.map(p => p.event.name).join(' / ')}</div>
         </div>
       </a>

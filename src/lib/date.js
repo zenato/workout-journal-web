@@ -1,3 +1,3 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 
-export const formatDate = (date, format) => (date && moment(date).format(format || 'YYYY-MM-DD')) || '';
+export const formatDate = (date, dateFormat) => (date && format(date, dateFormat || 'YYYY-MM-DD')) || '';
