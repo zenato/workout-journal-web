@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form'
 import classNames from 'classnames/bind';
@@ -7,31 +7,26 @@ import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
 
-class LoginForm extends Component {
-  render() {
-    const { error, handleSubmit } = this.props;
-    return (
-      <form onSubmit={handleSubmit} className={cx('login-form')}>
-        <FormGroup label="Username">
-          <Field type="text" name="username" component={Input} />
-        </FormGroup>
-        <FormGroup label="Password">
-          <Field type="password" name="password" component={Input} />
-        </FormGroup>
+const LoginForm = ({ error, handleSubmit }) => (
+  <form onSubmit={handleSubmit} className={cx('login-form')}>
+    <FormGroup label="Username">
+      <Field type="text" name="username" component={Input} />
+    </FormGroup>
+    <FormGroup label="Password">
+      <Field type="password" name="password" component={Input} />
+    </FormGroup>
 
-        {error && (
-          <div className={cx('error')}>
-            <span>Oops, An expected error seems to have occurred.</span>
-          </div>
-        )}
+    {error && (
+      <div className={cx('error')}>
+        <span>Oops, An expected error seems to have occurred.</span>
+      </div>
+    )}
 
-        <div className={cx('tool')}>
-          <Button type="submit" value="Login" className={cx('primary')} />
-        </div>
-      </form>
-    );
-  }
-}
+    <div className={cx('tool')}>
+      <Button type="submit" value="Login" className={cx('primary')} />
+    </div>
+  </form>
+);
 
 LoginForm.propTypes = {
   error: PropTypes.object,
