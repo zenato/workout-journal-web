@@ -66,6 +66,7 @@ module.exports = function override(config, env) {
         'react',
         'react-dom',
         'react-router-dom',
+        'lodash',
       ],
       app: config.entry[1],
     };
