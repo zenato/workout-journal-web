@@ -14,7 +14,7 @@ describe('LoginForm', () => {
   });
 
   it('should call `onSubmit` if submit form.', () => {
-    const component = shallow(<LoginForm {...props} />);
+    const component = shallow(<LoginForm {...props} />).dive();
     component.find('form').simulate('submit');
     expect(props.handleSubmit).toBeCalled();
   });

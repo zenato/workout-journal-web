@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginForm should render error if not empty \`error\` props. 1`] = `
-<form
-  className="login-form"
+<styled.form
   onSubmit={[Function]}
 >
   <FormGroup
@@ -23,21 +22,17 @@ exports[`LoginForm should render error if not empty \`error\` props. 1`] = `
       type="password"
     />
   </FormGroup>
-  <div
-    className="error"
-  >
+  <styled.div>
     <span>
       Oops, An expected error seems to have occurred.
     </span>
-  </div>
-  <div
-    className="tool"
-  >
+  </styled.div>
+  <styled.div>
     <Button
-      className="primary"
+      color="primary"
       type="submit"
       value="Login"
     />
-  </div>
-</form>
+  </styled.div>
+</styled.form>
 `;
