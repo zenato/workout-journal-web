@@ -50,7 +50,7 @@ class Events extends Component {
   };
 
   render() {
-    const { items, location, loading } = this.props;
+    const { items, location, isLoading, hasError } = this.props;
     const search = { ...queryString.parse(location.search) };
     return (
       <div>
@@ -69,9 +69,10 @@ class Events extends Component {
           placeholder="Input event name."
         />
 
-        <article>
-          {loading && <span>Now loading...</span>}
+        {isLoading && <div>Now loading...</div>}
+        {hasError && <div>Oops, An expected error seems to have occurred.</div>}
 
+        <article>
           <ul>
             {items.map(item => (
               <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
@@ -87,7 +88,8 @@ export default withDone(
   connect(
     state => ({
       items: state.events.items,
-      loading: state.pender.pending[GET_EVENTS],
+      isLoading: !!state.pender.pending[GET_EVENTS],
+      hasError: !!state.pender.failure[GET_EVENTS],
     }),
     dispatch => ({
       EventsActions: bindActionCreators(eventsActions, dispatch),
