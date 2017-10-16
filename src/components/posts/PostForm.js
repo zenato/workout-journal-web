@@ -20,7 +20,7 @@ class PostForm extends Component {
   };
 
   render() {
-    const { initialValues, handleSubmit, loading, error, events, formValues } = this.props;
+    const { initialValues, handleSubmit, hasError, events, formValues } = this.props;
     return (
       <form onSubmit={handleSubmit} className={cx('post-form')}>
         <FormGroup label="Workout Date">
@@ -36,12 +36,11 @@ class PostForm extends Component {
           <Field type="text" name="remark" component={Input} />
         </FormGroup>
 
-        {!loading &&
-          error && (
-            <div className={cx('error')}>
-              <span>Oops, An expected error seems to have occurred.</span>
-            </div>
-          )}
+        {hasError && (
+          <div className={cx('error')}>
+            <span>Oops, An expected error seems to have occurred.</span>
+          </div>
+        )}
 
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className={cx('primary')} />
@@ -58,8 +57,7 @@ PostForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   formValues: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,

@@ -26,7 +26,6 @@ const initialState = {
   events: [],
   items: [],
   item: null,
-  error: null,
   pageInfo: {
     hasNextPage: false,
     endCursor: null,
@@ -39,7 +38,6 @@ export default handleActions(
       type: GET_POSTS,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         items: action.payload.items,
         pageInfo: action.payload.pageInfo,
       }),
@@ -48,7 +46,6 @@ export default handleActions(
       type: GET_MORE_POSTS,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         items: [...state.items, ...action.payload.items],
         pageInfo: action.payload.pageInfo,
       }),
@@ -58,7 +55,6 @@ export default handleActions(
       type: GET_POST,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         item: action.payload,
       }),
     }),
@@ -66,7 +62,6 @@ export default handleActions(
       type: GET_POST_EVENTS,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         events: action.payload,
       }),
     }),
@@ -76,7 +71,6 @@ export default handleActions(
         const item = action.payload;
         return {
           ...state,
-          error: null,
           item: {
             ...item,
             performances: item.performances.map(p => ({
@@ -87,10 +81,6 @@ export default handleActions(
           items: state.items.map(i => (i.id === item.id ? item : i)),
         };
       },
-      onFailure: (state, action) => ({
-        ...state,
-        error: action.payload.errors || action.payload.response,
-      }),
     }),
     ...pender({
       type: INSERT_POST,
@@ -109,10 +99,6 @@ export default handleActions(
           items: [item, ...state.items],
         };
       },
-      onFailure: (state, action) => ({
-        ...state,
-        error: action.payload.errors || action.payload.response,
-      }),
     }),
     ...pender({
       type: DELETE_POST,

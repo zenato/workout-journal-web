@@ -5,11 +5,10 @@ import PostForm from '../PostForm';
 const props = {
   handleSubmit: jest.fn(),
   initialValues: {},
-  error: null,
+  hasError: false,
   onDelete: jest.fn(),
   onMoveList: jest.fn(),
   events: [{ id: '1', name: 'event-1' }],
-  loading: false,
 };
 
 it('Renders without errors.', () => {
