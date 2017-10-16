@@ -4,7 +4,12 @@
       "target": "ES6",
       "module": "commonjs",
       "allowSyntheticDefaultImports": true,
-      "baseUrl": "src"
+      "baseUrl": "src",
+      "plugins": [
+        {
+          "name": "typescript-styled-plugin"
+        }
+      ]
   },
   "exclude": [
       ".git",
