@@ -63,7 +63,7 @@ class Posts extends Component {
         </Helmet>
 
         <section>
-          <Button value="Add Post" onClick={this.handleForm} className="primary" />
+          <Button value="Add Post" onClick={this.handleForm} color="primary" />
         </section>
 
         <PostSearchForm

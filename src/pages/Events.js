@@ -59,7 +59,7 @@ class Events extends Component {
         </Helmet>
 
         <section>
-          <Button value="Add Event" onClick={this.handleForm} className="primary" />
+          <Button value="Add Event" onClick={this.handleForm} color="primary" />
         </section>
 
         <EventSearchForm
