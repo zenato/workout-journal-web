@@ -80,16 +80,18 @@ export default withDone(
   connect(
     state => ({
       item: state.events.item,
-      hasError:
+      hasError: !!(
         state.pender.failure[GET_EVENT] ||
         state.pender.failure[INSERT_EVENT] ||
         state.pender.failure[UPDATE_EVENT] ||
-        state.pender.failure[DELETE_EVENT],
-      isLoading:
+        state.pender.failure[DELETE_EVENT]
+      ),
+      isLoading: !!(
         state.pender.pending[GET_EVENT] ||
         state.pender.pending[INSERT_EVENT] ||
         state.pender.pending[UPDATE_EVENT] ||
-        state.pender.pending[DELETE_EVENT],
+        state.pender.pending[DELETE_EVENT]
+      ),
     }),
     dispatch => ({
       EventsActions: bindActionCreators(eventsActions, dispatch),
