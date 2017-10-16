@@ -5,7 +5,9 @@ const serialize = require('serialize-javascript');
 // Loading built modules.
 const render = require('./build').default;
 
-const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), { encoding: 'utf8' });
+const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), {
+  encoding: 'utf8',
+});
 
 module.exports = (req, res, next) => {
   const location = req.path;
@@ -19,19 +21,18 @@ module.exports = (req, res, next) => {
       const page = template
         .replace(
           '<div id="root"></div>',
-          `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${serialize(state)}</script>`,
+          `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${serialize(
+            state,
+          )}</script>`,
         )
         .replace(
           '<meta helmet>',
           `${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}`,
         )
-        .replace(
-          '<style></style>',
-          style,
-        );
+        .replace('<style></style>', style);
       res.send(page);
     })
-    .catch((e) => {
+    .catch(e => {
       console.error(e);
       next(e);
     });

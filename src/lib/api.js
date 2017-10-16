@@ -16,22 +16,24 @@ export function getErrorMessages(error, fieldName, context) {
   return _.get(error, prefix + fieldName);
 }
 
-const api = (accessToken, query, variables) => axios.post(
-  `${API_URL}/graphql`,
-  {
-    query,
-    variables,
-  },
-  {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-    },
-})
-.then(({ data }) => {
-  if (data.errors) throw data;
-  return data.data;
-});
-
+const api = (accessToken, query, variables) =>
+  axios
+    .post(
+      `${API_URL}/graphql`,
+      {
+        query,
+        variables,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+    .then(({ data }) => {
+      if (data.errors) throw data;
+      return data.data;
+    });
 
 // Events
 
@@ -134,7 +136,6 @@ export const deleteEvent = accessToken => id => {
   };
   return api(accessToken, query, vars);
 };
-
 
 // Posts
 
@@ -266,7 +267,7 @@ export const getMorePosts = accessToken => after => {
     items: edges.map(e => e.node),
     pageInfo,
   }));
-}
+};
 
 export const insertPost = accessToken => data => {
   const query = `
@@ -350,23 +351,23 @@ export const deletePost = accessToken => id => {
   return api(accessToken, query, vars);
 };
 
-
 // Users
 
-export const login = ({ username, password }) => axios.post(
-  `${API_URL}/o/token/`,
-  queryString.stringify({
-    'grant_type': 'password',
-    username,
-    password,
-  }),
-  {
-    auth: {
-      username: process.env.REACT_APP_API_CLIENT_ID,
-      password: process.env.REACT_APP_API_CLIENT_SECRET,
+export const login = ({ username, password }) =>
+  axios.post(
+    `${API_URL}/o/token/`,
+    queryString.stringify({
+      grant_type: 'password',
+      username,
+      password,
+    }),
+    {
+      auth: {
+        username: process.env.REACT_APP_API_CLIENT_ID,
+        password: process.env.REACT_APP_API_CLIENT_SECRET,
+      },
     },
-  },
-);
+  );
 
 export const getUser = accessToken => () => {
   const query = `

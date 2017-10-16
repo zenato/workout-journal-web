@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 import Cookies from 'js-cookie';
 import * as usersActions from 'redux/modules/users';
-import { LOGIN, GET_USER } from 'redux/modules/users'
+import { LOGIN, GET_USER } from 'redux/modules/users';
 import Form, { validate } from 'components/users/LoginForm';
 
 const LoginForm = reduxForm({
@@ -14,7 +14,7 @@ const LoginForm = reduxForm({
 })(Form);
 
 class Login extends Component {
-  handleSubmit = async (values) => {
+  handleSubmit = async values => {
     const { UsersActions, location } = this.props;
     const { data } = await UsersActions.login(values);
 
@@ -31,18 +31,13 @@ class Login extends Component {
     const { error, loading } = this.props;
     return (
       <div>
-        {loading && (
-          <span className="loading">Now loading...</span>
-        )}
+        {loading && <span className="loading">Now loading...</span>}
 
         <article>
           <Helmet>
             <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
           </Helmet>
-          <LoginForm
-            error={loading ? null : error}
-            onSubmit={this.handleSubmit}
-          />
+          <LoginForm error={loading ? null : error} onSubmit={this.handleSubmit} />
         </article>
       </div>
     );
@@ -53,11 +48,11 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign({}, stateProps, dispatchProps, ownProps);
 
 export default connect(
-  (state) => ({
+  state => ({
     error: state.users.error,
     loading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
   }),
-  (dispatch) => ({
+  dispatch => ({
     UsersActions: bindActionCreators(usersActions, dispatch),
   }),
   mergeProps,

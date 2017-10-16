@@ -8,9 +8,7 @@ const props = {
   error: null,
   onDelete: jest.fn(),
   onMoveList: jest.fn(),
-  events: [
-    { id: '1', name: 'event-1' },
-  ],
+  events: [{ id: '1', name: 'event-1' }],
   loading: false,
 };
 

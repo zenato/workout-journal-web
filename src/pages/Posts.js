@@ -4,7 +4,7 @@ import { withDone } from 'react-router-server';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 import * as postsActions from 'redux/modules/posts';
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
@@ -34,14 +34,14 @@ class Posts extends Component {
     return this.props.PostsActions.getPosts(query);
   }
 
-  handleSearch = (values) => {
-    const { history, match, } = this.props;
-    history.push((`${match.path}?${queryString.stringify(values)}`));
+  handleSearch = values => {
+    const { history, match } = this.props;
+    history.push(`${match.path}?${queryString.stringify(values)}`);
   };
 
-  handleDetail = (id) => {
-    const { history, match, location, } = this.props;
-    history.push((`${match.path}/${id}${location.search}`));
+  handleDetail = id => {
+    const { history, match, location } = this.props;
+    history.push(`${match.path}/${id}${location.search}`);
   };
 
   handleForm = () => {
@@ -74,28 +74,26 @@ class Posts extends Component {
 
         <article>
           <ul>
-            {items.map(item => (
-              <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
-            ))}
+            {items.map(item => <PostItem key={item.id} item={item} onDetail={this.handleDetail} />)}
           </ul>
         </article>
 
         <aside>
-          {pageInfo.hasNextPage && (
-            <Button onClick={this.handleMorePosts} value="More" />
-          )}
+          {pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
         </aside>
       </div>
     );
   }
 }
 
-export default withDone(connect(
-  (state) => ({
-    items: state.posts.items,
-    pageInfo: state.posts.pageInfo,
-  }),
-  (dispatch) => ({
-    PostsActions: bindActionCreators(postsActions, dispatch),
-  }),
-)(Posts));
+export default withDone(
+  connect(
+    state => ({
+      items: state.posts.items,
+      pageInfo: state.posts.pageInfo,
+    }),
+    dispatch => ({
+      PostsActions: bindActionCreators(postsActions, dispatch),
+    }),
+  )(Posts),
+);

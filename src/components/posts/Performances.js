@@ -13,7 +13,7 @@ const Performances = ({ fields, meta: { error, submitFailed }, events, formValue
       <Button onClick={() => fields.push({})} value="Add" />
       {fields.map((name, index) => (
         <div key={index} className={cx('performance')}>
-          <div className={cx('index')}>#{index+1}</div>
+          <div className={cx('index')}>#{index + 1}</div>
           <Performance
             key={index}
             name={name}
@@ -24,7 +24,7 @@ const Performances = ({ fields, meta: { error, submitFailed }, events, formValue
         </div>
       ))}
     </FormGroup>
-  )
+  );
 };
 
 Performances.propTypes = {

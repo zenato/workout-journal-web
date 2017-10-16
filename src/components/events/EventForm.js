@@ -7,13 +7,7 @@ import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
-const EventForm = ({
-  error,
-  handleSubmit,
-  initialValues,
-  onDelete,
-  onMoveList,
-}) => (
+const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList }) => (
   <form onSubmit={handleSubmit} className={cx('event-form')}>
     <FormGroup label="Name">
       <Field type="text" name="name" component={Input} />

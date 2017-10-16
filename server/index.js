@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 // Set proxy
 const proxySetting = require(paths.appPackageJson).proxy;
-Object.keys(proxySetting).forEach((key) => {
+Object.keys(proxySetting).forEach(key => {
   app.use(key, proxy(proxySetting[key]));
 });
 
@@ -38,10 +38,10 @@ app.use((err, req, res, next) => {
   res.status(500);
 });
 
-app.listen(port, (err) => {
+app.listen(port, err => {
   if (err) {
     console.log(err);
-    return
+    return;
   }
   console.info(`⚡  Listening on ${port}.`);
 });

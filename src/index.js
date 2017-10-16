@@ -19,7 +19,7 @@ const render = Component => {
     <AppContainer>
       <Component store={store} />
     </AppContainer>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 };
 

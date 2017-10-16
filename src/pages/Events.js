@@ -4,9 +4,9 @@ import { withDone } from 'react-router-server';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 import * as eventsActions from 'redux/modules/events';
-import { GET_EVENTS } from 'redux/modules/events'
+import { GET_EVENTS } from 'redux/modules/events';
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
@@ -35,14 +35,14 @@ class Events extends Component {
     return this.props.EventsActions.getEvents(query);
   }
 
-  handleSearch = (values) => {
-    const { history, match, } = this.props;
-    history.push((`${match.path}?${queryString.stringify(values)}`));
+  handleSearch = values => {
+    const { history, match } = this.props;
+    history.push(`${match.path}?${queryString.stringify(values)}`);
   };
 
-  handleDetail = (id) => {
-    const { history, match, location, } = this.props;
-    history.push((`${match.path}/${id}${location.search}`));
+  handleDetail = id => {
+    const { history, match, location } = this.props;
+    history.push(`${match.path}/${id}${location.search}`);
   };
 
   handleForm = () => {
@@ -70,9 +70,7 @@ class Events extends Component {
         />
 
         <article>
-          {loading && (
-            <span>Now loading...</span>
-          )}
+          {loading && <span>Now loading...</span>}
 
           <ul>
             {items.map(item => (
@@ -85,12 +83,14 @@ class Events extends Component {
   }
 }
 
-export default withDone(connect(
-  (state) => ({
-    items: state.events.items,
-    loading: state.pender.pending[GET_EVENTS],
-  }),
-  (dispatch) => ({
-    EventsActions: bindActionCreators(eventsActions, dispatch),
-  }),
-)(Events));
+export default withDone(
+  connect(
+    state => ({
+      items: state.events.items,
+      loading: state.pender.pending[GET_EVENTS],
+    }),
+    dispatch => ({
+      EventsActions: bindActionCreators(eventsActions, dispatch),
+    }),
+  )(Events),
+);

@@ -15,32 +15,34 @@ const initialState = {
   error: null,
 };
 
-export default handleActions({
-  ...pender({
-    type: LOGIN,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-    }),
-    onFailure: (state, action) => ({
-      ...state,
-      error: true,
-    }),
-  }),
-
-  ...pender({
-    type: GET_USER,
-    onSuccess: (state, action) => {
-      return ({
+export default handleActions(
+  {
+    ...pender({
+      type: LOGIN,
+      onSuccess: (state, action) => ({
         ...state,
         error: null,
-        user: action.payload,
-      })
-    },
-    onFailure: (state, action) => ({
-      ...state,
-      // Skip error for unauthorization.
+      }),
+      onFailure: (state, action) => ({
+        ...state,
+        error: true,
+      }),
     }),
-  }),
 
-}, initialState);
+    ...pender({
+      type: GET_USER,
+      onSuccess: (state, action) => {
+        return {
+          ...state,
+          error: null,
+          user: action.payload,
+        };
+      },
+      onFailure: (state, action) => ({
+        ...state,
+        // Skip error for unauthorization.
+      }),
+    }),
+  },
+  initialState,
+);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
 import classNames from 'classnames/bind';
 import { Button } from 'components/form';
 import styles from './SearchForm.scss';
@@ -13,7 +13,13 @@ class SearchForm extends Component {
     return (
       <section>
         <form onSubmit={handleSubmit} className={cx('search-form')}>
-          <Field name="name" type="text" placeholder={placeholder} component="input" className={cx('form-control')} />
+          <Field
+            name="name"
+            type="text"
+            placeholder={placeholder}
+            component="input"
+            className={cx('form-control')}
+          />
           <Button type="submit" value="Search" />
         </form>
       </section>

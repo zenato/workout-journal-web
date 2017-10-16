@@ -16,7 +16,7 @@ describe('EventItem', () => {
 
   it('should render value and unit if not empty `value` props.', () => {
     const component = shallow(<EventItem {...props} value={10} />);
-    expect(component).toMatchSnapshot()
+    expect(component).toMatchSnapshot();
   });
 
   it('should call `onDetail` if click link.', () => {

@@ -8,9 +8,7 @@ const cx = classNames.bind(styles);
 const FormGroup = ({ label, children }) => (
   <div className={cx('item')}>
     <label>{label}</label>
-    <div className={cx('field')}>
-      {children}
-    </div>
+    <div className={cx('field')}>{children}</div>
   </div>
 );
 

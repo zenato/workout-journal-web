@@ -33,104 +33,100 @@ const initialState = {
   },
 };
 
-export default handleActions({
-  ...pender({
-    type: GET_POSTS,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      items: action.payload.items,
-      pageInfo: action.payload.pageInfo,
-    }),
-  }),
-  ...pender({
-    type: GET_MORE_POSTS,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      items: [
-        ...state.items,
-        ...action.payload.items,
-      ],
-      pageInfo: action.payload.pageInfo,
-    }),
-  }),
-
-  ...pender({
-    type: GET_POST,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      item: action.payload,
-    }),
-  }),
-  ...pender({
-    type: GET_POST_EVENTS,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      events: action.payload,
-    }),
-  }),
-  ...pender({
-    type: UPDATE_POST,
-    onSuccess: (state, action) => {
-      const item = action.payload;
-      return ({
+export default handleActions(
+  {
+    ...pender({
+      type: GET_POSTS,
+      onSuccess: (state, action) => ({
         ...state,
         error: null,
-        item: {
-          ...item,
-          performances: item.performances.map(p => ({
-            ...p,
-            event: { id: p.event.id },
-          })),
-
-        },
-        items: state.items.map(i => i.id === item.id ? item : i),
-      });
-    },
-    onFailure: (state, action) => ({
-      ...state,
-      error: action.payload.errors || action.payload.response,
+        items: action.payload.items,
+        pageInfo: action.payload.pageInfo,
+      }),
     }),
-  }),
-  ...pender({
-    type: INSERT_POST,
-    onSuccess: (state, action) => {
-      const item = action.payload;
-      return ({
+    ...pender({
+      type: GET_MORE_POSTS,
+      onSuccess: (state, action) => ({
         ...state,
         error: null,
-        item: {
-          ...item,
-          performances: item.performances.map(p => ({
-            ...p,
-            event: { id: p.event.id },
-          })),
-        },
-        items: [
-          item,
-          ...state.items,
-        ],
-      })
-    },
-    onFailure: (state, action) => ({
-      ...state,
-      error: action.payload.errors || action.payload.response,
+        items: [...state.items, ...action.payload.items],
+        pageInfo: action.payload.pageInfo,
+      }),
     }),
-  }),
-  ...pender({
-    type: DELETE_POST,
-    onSuccess: (state, action) => ({
+
+    ...pender({
+      type: GET_POST,
+      onSuccess: (state, action) => ({
+        ...state,
+        error: null,
+        item: action.payload,
+      }),
+    }),
+    ...pender({
+      type: GET_POST_EVENTS,
+      onSuccess: (state, action) => ({
+        ...state,
+        error: null,
+        events: action.payload,
+      }),
+    }),
+    ...pender({
+      type: UPDATE_POST,
+      onSuccess: (state, action) => {
+        const item = action.payload;
+        return {
+          ...state,
+          error: null,
+          item: {
+            ...item,
+            performances: item.performances.map(p => ({
+              ...p,
+              event: { id: p.event.id },
+            })),
+          },
+          items: state.items.map(i => (i.id === item.id ? item : i)),
+        };
+      },
+      onFailure: (state, action) => ({
+        ...state,
+        error: action.payload.errors || action.payload.response,
+      }),
+    }),
+    ...pender({
+      type: INSERT_POST,
+      onSuccess: (state, action) => {
+        const item = action.payload;
+        return {
+          ...state,
+          error: null,
+          item: {
+            ...item,
+            performances: item.performances.map(p => ({
+              ...p,
+              event: { id: p.event.id },
+            })),
+          },
+          items: [item, ...state.items],
+        };
+      },
+      onFailure: (state, action) => ({
+        ...state,
+        error: action.payload.errors || action.payload.response,
+      }),
+    }),
+    ...pender({
+      type: DELETE_POST,
+      onSuccess: (state, action) => ({
+        ...state,
+        error: null,
+        items: state.items.filter(i => i.id !== state.item.id),
+      }),
+    }),
+    [CLEAR_POST]: (state, action) => ({
       ...state,
+      item: null,
       error: null,
-      items: state.items.filter(i => i.id !== state.item.id),
     }),
-  }),
-  [CLEAR_POST]: (state, action) => ({
-    ...state,
-    item: null,
-    error: null,
-  }),
-}, initialState);
+  },
+  initialState,
+);

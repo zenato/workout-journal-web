@@ -6,7 +6,7 @@ import styles from './EventItem.scss';
 const cx = classNames.bind(styles);
 
 const EventItem = ({ item, onDetail }) => {
-  const handleDetail = (e) => {
+  const handleDetail = e => {
     e.preventDefault();
     onDetail(item.id);
   };
@@ -16,7 +16,10 @@ const EventItem = ({ item, onDetail }) => {
         <div className={cx('info')}>
           <span className={cx('name')}>{item.name}</span>
           {item.value && (
-            <span className={cx('value-unit')}>{item.value}{item.unit}</span>
+            <span className={cx('value-unit')}>
+              {item.value}
+              {item.unit}
+            </span>
           )}
           <div className={cx('remark')}>{item.remark}</div>
         </div>

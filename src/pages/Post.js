@@ -4,13 +4,19 @@ import { bindActionCreators } from 'redux';
 import { formValueSelector } from 'redux-form';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 import * as postsActions from 'redux/modules/posts';
-import { GET_POST, INSERT_POST, UPDATE_POST, DELETE_POST, GET_POST_EVENTS } from 'redux/modules/posts'
+import {
+  GET_POST,
+  INSERT_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  GET_POST_EVENTS,
+} from 'redux/modules/posts';
 import Form, { validate } from 'components/posts/PostForm';
 import { formatDate } from 'lib/date';
 
-const PostForm  = reduxForm({
+const PostForm = reduxForm({
   form: 'postForm',
   validate,
 })(Form);
@@ -39,7 +45,7 @@ class Post extends Component {
 
   isNew = () => this.props.match.params.id === 'new';
 
-  handleSubmit = async (values) => {
+  handleSubmit = async values => {
     const { location, history, PostsActions } = this.props;
     if (this.isNew()) {
       const item = await PostsActions.insertPost(values);
@@ -65,14 +71,13 @@ class Post extends Component {
     const { item, events, error, loading, formValues } = this.props;
     return (
       <div>
-        {loading && (
-          <span>Now loading...</span>
-        )}
+        {loading && <span>Now loading...</span>}
 
         {(this.isNew() || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
+              <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${process.env
+                .REACT_APP_SITE_NAME}`}</title>
             </Helmet>
             <PostForm
               initialValues={item || this.defaultItem}
@@ -94,23 +99,25 @@ class Post extends Component {
 
 const selector = formValueSelector('postForm');
 
-export default withDone(connect(
-  (state) => ({
-    error: state.posts.error,
-    loading: !!(
-      state.pender.pending[GET_POST_EVENTS]
-      || state.pender.pending[GET_POST]
-      || state.pender.pending[INSERT_POST]
-      || state.pender.pending[UPDATE_POST]
-      || state.pender.pending[DELETE_POST]
-    ),
-    item: state.posts.item,
-    events: state.posts.events,
-    formValues: {
-      performances: selector(state, 'performances') || [],
-    },
-  }),
-  (dispatch) => ({
-    PostsActions: bindActionCreators(postsActions, dispatch),
-  }),
-)(Post));
+export default withDone(
+  connect(
+    state => ({
+      error: state.posts.error,
+      loading: !!(
+        state.pender.pending[GET_POST_EVENTS] ||
+        state.pender.pending[GET_POST] ||
+        state.pender.pending[INSERT_POST] ||
+        state.pender.pending[UPDATE_POST] ||
+        state.pender.pending[DELETE_POST]
+      ),
+      item: state.posts.item,
+      events: state.posts.events,
+      formValues: {
+        performances: selector(state, 'performances') || [],
+      },
+    }),
+    dispatch => ({
+      PostsActions: bindActionCreators(postsActions, dispatch),
+    }),
+  )(Post),
+);

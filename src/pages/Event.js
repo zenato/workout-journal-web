@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withDone } from 'react-router-server';
 import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 import * as eventsActions from 'redux/modules/events';
-import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
+import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events';
 import Form, { validate } from 'components/events/EventForm';
 
 const isNew = ({ id }) => id === 'new';
@@ -27,7 +27,7 @@ class Event extends Component {
     this.props.EventsActions.clearEvent();
   }
 
-  handleSubmit = async (values) => {
+  handleSubmit = async values => {
     const { match, location, history, EventsActions } = this.props;
     if (isNew(match.params)) {
       const item = await EventsActions.insertEvent(values);
@@ -53,14 +53,13 @@ class Event extends Component {
     const { match, item, error, loading } = this.props;
     return (
       <div>
-        {loading && (
-          <span>Now loading...</span>
-        )}
+        {loading && <span>Now loading...</span>}
 
         {(isNew(match.params) || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? item.name : 'New Event'} | ${process.env.REACT_APP_SITE_NAME}`}</title>
+              <title>{`${item ? item.name : 'New Event'} | ${process.env
+                .REACT_APP_SITE_NAME}`}</title>
             </Helmet>
             <EventForm
               initialValues={item}
@@ -77,18 +76,19 @@ class Event extends Component {
   }
 }
 
-export default withDone(connect(
-  (state) => ({
-    error: state.events.error,
-    item: state.events.item,
-    loading: (
-      state.pender.pending[GET_EVENT] ||
-      state.pender.pending[INSERT_EVENT] ||
-      state.pender.pending[UPDATE_EVENT] ||
-      state.pender.pending[DELETE_EVENT]
-    ),
-  }),
-  (dispatch) => ({
-    EventsActions: bindActionCreators(eventsActions, dispatch),
-  }),
-)(Event));
+export default withDone(
+  connect(
+    state => ({
+      error: state.events.error,
+      item: state.events.item,
+      loading:
+        state.pender.pending[GET_EVENT] ||
+        state.pender.pending[INSERT_EVENT] ||
+        state.pender.pending[UPDATE_EVENT] ||
+        state.pender.pending[DELETE_EVENT],
+    }),
+    dispatch => ({
+      EventsActions: bindActionCreators(eventsActions, dispatch),
+    }),
+  )(Event),
+);

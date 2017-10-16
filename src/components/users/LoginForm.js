@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
 import classNames from 'classnames/bind';
 import { FormGroup, Button, Input } from 'components/form';
 import styles from './LoginForm.scss';
@@ -41,7 +41,7 @@ export const validate = ({ username, password }) => {
   if (!password) {
     errors.password = 'Required';
   }
-  return errors
+  return errors;
 };
 
 export default LoginForm;

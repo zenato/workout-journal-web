@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-router-server';
 import configureStore from 'redux/configureStore';
 import { Helmet } from 'react-helmet';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import App from 'shared/App';
 
 const render = async ({ location, accessToken }) => {
@@ -15,10 +15,10 @@ const render = async ({ location, accessToken }) => {
     <StaticRouter location={location}>
       <Provider store={store}>
         <StyleSheetManager sheet={sheet.instance}>
-          <App/>
+          <App />
         </StyleSheetManager>
       </Provider>
-    </StaticRouter>
+    </StaticRouter>,
   );
 
   const helmet = Helmet.renderStatic();

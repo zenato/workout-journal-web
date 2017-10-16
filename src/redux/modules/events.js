@@ -24,64 +24,67 @@ const initialState = {
   error: null,
 };
 
-export default handleActions({
-  ...pender({
-    type: GET_EVENTS,
-    onSuccess: (state, action) => {
-      return ({
+export default handleActions(
+  {
+    ...pender({
+      type: GET_EVENTS,
+      onSuccess: (state, action) => {
+        return {
+          ...state,
+          error: null,
+          items: action.payload,
+        };
+      },
+    }),
+
+    ...pender({
+      type: GET_EVENT,
+      onSuccess: (state, action) => ({
         ...state,
         error: null,
-        items: action.payload,
-      })
-    },
-  }),
-
-  ...pender({
-    type: GET_EVENT,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      item: action.payload,
+        item: action.payload,
+      }),
     }),
-  }),
-  ...pender({
-    type: UPDATE_EVENT,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      item: action.payload,
-      items: state.items.map(i => i.id === state.item.id ? { ...i, ...action.payload } : i),
+    ...pender({
+      type: UPDATE_EVENT,
+      onSuccess: (state, action) => ({
+        ...state,
+        error: null,
+        item: action.payload,
+        items: state.items.map(i => (i.id === state.item.id ? { ...i, ...action.payload } : i)),
+      }),
+      onFailure: (state, action) => ({
+        ...state,
+        error: action.payload.response,
+      }),
     }),
-    onFailure: (state, action) => ({
-      ...state,
-      error: action.payload.response,
+    ...pender({
+      type: INSERT_EVENT,
+      onSuccess: (state, action) => ({
+        ...state,
+        error: null,
+        items: [action.payload, ...state.items],
+        item: action.payload,
+      }),
+      onFailure: (state, action) => ({
+        ...state,
+        error: action.payload.response,
+      }),
     }),
-  }),
-  ...pender({
-    type: INSERT_EVENT,
-    onSuccess: (state, action) => ({
-      ...state,
-      error: null,
-      items: [ action.payload, ...state.items ],
-      item: action.payload,
+    ...pender({
+      type: DELETE_EVENT,
+      onSuccess: (state, action) => ({
+        ...state,
+        item: null,
+        items: state.items.filter(i => i.id !== state.item.id),
+        error: null,
+      }),
     }),
-    onFailure: (state, action) => ({
-      ...state,
-      error: action.payload.response,
-    }),
-  }),
-  ...pender({
-    type: DELETE_EVENT,
-    onSuccess: (state, action) => ({
+    [CLEAR_EVENT]: (state, action) => ({
       ...state,
       item: null,
-      items: state.items.filter(i => i.id !== state.item.id),
       error: null,
     }),
-  }),
-  [CLEAR_EVENT]: (state, action) => ({
-    ...state,
-    item: null,
-    error: null,
-  }),
-}, initialState);
+  },
+  initialState,
+);

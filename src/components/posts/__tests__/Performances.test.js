@@ -4,12 +4,10 @@ import Performances from '../Performances';
 
 describe('Performances', () => {
   const props = {
-    events: [
-      { id: '1', name: 'event' },
-    ],
+    events: [{ id: '1', name: 'event' }],
     fields: {
       map: fn => [fn('performances[0]', 0)],
-      remove: () => {}
+      remove: () => {},
     },
     meta: {},
     formValues: {

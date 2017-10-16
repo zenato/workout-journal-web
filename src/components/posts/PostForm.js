@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form'
+import { Field, FieldArray } from 'redux-form';
 import classNames from 'classnames/bind';
 import { FormGroup, Button, Input } from 'components/form';
 import Performances from './Performances';
@@ -9,12 +9,12 @@ import styles from './PostForm.scss';
 const cx = classNames.bind(styles);
 
 class PostForm extends Component {
-  handleDelete = (e) => {
+  handleDelete = e => {
     e.preventDefault();
     this.props.onDelete();
   };
 
-  handleMoveList = (e) => {
+  handleMoveList = e => {
     e.preventDefault();
     this.props.onMoveList();
   };
@@ -26,23 +26,27 @@ class PostForm extends Component {
         <FormGroup label="Workout Date">
           <Field type="date" name="workoutDate" component={Input} />
         </FormGroup>
-        <FieldArray name="performances" events={events} formValues={formValues} component={Performances} />
+        <FieldArray
+          name="performances"
+          events={events}
+          formValues={formValues}
+          component={Performances}
+        />
         <FormGroup label="Remark">
           <Field type="text" name="remark" component={Input} />
         </FormGroup>
 
-        {!loading && error && (
-          <div className={cx('error')}>
-            <span>Oops, An expected error seems to have occurred.</span>
-          </div>
-        )}
+        {!loading &&
+          error && (
+            <div className={cx('error')}>
+              <span>Oops, An expected error seems to have occurred.</span>
+            </div>
+          )}
 
         <div className={cx('tool')}>
           <Button type="submit" value="Save" className={cx('primary')} />
           <Button value="List" onClick={this.handleMoveList} />
-          {initialValues.id && (
-            <Button value="Delete" onClick={this.handleDelete} />
-          )}
+          {initialValues.id && <Button value="Delete" onClick={this.handleDelete} />}
         </div>
       </form>
     );

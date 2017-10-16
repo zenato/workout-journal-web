@@ -11,14 +11,28 @@ const Nav = ({ user, onLogout }) => {
     <nav className={cx('nav')}>
       <div className={cx('main')}>
         <ul>
-          <li><NavLink exact to="/" activeClassName={cx('active')}>Home</NavLink></li>
-          <li><NavLink to="/events" activeClassName={cx('active')}>Events</NavLink></li>
-          <li><NavLink to="/posts" activeClassName={cx('active')}>Posts</NavLink></li>
+          <li>
+            <NavLink exact to="/" activeClassName={cx('active')}>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/events" activeClassName={cx('active')}>
+              Events
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/posts" activeClassName={cx('active')}>
+              Posts
+            </NavLink>
+          </li>
         </ul>
       </div>
       {user && (
         <aside className={cx('tool')}>
-          <a href="" onClick={onLogout}>Logout</a>
+          <a href="" onClick={onLogout}>
+            Logout
+          </a>
         </aside>
       )}
     </nav>

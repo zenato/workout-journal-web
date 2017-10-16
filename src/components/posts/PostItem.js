@@ -7,7 +7,7 @@ import styles from './PostItem.scss';
 const cx = classNames.bind(styles);
 
 const PostItem = ({ item, onDetail }) => {
-  const handleClick = (e) => {
+  const handleClick = e => {
     e.preventDefault();
     onDetail(item.id);
   };
@@ -28,11 +28,13 @@ PostItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     workoutDate: PropTypes.string.isRequired,
-    performances: PropTypes.arrayOf(PropTypes.shape({
-      event: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      }).isRequired,
-    })),
+    performances: PropTypes.arrayOf(
+      PropTypes.shape({
+        event: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+        }).isRequired,
+      }),
+    ),
   }).isRequired,
   onDetail: PropTypes.func.isRequired,
 };

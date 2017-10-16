@@ -37,4 +37,3 @@ describe('Performance', () => {
     expect(button.props.onClick).toBe(props.onDelete);
   });
 });
-
