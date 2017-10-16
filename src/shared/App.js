@@ -25,7 +25,7 @@ class App extends Component {
     }
   }
 
-  handleLogout = (e) => {
+  handleLogout = e => {
     e.preventDefault();
     Cookies.remove('accessToken');
     window.location.href = '/';
