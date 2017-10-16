@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
 import classNames from 'classnames/bind';
 import { FormGroup, Button, Input } from 'components/form';
 import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
-const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList }) => (
+const EventForm = ({
+  error,
+  handleSubmit,
+  initialValues,
+  onDelete,
+  onMoveList,
+}) => (
   <form onSubmit={handleSubmit} className={cx('event-form')}>
     <FormGroup label="Name">
       <Field type="text" name="name" component={Input} />
@@ -31,9 +37,7 @@ const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList })
     <div className={cx('tool')}>
       <Button type="submit" value="Save" className="primary" />
       <Button value="List" onClick={onMoveList} />
-      {initialValues && (
-        <Button value="Delete" onClick={onDelete} />
-      )}
+      {initialValues && <Button value="Delete" onClick={onDelete} />}
     </div>
   </form>
 );
