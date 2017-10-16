@@ -4,7 +4,7 @@ import LoginForm from '../LoginForm';
 
 describe('LoginForm', () => {
   const props = {
-    error: null,
+    errors: null,
     handleSubmit: jest.fn(),
   };
 

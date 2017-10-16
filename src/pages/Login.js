@@ -28,7 +28,7 @@ class Login extends Component {
   };
 
   render() {
-    const { error, loading } = this.props;
+    const { errors, loading } = this.props;
     return (
       <div>
         {loading && <span className="loading">Now loading...</span>}
@@ -37,7 +37,7 @@ class Login extends Component {
           <Helmet>
             <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
           </Helmet>
-          <LoginForm error={loading ? null : error} onSubmit={this.handleSubmit} />
+          <LoginForm errors={loading ? null : errors} onSubmit={this.handleSubmit} />
         </article>
       </div>
     );
@@ -49,7 +49,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    error: state.users.error,
+    errors: state.users.errors,
     loading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
   }),
   dispatch => ({
