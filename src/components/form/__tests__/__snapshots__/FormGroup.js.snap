@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FormGroup should render passed props. 1`] = `
-<div
-  className="item"
->
-  <label>
+<styled.div>
+  <styled.label>
     test
-  </label>
-  <div
-    className="field"
-  >
+  </styled.label>
+  <styled.div>
     Test
-  </div>
-</div>
+  </styled.div>
+</styled.div>
 `;

@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
-import styles from './FormGroup.scss';
+import styled from 'styled-components';
 
-const cx = classNames.bind(styles);
+const Wrapper = styled.div`
+  display: flex;
+  margin-bottom: 5px;
+  align-items: center;
+`;
+
+const Label = styled.label`
+  flex: 2;
+  text-align: right;
+  font-weight: bold;
+  margin-right: 5px;
+`;
+
+const Field = styled.div`
+  flex: 10;
+  padding-right: 10px;
+  vertical-align: middle;
+`;
 
 const FormGroup = ({ label, children }) => (
-  <div className={cx('item')}>
-    <label>{label}</label>
-    <div className={cx('field')}>{children}</div>
-  </div>
+  <Wrapper>
+    <Label>{label}</Label>
+    <Field>{children}</Field>
+  </Wrapper>
 );
 
 FormGroup.propTypes = {
