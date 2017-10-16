@@ -49,8 +49,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    hasError: state.pender.failure[LOGIN],
-    isLoading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
+    hasError: !!state.pender.failure[LOGIN],
+    isLoading: !!(state.pender.pending[LOGIN] || state.pender.pending[GET_USER]),
   }),
   dispatch => ({
     UsersActions: bindActionCreators(usersActions, dispatch),
