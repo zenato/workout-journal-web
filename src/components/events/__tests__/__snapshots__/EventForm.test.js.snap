@@ -61,7 +61,7 @@ exports[`EventForm should render delete button if not empty \`initialValues\` pr
 </form>
 `;
 
-exports[`EventForm should render error message if not empty \`error\` props. 1`] = `
+exports[`EventForm should render error message if not empty \`hasError\` props. 1`] = `
 <form
   className="event-form"
   onSubmit={[Function]}

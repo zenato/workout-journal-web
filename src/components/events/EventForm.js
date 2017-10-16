@@ -7,7 +7,7 @@ import styles from './EventForm.scss';
 
 const cx = classNames.bind(styles);
 
-const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList }) => (
+const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList }) => (
   <form onSubmit={handleSubmit} className={cx('event-form')}>
     <FormGroup label="Name">
       <Field type="text" name="name" component={Input} />
@@ -22,7 +22,7 @@ const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList })
       <Field type="text" name="remark" component={Input} />
     </FormGroup>
 
-    {error && (
+    {hasError && (
       <div className={cx('error')}>
         <span>Oops, An expected error seems to have occurred.</span>
       </div>
@@ -38,7 +38,7 @@ const EventForm = ({ error, handleSubmit, initialValues, onDelete, onMoveList })
 
 EventForm.propTypes = {
   initialValues: PropTypes.object,
-  error: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,

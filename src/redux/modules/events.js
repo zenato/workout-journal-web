@@ -21,7 +21,6 @@ export const deleteEvent = createPrivateAction(DELETE_EVENT, api.deleteEvent);
 const initialState = {
   items: [],
   item: null,
-  error: null,
 };
 
 export default handleActions(
@@ -31,7 +30,6 @@ export default handleActions(
       onSuccess: (state, action) => {
         return {
           ...state,
-          error: null,
           items: action.payload,
         };
       },
@@ -41,7 +39,6 @@ export default handleActions(
       type: GET_EVENT,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         item: action.payload,
       }),
     }),
@@ -49,26 +46,16 @@ export default handleActions(
       type: UPDATE_EVENT,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         item: action.payload,
         items: state.items.map(i => (i.id === state.item.id ? { ...i, ...action.payload } : i)),
-      }),
-      onFailure: (state, action) => ({
-        ...state,
-        error: action.payload.response,
       }),
     }),
     ...pender({
       type: INSERT_EVENT,
       onSuccess: (state, action) => ({
         ...state,
-        error: null,
         items: [action.payload, ...state.items],
         item: action.payload,
-      }),
-      onFailure: (state, action) => ({
-        ...state,
-        error: action.payload.response,
       }),
     }),
     ...pender({
@@ -77,13 +64,11 @@ export default handleActions(
         ...state,
         item: null,
         items: state.items.filter(i => i.id !== state.item.id),
-        error: null,
       }),
     }),
     [CLEAR_EVENT]: (state, action) => ({
       ...state,
       item: null,
-      error: null,
     }),
   },
   initialState,

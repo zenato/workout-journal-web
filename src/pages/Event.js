@@ -50,10 +50,10 @@ class Event extends Component {
   };
 
   render() {
-    const { match, item, error, loading } = this.props;
+    const { match, item, hasError, isLoading } = this.props;
     return (
       <div>
-        {loading && <span>Now loading...</span>}
+        {isLoading && <span>Now loading...</span>}
 
         {(isNew(match.params) || item) && (
           <article>
@@ -64,7 +64,7 @@ class Event extends Component {
             <EventForm
               initialValues={item}
               enableReinitialize={true}
-              error={loading ? null : error}
+              hasError={isLoading ? false : hasError}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
@@ -79,9 +79,13 @@ class Event extends Component {
 export default withDone(
   connect(
     state => ({
-      error: state.events.error,
       item: state.events.item,
-      loading:
+      hasError:
+        state.pender.failure[GET_EVENT] ||
+        state.pender.failure[INSERT_EVENT] ||
+        state.pender.failure[UPDATE_EVENT] ||
+        state.pender.failure[DELETE_EVENT],
+      isLoading:
         state.pender.pending[GET_EVENT] ||
         state.pender.pending[INSERT_EVENT] ||
         state.pender.pending[UPDATE_EVENT] ||

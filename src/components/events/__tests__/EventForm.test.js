@@ -6,13 +6,13 @@ describe('EventForm', () => {
   const props = {
     handleSubmit: jest.fn(),
     initialValues: null,
-    error: null,
+    hasError: false,
     onDelete: jest.fn(),
     onMoveList: jest.fn(),
   };
 
-  it('should render error message if not empty `error` props.', () => {
-    const component = shallow(<EventForm {...props} error={['error']} />);
+  it('should render error message if not empty `hasError` props.', () => {
+    const component = shallow(<EventForm {...props} hasError={true} />);
     expect(component).toMatchSnapshot();
   });
 
