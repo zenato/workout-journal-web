@@ -1,3 +1,4 @@
 {
-  "jest.autoEnable": true
+  "jest.autoEnable": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
