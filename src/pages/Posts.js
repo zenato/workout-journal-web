@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { reduxForm } from 'redux-form';
 import * as postsActions from 'redux/modules/posts';
+import { GET_POSTS } from 'redux/modules/posts';
 import { hasChangedLocation } from 'lib/location';
 import { Button } from 'components/form';
 import SearchForm from 'components/SearchForm';
@@ -53,7 +54,7 @@ class Posts extends Component {
   };
 
   render() {
-    const { items, location, pageInfo } = this.props;
+    const { items, location, pageInfo, isLoading, hasError } = this.props;
     const search = { ...queryString.parse(location.search) };
     return (
       <div>
@@ -71,6 +72,9 @@ class Posts extends Component {
           onSubmit={this.handleSearch}
           placeholder="Input post name."
         />
+
+        {isLoading && <div>Now loading... </div>}
+        {hasError && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
           <ul>
@@ -91,6 +95,8 @@ export default withDone(
     state => ({
       items: state.posts.items,
       pageInfo: state.posts.pageInfo,
+      isLoading: !!state.pender.pending[GET_POSTS],
+      hasError: !!state.pender.failure[GET_POSTS],
     }),
     dispatch => ({
       PostsActions: bindActionCreators(postsActions, dispatch),
