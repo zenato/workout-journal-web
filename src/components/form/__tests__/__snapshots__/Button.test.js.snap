@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button should render passed props. 1`] = `
-<input
-  className="btn"
+<styled.input
   onClick={[Function]}
   type="submit"
   value="test"
