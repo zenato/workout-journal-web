@@ -2,17 +2,14 @@
 
 exports[`Input should render passed props. 1`] = `
 <div>
-  <input
-    className="form-control"
+  <styled.input
     name="test"
     placeholder="test"
     type="text"
     value="test"
   />
-  <span
-    className="error"
-  >
+  <styled.span>
     test
-  </span>
+  </styled.span>
 </div>
 `;

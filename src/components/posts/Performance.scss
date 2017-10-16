@@ -1,2 +1,10 @@
 @import 'common';
-@import '../form/Input.scss';
+
+.form-control {
+  display: block;
+  background-color: #fff;
+  color: #4a4a4a;
+  border: solid #d4d4d4 1px;
+  padding: 10px;
+  width: 100%;
+}
