@@ -24,6 +24,13 @@ exports[`LoginForm should render error if not empty \`error\` props. 1`] = `
     />
   </FormGroup>
   <div
+    className="error"
+  >
+    <span>
+      Oops, An expected error seems to have occurred.
+    </span>
+  </div>
+  <div
     className="tool"
   >
     <Button

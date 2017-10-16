@@ -28,16 +28,16 @@ class Login extends Component {
   };
 
   render() {
-    const { errors, loading } = this.props;
+    const { hasError, isLoading } = this.props;
     return (
       <div>
-        {loading && <span className="loading">Now loading...</span>}
+        {isLoading && <span className="loading">Now loading...</span>}
 
         <article>
           <Helmet>
             <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
           </Helmet>
-          <LoginForm errors={loading ? null : errors} onSubmit={this.handleSubmit} />
+          <LoginForm hasError={isLoading ? false : hasError} onSubmit={this.handleSubmit} />
         </article>
       </div>
     );
@@ -49,8 +49,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    errors: state.users.errors,
-    loading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
+    hasError: state.users.hasError,
+    isLoading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
   }),
   dispatch => ({
     UsersActions: bindActionCreators(usersActions, dispatch),

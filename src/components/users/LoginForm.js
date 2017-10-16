@@ -7,7 +7,7 @@ import styles from './LoginForm.scss';
 
 const cx = classNames.bind(styles);
 
-const LoginForm = ({ errors, handleSubmit }) => (
+const LoginForm = ({ hasError, handleSubmit }) => (
   <form onSubmit={handleSubmit} className={cx('login-form')}>
     <FormGroup label="Username">
       <Field type="text" name="username" component={Input} />
@@ -16,7 +16,7 @@ const LoginForm = ({ errors, handleSubmit }) => (
       <Field type="password" name="password" component={Input} />
     </FormGroup>
 
-    {errors && (
+    {hasError && (
       <div className={cx('error')}>
         <span>Oops, An expected error seems to have occurred.</span>
       </div>
@@ -29,7 +29,7 @@ const LoginForm = ({ errors, handleSubmit }) => (
 );
 
 LoginForm.propTypes = {
-  errors: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

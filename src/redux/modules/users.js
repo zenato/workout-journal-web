@@ -12,7 +12,7 @@ export const getUser = createPrivateAction(GET_USER, api.getUser);
 
 const initialState = {
   user: null,
-  errors: null,
+  hasError: false,
 };
 
 export default handleActions(
@@ -21,11 +21,11 @@ export default handleActions(
       type: LOGIN,
       onSuccess: (state, action) => ({
         ...state,
-        errors: null,
+        hasError: null,
       }),
       onFailure: (state, action) => ({
         ...state,
-        errors: true,
+        hasError: true,
       }),
     }),
 
@@ -34,7 +34,7 @@ export default handleActions(
       onSuccess: (state, action) => {
         return {
           ...state,
-          errors: null,
+          hasError: null,
           user: action.payload,
         };
       },

@@ -4,12 +4,12 @@ import LoginForm from '../LoginForm';
 
 describe('LoginForm', () => {
   const props = {
-    errors: null,
+    hasError: false,
     handleSubmit: jest.fn(),
   };
 
   it('should render error if not empty `error` props.', () => {
-    const component = shallow(<LoginForm {...props} error={['error']} />);
+    const component = shallow(<LoginForm {...props} hasError={true} />);
     expect(component).toMatchSnapshot();
   });
 
