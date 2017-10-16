@@ -49,7 +49,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    hasError: state.users.hasError,
+    hasError: state.pender.failure[LOGIN],
     isLoading: state.pender.pending[LOGIN] || state.pender.pending[GET_USER],
   }),
   dispatch => ({

@@ -12,7 +12,6 @@ export const getUser = createPrivateAction(GET_USER, api.getUser);
 
 const initialState = {
   user: null,
-  hasError: false,
 };
 
 export default handleActions(
@@ -21,26 +20,14 @@ export default handleActions(
       type: LOGIN,
       onSuccess: (state, action) => ({
         ...state,
-        hasError: null,
-      }),
-      onFailure: (state, action) => ({
-        ...state,
-        hasError: true,
       }),
     }),
 
     ...pender({
       type: GET_USER,
-      onSuccess: (state, action) => {
-        return {
-          ...state,
-          hasError: null,
-          user: action.payload,
-        };
-      },
-      onFailure: (state, action) => ({
+      onSuccess: (state, action) => ({
         ...state,
-        // Skip error for unauthorization.
+        user: action.payload,
       }),
     }),
   },
