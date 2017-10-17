@@ -14,7 +14,11 @@ describe('SearchForm', () => {
 
   it('should call `handleSubmit` when submit form.', () => {
     const component = shallow(<SearchForm {...props} />);
-    component.find('Form').dive().find('form').simulate('submit');
+    component
+      .find('Form')
+      .dive()
+      .find('form')
+      .simulate('submit');
     expect(props.handleSubmit).toBeCalled();
   });
 });

@@ -26,7 +26,11 @@ describe('PostItem', () => {
 
   it('should call `onDetail` if click link.', () => {
     const component = shallow(<PostItem {...props} />);
-    component.find('Link').dive().find('a').simulate('click', { preventDefault: () => {} });
+    component
+      .find('Link')
+      .dive()
+      .find('a')
+      .simulate('click', { preventDefault: () => {} });
     expect(props.onDetail.mock.calls[0][0]).toBe('1');
   });
 });

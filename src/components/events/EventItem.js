@@ -41,7 +41,6 @@ const Remark = styled.div`
   margin-top: 5px;
 `;
 
-
 const EventItem = ({ item, onDetail }) => {
   const handleDetail = e => {
     e.preventDefault();

@@ -21,7 +21,11 @@ describe('EventItem', () => {
 
   it('should call `onDetail` if click link.', () => {
     const component = shallow(<EventItem {...props} />);
-    component.find('Link').dive().find('a').simulate('click', { preventDefault: () => {} });
+    component
+      .find('Link')
+      .dive()
+      .find('a')
+      .simulate('click', { preventDefault: () => {} });
     expect(props.onDetail).toBeCalled();
   });
 });

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Wrapper = styled.input`
-  background-color: ${({ color }) => color === 'primary' ? '#008ee0' : '#fff'};
-  color: ${({ color }) => color === 'primary' ? '#fff' : '#323232'};
+  background-color: ${({ color }) => (color === 'primary' ? '#008ee0' : '#fff')};
+  color: ${({ color }) => (color === 'primary' ? '#fff' : '#323232')};
   padding: 10px;
   border: solid #d4d4d4 1px;
   cursor: pointer;
   &:hover {
-    color: ${({ color }) => color === 'primary' ? '#fff' : '#161616'};
-    background-color: ${({ color }) => color === 'primary' ? '#00a4ff' : '#f6f6f6'} ;
+    color: ${({ color }) => (color === 'primary' ? '#fff' : '#161616')};
+    background-color: ${({ color }) => (color === 'primary' ? '#00a4ff' : '#f6f6f6')};
   }
   &:active {
     color: #161616;

@@ -16,10 +16,10 @@ const Footer = styled.div`
 `;
 
 const Error = styled.div`
-    color: #f00;
-    text-align: center;
-    font-size: 0.7rem;
-    padding: 5px;
+  color: #f00;
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 5px;
 `;
 
 const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList }) => (

@@ -22,25 +22,25 @@ const Link = styled.a`
 Link.displayName = 'Link';
 
 const Info = styled.div`
-    flex: 1;
+  flex: 1;
 `;
 
 const WorkoutDate = styled.span`
-    font-weight: bold;
-    color: #ff5008;
+  font-weight: bold;
+  color: #ff5008;
 `;
 
 const Weekday = styled.span`
-    margin-left: 3px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: #7c7c7c;
+  margin-left: 3px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #7c7c7c;
 `;
 
 const Remark = styled.div`
-    color: #a0a0a0;
-    font-size: 0.7rem;
-    margin-top: 5px;
+  color: #a0a0a0;
+  font-size: 0.7rem;
+  margin-top: 5px;
 `;
 
 const PostItem = ({ item, onDetail }) => {
