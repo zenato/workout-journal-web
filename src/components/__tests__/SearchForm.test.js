@@ -8,13 +8,13 @@ describe('SearchForm', () => {
   };
 
   it('should render without error.', () => {
-    const component = shallow(<SearchForm {...props} />).dive();
+    const component = shallow(<SearchForm {...props} />);
     expect(component).toMatchSnapshot();
   });
 
   it('should call `handleSubmit` when submit form.', () => {
-    const component = shallow(<SearchForm {...props} />).dive();
-    component.find('form').simulate('submit');
+    const component = shallow(<SearchForm {...props} />);
+    component.find('Form').dive().find('form').simulate('submit');
     expect(props.handleSubmit).toBeCalled();
   });
 });
