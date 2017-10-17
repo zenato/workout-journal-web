@@ -9,13 +9,13 @@ describe('Nav', () => {
   };
 
   it('should render logout button if not empty `user` prop.', () => {
-    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />);
+    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />).dive();
     expect(component).toMatchSnapshot();
   });
 
   it('call `logout` props when click logout link.', () => {
-    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />);
-    component.find('aside a').simulate('click');
+    const component = shallow(<Nav {...props} user={{ username: 'tester' }} />).dive();
+    component.find('a').simulate('click');
     expect(props.onLogout).toBeCalled();
   });
 });
