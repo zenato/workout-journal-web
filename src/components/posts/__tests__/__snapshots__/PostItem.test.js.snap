@@ -1,33 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PostItem should render without error. 1`] = `
-<li
-  className="list-item"
-  key="1"
->
-  <a
+<styled.li>
+  <Link
     href=""
     onClick={[Function]}
   >
-    <div
-      className="info"
-    >
-      <span
-        className="name"
-      >
+    <styled.div>
+      <styled.span>
         2017-08-18
-      </span>
-      <span
-        className="weekday"
-      >
+      </styled.span>
+      <styled.span>
         Fri
-      </span>
-      <div
-        className="remark"
-      >
+      </styled.span>
+      <styled.div>
         test
-      </div>
-    </div>
-  </a>
-</li>
+      </styled.div>
+    </styled.div>
+  </Link>
+</styled.li>
 `;

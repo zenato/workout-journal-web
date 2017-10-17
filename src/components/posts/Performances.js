@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
+import styled from 'styled-components';
 import { FormGroup, Button } from 'components/form';
 import Performance from 'components/posts/Performance';
-import styles from './Performances.scss';
 
-const cx = classNames.bind(styles);
+const Container = styled.div`
+  border: solid 1px #d5d5d5;
+  padding: 10px;
+  margin-top: 10px;
+`;
+
+const Index = styled.div`
+  color: #ca2a00;
+  font-weight: bold;
+`;
 
 const Performances = ({ fields, meta: { error, submitFailed }, events, formValues }) => {
   return (
     <FormGroup label="Perf.">
       <Button onClick={() => fields.push({})} value="Add" />
       {fields.map((name, index) => (
-        <div key={index} className={cx('performance')}>
-          <div className={cx('index')}>#{index + 1}</div>
+        <Container key={index}>
+          <Index>#{index + 1}</Index>
           <Performance
             key={index}
             name={name}
@@ -21,7 +29,7 @@ const Performances = ({ fields, meta: { error, submitFailed }, events, formValue
             values={formValues.performances[index] || {}}
             onDelete={() => fields.remove(index)}
           />
-        </div>
+        </Container>
       ))}
     </FormGroup>
   );

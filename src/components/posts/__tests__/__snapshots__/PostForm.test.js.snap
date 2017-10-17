@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Renders without errors. 1`] = `
-<form
-  className="post-form"
+<Form
   onSubmit={[Function]}
 >
   <FormGroup
@@ -35,11 +34,9 @@ exports[`Renders without errors. 1`] = `
       type="text"
     />
   </FormGroup>
-  <div
-    className="tool"
-  >
+  <styled.div>
     <Button
-      className="primary"
+      color="primary"
       type="submit"
       value="Save"
     />
@@ -47,6 +44,6 @@ exports[`Renders without errors. 1`] = `
       onClick={[Function]}
       value="List"
     />
-  </div>
-</form>
+  </styled.div>
+</Form>
 `;

@@ -8,16 +8,13 @@ exports[`Performances should render without errors. 1`] = `
     onClick={[Function]}
     value="Add"
   />
-  <div
-    className="performance"
+  <styled.div
     key="0"
   >
-    <div
-      className="index"
-    >
+    <styled.div>
       #
       1
-    </div>
+    </styled.div>
     <Performance
       events={
         Array [
@@ -32,6 +29,6 @@ exports[`Performances should render without errors. 1`] = `
       onDelete={[Function]}
       values={Object {}}
     />
-  </div>
+  </styled.div>
 </FormGroup>
 `;

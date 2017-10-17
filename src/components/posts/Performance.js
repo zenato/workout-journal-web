@@ -2,11 +2,18 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import classNames from 'classnames/bind';
+import styled from 'styled-components';
 import { FormGroup, Input, Button } from 'components/form';
-import styles from './Performance.scss';
 
-const cx = classNames.bind(styles);
+const Select = styled.select`
+  display: block;
+  background-color: #fff;
+  color: #4a4a4a;
+  border: solid #d4d4d4 1px;
+  padding: 10px;
+  width: 100%;
+`;
+Select.displayName = 'Select';
 
 const renderEvent = ({ events }) => ({ input, meta: { touched, error } }) => {
   const onChange = e => {
@@ -16,15 +23,15 @@ const renderEvent = ({ events }) => ({ input, meta: { touched, error } }) => {
   };
   return (
     <div>
-      <select {...input} value={input.value.id} onChange={onChange} className={cx('form-control')}>
+      <Select {...input} value={input.value.id} onChange={onChange}>
         <option>Select event</option>
         {events.map(e => (
           <option key={e.id} value={e.id}>
             {e.name}
           </option>
         ))}
-      </select>
-      {touched && error && <span className={cx('error')}>{error}</span>}
+      </Select>
+      {touched && error && <span className="error">{error}</span>}
     </div>
   );
 };

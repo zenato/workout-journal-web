@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import classNames from 'classnames/bind';
+import styled from 'styled-components';
 import { FormGroup, Button, Input } from 'components/form';
 import Performances from './Performances';
-import styles from './PostForm.scss';
 
-const cx = classNames.bind(styles);
+const Form = styled.form`
+  padding: 10px;
+`;
+Form.displayName = 'Form';
+
+const Footer = styled.div`
+  text-align: center;
+  * {
+    margin-left: 3px;
+  }
+`;
+
+const Error = styled.div`
+  color: #f00;
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 5px;
+`;
 
 class PostForm extends Component {
   handleDelete = e => {
@@ -22,7 +38,7 @@ class PostForm extends Component {
   render() {
     const { initialValues, handleSubmit, hasError, events, formValues } = this.props;
     return (
-      <form onSubmit={handleSubmit} className={cx('post-form')}>
+      <Form onSubmit={handleSubmit}>
         <FormGroup label="Workout Date">
           <Field type="date" name="workoutDate" component={Input} />
         </FormGroup>
@@ -37,17 +53,17 @@ class PostForm extends Component {
         </FormGroup>
 
         {hasError && (
-          <div className={cx('error')}>
+          <Error>
             <span>Oops, An expected error seems to have occurred.</span>
-          </div>
+          </Error>
         )}
 
-        <div className={cx('tool')}>
-          <Button type="submit" value="Save" className={cx('primary')} />
+        <Footer>
+          <Button type="submit" value="Save" color="primary" />
           <Button value="List" onClick={this.handleMoveList} />
           {initialValues.id && <Button value="Delete" onClick={this.handleDelete} />}
-        </div>
-      </form>
+        </Footer>
+      </Form>
     );
   }
 }

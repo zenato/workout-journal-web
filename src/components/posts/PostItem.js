@@ -1,10 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatDate } from 'lib/date';
-import classNames from 'classnames/bind';
-import styles from './PostItem.scss';
+import styled from 'styled-components';
 
-const cx = classNames.bind(styles);
+const Wrapper = styled.li`
+  border: solid 1px #c7c7c7;
+  margin-bottom: 5px;
+  background-color: #fff;
+`;
+
+const Link = styled.a`
+  padding: 10px;
+  display: flex;
+  &:hover {
+    background-color: #efefef;
+  }
+  &:active {
+    background-color: #d7d7d7;
+  }
+`;
+Link.displayName = 'Link';
+
+const Info = styled.div`
+    flex: 1;
+`;
+
+const WorkoutDate = styled.span`
+    font-weight: bold;
+    color: #ff5008;
+`;
+
+const Weekday = styled.span`
+    margin-left: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #7c7c7c;
+`;
+
+const Remark = styled.div`
+    color: #a0a0a0;
+    font-size: 0.7rem;
+    margin-top: 5px;
+`;
 
 const PostItem = ({ item, onDetail }) => {
   const handleClick = e => {
@@ -12,15 +49,15 @@ const PostItem = ({ item, onDetail }) => {
     onDetail(item.id);
   };
   return (
-    <li key={item.id} className={cx('list-item')}>
-      <a href="" onClick={handleClick}>
-        <div className={cx('info')}>
-          <span className={cx('name')}>{formatDate(item.workoutDate)}</span>
-          <span className={cx('weekday')}>{formatDate(item.workoutDate, 'ddd')}</span>
-          <div className={cx('remark')}>{item.performances.map(p => p.event.name).join(' / ')}</div>
-        </div>
-      </a>
-    </li>
+    <Wrapper>
+      <Link href="" onClick={handleClick}>
+        <Info>
+          <WorkoutDate>{formatDate(item.workoutDate)}</WorkoutDate>
+          <Weekday>{formatDate(item.workoutDate, 'ddd')}</Weekday>
+          <Remark>{item.performances.map(p => p.event.name).join(' / ')}</Remark>
+        </Info>
+      </Link>
+    </Wrapper>
   );
 };
 
