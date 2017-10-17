@@ -3,7 +3,7 @@ const path = require('path')
 const serialize = require('serialize-javascript')
 
 // Loading built modules.
-const render = require('./build').default
+const render = require('../build/server').default
 
 const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), {
   encoding: 'utf8',
