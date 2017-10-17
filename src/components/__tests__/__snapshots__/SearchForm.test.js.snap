@@ -1,13 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SearchForm should render without error. 1`] = `
-<section>
+<section
+  className="sc-bZQynM iohwpc"
+>
   <form
-    className="search-form"
     onSubmit={[Function]}
   >
     <Field
-      className="form-control"
+      className="field"
       component="input"
       name="name"
       placeholder="Input search text."
