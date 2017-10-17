@@ -1,28 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EventItem should render value and unit if not empty \`value\` props. 1`] = `
-<li
-  className="event-item"
-  key="1"
->
-  <a
+<styled.li>
+  <Link
     href=""
     onClick={[Function]}
   >
-    <div
-      className="info"
-    >
-      <span
-        className="name"
-      >
+    <styled.div>
+      <styled.span>
         test name
-      </span>
-      <div
-        className="remark"
-      >
+      </styled.span>
+      <styled.div>
         test mock data
-      </div>
-    </div>
-  </a>
-</li>
+      </styled.div>
+    </styled.div>
+  </Link>
+</styled.li>
 `;

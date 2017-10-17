@@ -6,7 +6,7 @@ exports[`SearchForm should render without error. 1`] = `
     onSubmit={[Function]}
   >
     <Field
-      className="field"
+      className="form-control"
       component="input"
       name="name"
       placeholder="Input search text."

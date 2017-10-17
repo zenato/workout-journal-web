@@ -22,7 +22,7 @@ describe('EventForm', () => {
   });
 
   it('should call `handleSubmit` when submitting form.', () => {
-    const component = shallow(<EventForm {...props} />);
+    const component = shallow(<EventForm {...props} />).dive();
     component.find('form').simulate('submit');
     expect(props.handleSubmit).toBeCalled();
   });

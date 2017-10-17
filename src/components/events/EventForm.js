@@ -1,14 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import classNames from 'classnames/bind';
+import styled from 'styled-components';
 import { FormGroup, Button, Input } from 'components/form';
-import styles from './EventForm.scss';
 
-const cx = classNames.bind(styles);
+const Form = styled.form`
+  padding: 10px;
+`;
+
+const Footer = styled.div`
+  text-align: center;
+  * {
+    margin-left: 5px;
+  }
+`;
+
+const Error = styled.div`
+    color: #f00;
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 5px;
+`;
 
 const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList }) => (
-  <form onSubmit={handleSubmit} className={cx('event-form')}>
+  <Form onSubmit={handleSubmit}>
     <FormGroup label="Name">
       <Field type="text" name="name" component={Input} />
     </FormGroup>
@@ -23,17 +38,17 @@ const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList
     </FormGroup>
 
     {hasError && (
-      <div className={cx('error')}>
+      <Error>
         <span>Oops, An expected error seems to have occurred.</span>
-      </div>
+      </Error>
     )}
 
-    <div className={cx('tool')}>
+    <Footer>
       <Button type="submit" value="Save" className="primary" />
       <Button value="List" onClick={onMoveList} />
       {initialValues && <Button value="Delete" onClick={onDelete} />}
-    </div>
-  </form>
+    </Footer>
+  </Form>
 );
 
 EventForm.propTypes = {
