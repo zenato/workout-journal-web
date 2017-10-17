@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { formatDate } from 'lib/date';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { formatDate } from 'lib/date'
 
 const Wrapper = styled.input`
   display: block;
@@ -11,13 +11,13 @@ const Wrapper = styled.input`
   padding: 10px;
   width: 100%;
   text-align: ${({ type }) => (type === 'number' ? 'right' : 'left')};
-`;
+`
 
 const Error = styled.span`
   color: #f00;
   font-size: 0.7rem;
   padding: 5px;
-`;
+`
 
 const Input = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -29,7 +29,7 @@ const Input = ({ input, label, type, meta: { touched, error } }) => (
     />
     {touched && error && <Error>{error}</Error>}
   </div>
-);
+)
 
 Input.propTypes = {
   type: PropTypes.string.isRequired,
@@ -39,6 +39,6 @@ Input.propTypes = {
     touched: PropTypes.bool,
     error: PropTypes.string,
   }).isRequired,
-};
+}
 
-export default Input;
+export default Input

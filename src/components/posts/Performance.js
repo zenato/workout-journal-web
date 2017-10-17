@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import styled from 'styled-components';
-import { FormGroup, Input, Button } from 'components/form';
+import _ from 'lodash'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+import styled from 'styled-components'
+import { FormGroup, Input, Button } from 'components/form'
 
 const Select = styled.select`
   display: block;
@@ -12,15 +12,15 @@ const Select = styled.select`
   border: solid #d4d4d4 1px;
   padding: 10px;
   width: 100%;
-`;
-Select.displayName = 'Select';
+`
+Select.displayName = 'Select'
 
 const renderEvent = ({ events }) => ({ input, meta: { touched, error } }) => {
   const onChange = e => {
-    e.preventDefault();
-    const { id } = _.find(events, { id: e.target.value }) || {};
-    input.onChange(id ? { id } : null);
-  };
+    e.preventDefault()
+    const { id } = _.find(events, { id: e.target.value }) || {}
+    input.onChange(id ? { id } : null)
+  }
   return (
     <div>
       <Select {...input} value={input.value.id} onChange={onChange}>
@@ -33,18 +33,18 @@ const renderEvent = ({ events }) => ({ input, meta: { touched, error } }) => {
       </Select>
       {touched && error && <span className="error">{error}</span>}
     </div>
-  );
-};
+  )
+}
 
 const Performance = ({ events, name, onDelete, values }) => {
   const total = _.sum(
     _.range(1, 6).map(i => {
-      const value = _.toNumber(values[`set${i}`]);
-      return isNaN(value) ? 0 : value;
+      const value = _.toNumber(values[`set${i}`])
+      return isNaN(value) ? 0 : value
     }),
-  );
-  const volume = total * (isNaN(values.value) ? 0 : _.toNumber(values.value));
-  const selectedEvent = (values.event ? _.find(events, { id: values.event.id }) : null) || {};
+  )
+  const volume = total * (isNaN(values.value) ? 0 : _.toNumber(values.value))
+  const selectedEvent = (values.event ? _.find(events, { id: values.event.id }) : null) || {}
   return (
     <div>
       <FormGroup label="Event">
@@ -76,8 +76,8 @@ const Performance = ({ events, name, onDelete, values }) => {
         <Button value="Del" onClick={onDelete} />
       </FormGroup>
     </div>
-  );
-};
+  )
+}
 
 Performance.propTypes = {
   name: PropTypes.string.isRequired,
@@ -91,6 +91,6 @@ Performance.propTypes = {
       }),
     }),
   ).isRequired,
-};
+}
 
-export default Performance;
+export default Performance

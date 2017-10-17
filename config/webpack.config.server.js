@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const paths = require('react-scripts/config/paths');
+const path = require('path')
+const webpack = require('webpack')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const paths = require('react-scripts/config/paths')
 
-const getClientEnvironment = require('react-scripts/config/env');
-const env = getClientEnvironment(paths.publicUrl);
+const getClientEnvironment = require('react-scripts/config/env')
+const env = getClientEnvironment(paths.publicUrl)
 
-const localPaths = require('./paths');
+const localPaths = require('./paths')
 
 module.exports = {
   entry: localPaths.serverRenderJs,
@@ -21,7 +21,7 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules', paths.appNodeModules].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
     extensions: ['.js', '.json', '.jsx'],
   },
@@ -29,11 +29,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        exclude: [
-          /\.(js|jsx)$/,
-          /\.json$/,
-          /\.scss$/,
-        ],
+        exclude: [/\.(js|jsx)$/, /\.json$/, /\.scss$/],
         loader: 'ignore',
       },
       {
@@ -71,5 +67,5 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     new CaseSensitivePathsPlugin(),
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-  ]
-};
+  ],
+}

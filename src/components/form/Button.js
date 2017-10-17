@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const Wrapper = styled.input`
   background-color: ${({ color }) => (color === 'primary' ? '#008ee0' : '#fff')};
@@ -16,15 +16,15 @@ const Wrapper = styled.input`
     color: #161616;
     background-color: #efefef;
   }
-`;
+`
 
 const Button = ({ type, color, ...props }) => (
   <Wrapper {...props} type={type || 'button'} color={color} />
-);
+)
 
 Button.propTypes = {
   type: PropTypes.string,
   color: PropTypes.string,
-};
+}
 
-export default Button;
+export default Button

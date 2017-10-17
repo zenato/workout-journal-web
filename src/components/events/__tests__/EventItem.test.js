@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import EventItem from '../EventItem';
+import React from 'react'
+import { shallow } from 'enzyme'
+import EventItem from '../EventItem'
 
 describe('EventItem', () => {
   const props = {
@@ -12,20 +12,20 @@ describe('EventItem', () => {
       remark: 'test mock data',
     },
     onDetail: jest.fn(),
-  };
+  }
 
   it('should render value and unit if not empty `value` props.', () => {
-    const component = shallow(<EventItem {...props} value={10} />);
-    expect(component).toMatchSnapshot();
-  });
+    const component = shallow(<EventItem {...props} value={10} />)
+    expect(component).toMatchSnapshot()
+  })
 
   it('should call `onDetail` if click link.', () => {
-    const component = shallow(<EventItem {...props} />);
+    const component = shallow(<EventItem {...props} />)
     component
       .find('Link')
       .dive()
       .find('a')
-      .simulate('click', { preventDefault: () => {} });
-    expect(props.onDetail).toBeCalled();
-  });
-});
+      .simulate('click', { preventDefault: () => {} })
+    expect(props.onDetail).toBeCalled()
+  })
+})

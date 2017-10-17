@@ -1,8 +1,8 @@
-const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
+const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
 
 module.exports = function override(config, env) {
-  const modules = config.module.rules.filter(r => r.oneOf)[0].oneOf;
+  const modules = config.module.rules.filter(r => r.oneOf)[0].oneOf
 
   // Enable SCSS
   modules.unshift({
@@ -45,37 +45,32 @@ module.exports = function override(config, env) {
         },
       },
     ],
-  });
+  })
 
   // Development
   if (env === 'development') {
-    config.entry.unshift('react-hot-loader/patch');
+    config.entry.unshift('react-hot-loader/patch')
     // Patch react hot loader
-    modules.filter(o => o.loader && o.loader.includes('babel-loader'))[0].options.plugins = ['react-hot-loader/babel'];
+    modules.filter(o => o.loader && o.loader.includes('babel-loader'))[0].options.plugins = [
+      'react-hot-loader/babel',
+    ]
   }
 
   // Production
   if (env === 'production') {
     if (config.entry.length !== 2) {
-      throw new Error('Changed entry config.');
+      throw new Error('Changed entry config.')
     }
 
     config.entry = {
-      vendor: [
-        config.entry[0],
-        'react',
-        'react-dom',
-        'react-router-dom',
-        'lodash',
-      ],
+      vendor: [config.entry[0], 'react', 'react-dom', 'react-router-dom', 'lodash'],
       app: config.entry[1],
-    };
-    config.plugins.push(new webpack.NormalModuleReplacementPlugin(
-      /^pages$/,
-      'pages/index.async.js',
-    ));
-    config.plugins.push(new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }));
+    }
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(/^pages$/, 'pages/index.async.js'),
+    )
+    config.plugins.push(new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }))
   }
 
-  return config;
-};
+  return config
+}

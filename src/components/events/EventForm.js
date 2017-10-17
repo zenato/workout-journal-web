@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import styled from 'styled-components';
-import { FormGroup, Button, Input } from 'components/form';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+import styled from 'styled-components'
+import { FormGroup, Button, Input } from 'components/form'
 
 const Form = styled.form`
   padding: 10px;
-`;
+`
 
 const Footer = styled.div`
   text-align: center;
   * {
     margin-left: 5px;
   }
-`;
+`
 
 const Error = styled.div`
   color: #f00;
   text-align: center;
   font-size: 0.7rem;
   padding: 5px;
-`;
+`
 
 const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList }) => (
   <Form onSubmit={handleSubmit}>
@@ -49,7 +49,7 @@ const EventForm = ({ hasError, handleSubmit, initialValues, onDelete, onMoveList
       {initialValues && <Button value="Delete" onClick={onDelete} />}
     </Footer>
   </Form>
-);
+)
 
 EventForm.propTypes = {
   initialValues: PropTypes.object,
@@ -57,24 +57,24 @@ EventForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,
-};
+}
 
 export const validate = ({ name, unit, value }) => {
-  const errors = {};
+  const errors = {}
 
   if (!name) {
-    errors.name = 'Required';
+    errors.name = 'Required'
   }
   if (!unit) {
-    errors.unit = 'Required';
+    errors.unit = 'Required'
   }
   if (!value) {
-    errors.value = 'Required';
+    errors.value = 'Required'
   } else if (!/^[0-9]{1,3}$/.test(value)) {
-    errors.value = 'Must be a number, 0-999';
+    errors.value = 'Must be a number, 0-999'
   }
 
-  return errors;
-};
+  return errors
+}
 
-export default EventForm;
+export default EventForm

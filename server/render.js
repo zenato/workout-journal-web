@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const serialize = require('serialize-javascript');
+const fs = require('fs')
+const path = require('path')
+const serialize = require('serialize-javascript')
 
 // Loading built modules.
-const render = require('./build').default;
+const render = require('./build').default
 
 const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), {
   encoding: 'utf8',
-});
+})
 
 module.exports = (req, res, next) => {
-  const location = req.path;
+  const location = req.path
   const params = {
     location,
     accessToken: req.cookies.accessToken,
-  };
+  }
 
   return render(params)
     .then(({ html, state, helmet, style }) => {
@@ -29,11 +29,11 @@ module.exports = (req, res, next) => {
           '<meta helmet>',
           `${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}`,
         )
-        .replace('<style></style>', style);
-      res.send(page);
+        .replace('<style></style>', style)
+      res.send(page)
     })
     .catch(e => {
-      console.error(e);
-      next(e);
-    });
-};
+      console.error(e)
+      next(e)
+    })
+}

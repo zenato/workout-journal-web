@@ -1,28 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import styled from 'styled-components';
-import { FormGroup, Button, Input } from 'components/form';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+import styled from 'styled-components'
+import { FormGroup, Button, Input } from 'components/form'
 
 const Form = styled.form`
   max-width: 500px;
   padding: 10px;
   margin: 0 auto;
-`;
+`
 
 const Error = styled.div`
   color: #f00;
   text-align: center;
   font-size: 0.7rem;
   padding: 5px;
-`;
+`
 
 const Footer = styled.div`
   text-align: center;
   * {
     margin-left: 5px;
   }
-`;
+`
 
 const LoginForm = ({ hasError, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
@@ -43,22 +43,22 @@ const LoginForm = ({ hasError, handleSubmit }) => (
       <Button type="submit" value="Login" color="primary" />
     </Footer>
   </Form>
-);
+)
 
 LoginForm.propTypes = {
   hasError: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-};
+}
 
 export const validate = ({ username, password }) => {
-  const errors = {};
+  const errors = {}
   if (!username) {
-    errors.username = 'Required';
+    errors.username = 'Required'
   }
   if (!password) {
-    errors.password = 'Required';
+    errors.password = 'Required'
   }
-  return errors;
-};
+  return errors
+}
 
-export default LoginForm;
+export default LoginForm

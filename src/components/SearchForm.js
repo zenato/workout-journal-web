@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Field } from 'redux-form';
-import { Button } from 'components/form';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Field } from 'redux-form'
+import { Button } from 'components/form'
 
 const Form = styled.form`
   display: flex;
@@ -17,12 +17,12 @@ const Form = styled.form`
     padding: 10px;
     width: 100%;
   }
-`;
-Form.displayName = 'Form';
+`
+Form.displayName = 'Form'
 
 class SearchForm extends Component {
   render() {
-    const { handleSubmit, placeholder } = this.props;
+    const { handleSubmit, placeholder } = this.props
     return (
       <section>
         <Form onSubmit={handleSubmit}>
@@ -36,17 +36,17 @@ class SearchForm extends Component {
           <Button type="submit" value="Search" />
         </Form>
       </section>
-    );
+    )
   }
 }
 
 SearchForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-};
+}
 
 SearchForm.defaultProps = {
   placeholder: 'Input search text.',
-};
+}
 
-export default SearchForm;
+export default SearchForm

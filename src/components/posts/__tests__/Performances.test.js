@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Performances from '../Performances';
+import React from 'react'
+import { shallow } from 'enzyme'
+import Performances from '../Performances'
 
 describe('Performances', () => {
   const props = {
@@ -13,10 +13,10 @@ describe('Performances', () => {
     formValues: {
       performances: [],
     },
-  };
+  }
 
   it('should render without errors.', () => {
-    const component = shallow(<Performances {...props} />);
-    expect(component).toMatchSnapshot();
-  });
-});
+    const component = shallow(<Performances {...props} />)
+    expect(component).toMatchSnapshot()
+  })
+})

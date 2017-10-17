@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { FormGroup, Button } from 'components/form';
-import Performance from 'components/posts/Performance';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { FormGroup, Button } from 'components/form'
+import Performance from 'components/posts/Performance'
 
 const Container = styled.div`
   border: solid 1px #d5d5d5;
   padding: 10px;
   margin-top: 10px;
-`;
+`
 
 const Index = styled.div`
   color: #ca2a00;
   font-weight: bold;
-`;
+`
 
 const Performances = ({ fields, meta: { error, submitFailed }, events, formValues }) => {
   return (
@@ -32,8 +32,8 @@ const Performances = ({ fields, meta: { error, submitFailed }, events, formValue
         </Container>
       ))}
     </FormGroup>
-  );
-};
+  )
+}
 
 Performances.propTypes = {
   fields: PropTypes.shape({
@@ -44,6 +44,6 @@ Performances.propTypes = {
   formValues: PropTypes.shape({
     performances: PropTypes.array.isRequired,
   }).isRequired,
-};
+}
 
-export default Performances;
+export default Performances

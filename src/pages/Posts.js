@@ -1,61 +1,61 @@
-import queryString from 'query-string';
-import React, { Component } from 'react';
-import { withDone } from 'react-router-server';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { reduxForm } from 'redux-form';
-import * as postsActions from 'redux/modules/posts';
-import { GET_POSTS } from 'redux/modules/posts';
-import { hasChangedLocation } from 'lib/location';
-import { Button } from 'components/form';
-import SearchForm from 'components/SearchForm';
-import PostItem from 'components/posts/PostItem';
+import queryString from 'query-string'
+import React, { Component } from 'react'
+import { withDone } from 'react-router-server'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
+import { reduxForm } from 'redux-form'
+import * as postsActions from 'redux/modules/posts'
+import { GET_POSTS } from 'redux/modules/posts'
+import { hasChangedLocation } from 'lib/location'
+import { Button } from 'components/form'
+import SearchForm from 'components/SearchForm'
+import PostItem from 'components/posts/PostItem'
 
 const PostSearchForm = reduxForm({
   form: 'postSearchForm',
-})(SearchForm);
+})(SearchForm)
 
 class Posts extends Component {
   componentWillMount() {
-    const { items, done } = this.props;
+    const { items, done } = this.props
     if (items.length < 1) {
-      this.fetchData(this.props).then(done, done);
+      this.fetchData(this.props).then(done, done)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (hasChangedLocation(this.props.location, nextProps.location)) {
-      this.fetchData(nextProps);
+      this.fetchData(nextProps)
     }
   }
 
   fetchData({ location }) {
-    const query = queryString.parse(location.search);
-    return this.props.PostsActions.getPosts(query);
+    const query = queryString.parse(location.search)
+    return this.props.PostsActions.getPosts(query)
   }
 
   handleSearch = values => {
-    const { history, match } = this.props;
-    history.push(`${match.path}?${queryString.stringify(values)}`);
-  };
+    const { history, match } = this.props
+    history.push(`${match.path}?${queryString.stringify(values)}`)
+  }
 
   handleDetail = id => {
-    const { history, match, location } = this.props;
-    history.push(`${match.path}/${id}${location.search}`);
-  };
+    const { history, match, location } = this.props
+    history.push(`${match.path}/${id}${location.search}`)
+  }
 
   handleForm = () => {
-    this.props.history.push(`/posts/new${this.props.location.search}`);
-  };
+    this.props.history.push(`/posts/new${this.props.location.search}`)
+  }
 
   handleMorePosts = () => {
-    return this.props.PostsActions.getMorePosts(this.props.pageInfo.endCursor);
-  };
+    return this.props.PostsActions.getMorePosts(this.props.pageInfo.endCursor)
+  }
 
   render() {
-    const { items, location, pageInfo, isLoading, hasError } = this.props;
-    const search = { ...queryString.parse(location.search) };
+    const { items, location, pageInfo, isLoading, hasError } = this.props
+    const search = { ...queryString.parse(location.search) }
     return (
       <div>
         <Helmet>
@@ -86,7 +86,7 @@ class Posts extends Component {
           {pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
         </aside>
       </div>
-    );
+    )
   }
 }
 
@@ -102,4 +102,4 @@ export default withDone(
       PostsActions: bindActionCreators(postsActions, dispatch),
     }),
   )(Posts),
-);
+)

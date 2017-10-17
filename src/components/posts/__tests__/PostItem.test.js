@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import PostItem from '../PostItem';
+import React from 'react'
+import { shallow } from 'enzyme'
+import PostItem from '../PostItem'
 
 describe('PostItem', () => {
   const props = {
@@ -17,20 +17,20 @@ describe('PostItem', () => {
       ],
     },
     onDetail: jest.fn(),
-  };
+  }
 
   it('should render without error.', () => {
-    const component = shallow(<PostItem {...props} />);
-    expect(component).toMatchSnapshot();
-  });
+    const component = shallow(<PostItem {...props} />)
+    expect(component).toMatchSnapshot()
+  })
 
   it('should call `onDetail` if click link.', () => {
-    const component = shallow(<PostItem {...props} />);
+    const component = shallow(<PostItem {...props} />)
     component
       .find('Link')
       .dive()
       .find('a')
-      .simulate('click', { preventDefault: () => {} });
-    expect(props.onDetail.mock.calls[0][0]).toBe('1');
-  });
-});
+      .simulate('click', { preventDefault: () => {} })
+    expect(props.onDetail.mock.calls[0][0]).toBe('1')
+  })
+})

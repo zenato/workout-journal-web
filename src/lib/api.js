@@ -1,19 +1,19 @@
-import _ from 'lodash';
-import axios from 'axios';
-import queryString from 'query-string';
+import _ from 'lodash'
+import axios from 'axios'
+import queryString from 'query-string'
 
-let API_URL = '/api';
+let API_URL = '/api'
 
-let MUTATION_ID = 0;
-const getClientMutationID = mutationName => `${mutationName}:${++MUTATION_ID}`;
+let MUTATION_ID = 0
+const getClientMutationID = mutationName => `${mutationName}:${++MUTATION_ID}`
 
 if (process.env.REACT_APP_ENV === 'server') {
-  API_URL = 'http://0.0.0.0:3001' + API_URL;
+  API_URL = 'http://0.0.0.0:3001' + API_URL
 }
 
 export function getErrorMessages(error, fieldName, context) {
-  const prefix = context ? `${context}.` : '';
-  return _.get(error, prefix + fieldName);
+  const prefix = context ? `${context}.` : ''
+  return _.get(error, prefix + fieldName)
 }
 
 const api = (accessToken, query, variables) =>
@@ -31,9 +31,9 @@ const api = (accessToken, query, variables) =>
       },
     )
     .then(({ data }) => {
-      if (data.errors) throw data;
-      return data.data;
-    });
+      if (data.errors) throw data
+      return data.data
+    })
 
 // Events
 
@@ -52,9 +52,9 @@ export const getEvents = accessToken => params => {
         }
       }
     }
-  `;
-  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node));
-};
+  `
+  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node))
+}
 
 export const getEvent = accessToken => id => {
   const query = `
@@ -69,10 +69,10 @@ export const getEvent = accessToken => id => {
         }
       }
     }
-  `;
-  const vars = { id };
-  return api(accessToken, query, vars).then(r => r.node);
-};
+  `
+  const vars = { id }
+  return api(accessToken, query, vars).then(r => r.node)
+}
 
 export const insertEvent = accessToken => params => {
   const query = `
@@ -87,15 +87,15 @@ export const insertEvent = accessToken => params => {
         }
       }
     }
-  `;
+  `
   const vars = {
     input: {
       ...params,
       clientMutationId: getClientMutationID('createEvent'),
     },
-  };
-  return api(accessToken, query, vars).then(r => r.createEvent.event);
-};
+  }
+  return api(accessToken, query, vars).then(r => r.createEvent.event)
+}
 
 export const updateEvent = accessToken => params => {
   const query = `
@@ -110,15 +110,15 @@ export const updateEvent = accessToken => params => {
         }
       }
     }
-  `;
+  `
   const vars = {
     input: {
       ...params,
       clientMutationId: getClientMutationID('updateEvent'),
     },
-  };
-  return api(accessToken, query, vars).then(r => r.updateEvent.event);
-};
+  }
+  return api(accessToken, query, vars).then(r => r.updateEvent.event)
+}
 
 export const deleteEvent = accessToken => id => {
   const query = `
@@ -127,15 +127,15 @@ export const deleteEvent = accessToken => id => {
         id
       }
     }
-  `;
+  `
   const vars = {
     input: {
       id,
       clientMutationId: getClientMutationID('deleteEvent'),
     },
-  };
-  return api(accessToken, query, vars);
-};
+  }
+  return api(accessToken, query, vars)
+}
 
 // Posts
 
@@ -161,9 +161,9 @@ export const getPostEvents = accessToken => params => {
         }
       }
     }
-  `;
-  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node));
-};
+  `
+  return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node))
+}
 
 export const getPosts = accessToken => params => {
   const query = `
@@ -196,12 +196,12 @@ export const getPosts = accessToken => params => {
         }
       }
     }
-  `;
+  `
   return api(accessToken, query, params).then(({ posts: { edges, pageInfo } }) => ({
     items: edges.map(e => e.node),
     pageInfo,
-  }));
-};
+  }))
+}
 
 export const getPost = accessToken => id => {
   const query = `
@@ -225,10 +225,10 @@ export const getPost = accessToken => id => {
         }
       }
     }
-  `;
-  const vars = { id };
-  return api(accessToken, query, vars).then(r => r.node);
-};
+  `
+  const vars = { id }
+  return api(accessToken, query, vars).then(r => r.node)
+}
 
 export const getMorePosts = accessToken => after => {
   const query = `
@@ -261,13 +261,13 @@ export const getMorePosts = accessToken => after => {
         }
       }
     }
-  `;
-  const vars = { after };
+  `
+  const vars = { after }
   return api(accessToken, query, vars).then(({ posts: { edges, pageInfo } }) => ({
     items: edges.map(e => e.node),
     pageInfo,
-  }));
-};
+  }))
+}
 
 export const insertPost = accessToken => data => {
   const query = `
@@ -291,15 +291,15 @@ export const insertPost = accessToken => data => {
         }
       }
     }
-  `;
+  `
   const vars = {
     input: {
       ...data,
       clientMutationId: getClientMutationID('createPost'),
     },
-  };
-  return api(accessToken, query, vars).then(r => r.createPost.post);
-};
+  }
+  return api(accessToken, query, vars).then(r => r.createPost.post)
+}
 
 export const updatePost = accessToken => params => {
   const query = `
@@ -324,15 +324,15 @@ export const updatePost = accessToken => params => {
         }
       }
     }
-  `;
+  `
   const vars = {
     input: {
       ...params,
       clientMutationId: getClientMutationID('updatePost'),
     },
-  };
-  return api(accessToken, query, vars).then(r => r.updatePost.post);
-};
+  }
+  return api(accessToken, query, vars).then(r => r.updatePost.post)
+}
 
 export const deletePost = accessToken => id => {
   const query = `
@@ -341,15 +341,15 @@ export const deletePost = accessToken => id => {
         id
       }
     }
-  `;
+  `
   const vars = {
     input: {
       id,
       clientMutationId: getClientMutationID('deletePost'),
     },
-  };
-  return api(accessToken, query, vars);
-};
+  }
+  return api(accessToken, query, vars)
+}
 
 // Users
 
@@ -367,7 +367,7 @@ export const login = ({ username, password }) =>
         password: process.env.REACT_APP_API_CLIENT_SECRET,
       },
     },
-  );
+  )
 
 export const getUser = accessToken => () => {
   const query = `
@@ -377,6 +377,6 @@ export const getUser = accessToken => () => {
         email
       }
     }
-  `;
-  return api(accessToken, query).then(r => r.user);
-};
+  `
+  return api(accessToken, query).then(r => r.user)
+}

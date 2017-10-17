@@ -1,38 +1,38 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withDone } from 'react-router-server';
-import { Helmet } from 'react-helmet';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import styled from 'styled-components';
-import Cookies from 'js-cookie';
-import * as usersActions from 'redux/modules/users';
-import { Events, Event, Home, Posts, Post, Login } from 'pages';
-import Nav from 'components/Nav';
-import PrivateRoute from './PrivateRoute';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { withDone } from 'react-router-server'
+import { Helmet } from 'react-helmet'
+import { Route, Switch, withRouter } from 'react-router-dom'
+import styled from 'styled-components'
+import Cookies from 'js-cookie'
+import * as usersActions from 'redux/modules/users'
+import { Events, Event, Home, Posts, Post, Login } from 'pages'
+import Nav from 'components/Nav'
+import PrivateRoute from './PrivateRoute'
 
 const Container = styled.div`
   padding: 5px;
-`;
+`
 
 class App extends Component {
   componentWillMount() {
-    const { accessToken, user, UsersActions, done } = this.props;
+    const { accessToken, user, UsersActions, done } = this.props
     if (accessToken && !user) {
-      UsersActions.getUser().then(done, done);
+      UsersActions.getUser().then(done, done)
     } else {
-      done();
+      done()
     }
   }
 
   handleLogout = e => {
-    e.preventDefault();
-    Cookies.remove('accessToken');
-    window.location.href = '/';
-  };
+    e.preventDefault()
+    Cookies.remove('accessToken')
+    window.location.href = '/'
+  }
 
   render() {
-    const { user } = this.props;
+    const { user } = this.props
     return (
       <div>
         <Helmet>
@@ -56,7 +56,7 @@ class App extends Component {
           </Switch>
         </Container>
       </div>
-    );
+    )
   }
 }
 
@@ -68,6 +68,6 @@ const ConnectedApp = connect(
   dispatch => ({
     UsersActions: bindActionCreators(usersActions, dispatch),
   }),
-)(App);
+)(App)
 
-export default withDone(withRouter(ConnectedApp));
+export default withDone(withRouter(ConnectedApp))

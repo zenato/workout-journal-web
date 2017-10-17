@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
 
 const NavWrapper = styled.nav`
   display: flex;
@@ -29,11 +29,11 @@ const NavWrapper = styled.nav`
     color: red !important;
     font-weight: bold;
   }
-`;
+`
 
 const Menu = styled.div`
   flex: 1;
-`;
+`
 
 const UserInfo = styled.aside`
   display: flex;
@@ -44,7 +44,7 @@ const UserInfo = styled.aside`
   a {
     font-size: 0.8em;
   }
-`;
+`
 
 const Nav = ({ user, onLogout }) => {
   return (
@@ -76,14 +76,14 @@ const Nav = ({ user, onLogout }) => {
         </UserInfo>
       )}
     </NavWrapper>
-  );
-};
+  )
+}
 
 Nav.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
   }),
   onLogout: PropTypes.func.isRequired,
-};
+}
 
-export default Nav;
+export default Nav

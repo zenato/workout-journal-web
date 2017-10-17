@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Input from '../Input';
+import React from 'react'
+import { shallow } from 'enzyme'
+import Input from '../Input'
 
 describe('Input', () => {
   const props = {
@@ -14,10 +14,10 @@ describe('Input', () => {
       touched: true,
       error: 'test',
     },
-  };
+  }
 
   it('should render passed props.', () => {
-    const component = shallow(<Input {...props} />);
-    expect(component).toMatchSnapshot();
-  });
-});
+    const component = shallow(<Input {...props} />)
+    expect(component).toMatchSnapshot()
+  })
+})

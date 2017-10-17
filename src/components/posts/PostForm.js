@@ -1,42 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
-import styled from 'styled-components';
-import { FormGroup, Button, Input } from 'components/form';
-import Performances from './Performances';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Field, FieldArray } from 'redux-form'
+import styled from 'styled-components'
+import { FormGroup, Button, Input } from 'components/form'
+import Performances from './Performances'
 
 const Form = styled.form`
   padding: 10px;
-`;
-Form.displayName = 'Form';
+`
+Form.displayName = 'Form'
 
 const Footer = styled.div`
   text-align: center;
   * {
     margin-left: 3px;
   }
-`;
+`
 
 const Error = styled.div`
   color: #f00;
   text-align: center;
   font-size: 0.7rem;
   padding: 5px;
-`;
+`
 
 class PostForm extends Component {
   handleDelete = e => {
-    e.preventDefault();
-    this.props.onDelete();
-  };
+    e.preventDefault()
+    this.props.onDelete()
+  }
 
   handleMoveList = e => {
-    e.preventDefault();
-    this.props.onMoveList();
-  };
+    e.preventDefault()
+    this.props.onMoveList()
+  }
 
   render() {
-    const { initialValues, handleSubmit, hasError, events, formValues } = this.props;
+    const { initialValues, handleSubmit, hasError, events, formValues } = this.props
     return (
       <Form onSubmit={handleSubmit}>
         <FormGroup label="Workout Date">
@@ -64,7 +64,7 @@ class PostForm extends Component {
           {initialValues.id && <Button value="Delete" onClick={this.handleDelete} />}
         </Footer>
       </Form>
-    );
+    )
   }
 }
 
@@ -77,44 +77,44 @@ PostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,
-};
+}
 
 export const validate = ({ workoutDate, performances }) => {
-  const errors = {};
+  const errors = {}
 
   if (!workoutDate) {
-    errors.workoutDate = 'Required';
+    errors.workoutDate = 'Required'
   }
 
-  const performanceArrayErrors = [];
-  (performances || []).forEach((performance, idx) => {
-    const performanceErrors = {};
+  const performanceArrayErrors = []
+  ;(performances || []).forEach((performance, idx) => {
+    const performanceErrors = {}
     if (performance) {
       if (!performance.event) {
-        performanceErrors.event = 'Required';
+        performanceErrors.event = 'Required'
       }
       if (!performance.value) {
-        performanceErrors.value = 'Required';
+        performanceErrors.value = 'Required'
       } else if (!/^[0-9]{1,3}$/.test(performance.value)) {
-        performanceErrors.value = 'Must be numeric, 0-999';
+        performanceErrors.value = 'Must be numeric, 0-999'
       }
-      ['set1', 'set2', 'set3', 'set4', 'set5'].forEach(fieldName => {
-        const value = performance[fieldName];
+      ;['set1', 'set2', 'set3', 'set4', 'set5'].forEach(fieldName => {
+        const value = performance[fieldName]
         if (value && !/^[0-9]{1,3}$/.test(value)) {
-          performanceErrors[fieldName] = 'Must be numeric, 0-999';
+          performanceErrors[fieldName] = 'Must be numeric, 0-999'
         }
-      });
+      })
     }
     if (Object.keys(performanceErrors).length) {
-      performanceArrayErrors[idx] = performanceErrors;
+      performanceArrayErrors[idx] = performanceErrors
     }
-  });
+  })
 
   if (performanceArrayErrors.length > 0) {
-    errors.performances = performanceArrayErrors;
+    errors.performances = performanceArrayErrors
   }
 
-  return errors;
-};
+  return errors
+}
 
-export default PostForm;
+export default PostForm

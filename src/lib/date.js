@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format } from 'date-fns'
 
 export const formatDate = (date, dateFormat) =>
-  (date && format(date, dateFormat || 'YYYY-MM-DD')) || '';
+  (date && format(date, dateFormat || 'YYYY-MM-DD')) || ''

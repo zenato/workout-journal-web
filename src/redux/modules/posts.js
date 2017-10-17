@@ -1,26 +1,26 @@
-import { createAction, handleActions } from 'redux-actions';
-import { pender } from 'redux-pender';
-import * as api from 'lib/api';
-import createPrivateAction from '../utils/createPrivateAction';
+import { createAction, handleActions } from 'redux-actions'
+import { pender } from 'redux-pender'
+import * as api from 'lib/api'
+import createPrivateAction from '../utils/createPrivateAction'
 
-export const GET_POSTS = 'posts/GET_POSTS';
-export const GET_MORE_POSTS = 'posts/GET_MORE_POSTS';
+export const GET_POSTS = 'posts/GET_POSTS'
+export const GET_MORE_POSTS = 'posts/GET_MORE_POSTS'
 
-export const GET_POST = 'posts/GET_POST';
-export const UPDATE_POST = 'posts/UPDATE_POST';
-export const INSERT_POST = 'posts/INSERT_POST';
-export const DELETE_POST = 'posts/DELETE_POST';
-const CLEAR_POST = 'posts/CLEAR_POST';
-export const GET_POST_EVENTS = 'posts/GET_POST_EVENTS';
+export const GET_POST = 'posts/GET_POST'
+export const UPDATE_POST = 'posts/UPDATE_POST'
+export const INSERT_POST = 'posts/INSERT_POST'
+export const DELETE_POST = 'posts/DELETE_POST'
+const CLEAR_POST = 'posts/CLEAR_POST'
+export const GET_POST_EVENTS = 'posts/GET_POST_EVENTS'
 
-export const getPosts = createPrivateAction(GET_POSTS, api.getPosts);
-export const getMorePosts = createPrivateAction(GET_MORE_POSTS, api.getMorePosts);
-export const getPost = createPrivateAction(GET_POST, api.getPost);
-export const getPostEvents = createPrivateAction(GET_POST_EVENTS, api.getPostEvents);
-export const clearPost = createAction(CLEAR_POST);
-export const updatePost = createPrivateAction(UPDATE_POST, api.updatePost);
-export const insertPost = createPrivateAction(INSERT_POST, api.insertPost);
-export const deletePost = createPrivateAction(DELETE_POST, api.deletePost);
+export const getPosts = createPrivateAction(GET_POSTS, api.getPosts)
+export const getMorePosts = createPrivateAction(GET_MORE_POSTS, api.getMorePosts)
+export const getPost = createPrivateAction(GET_POST, api.getPost)
+export const getPostEvents = createPrivateAction(GET_POST_EVENTS, api.getPostEvents)
+export const clearPost = createAction(CLEAR_POST)
+export const updatePost = createPrivateAction(UPDATE_POST, api.updatePost)
+export const insertPost = createPrivateAction(INSERT_POST, api.insertPost)
+export const deletePost = createPrivateAction(DELETE_POST, api.deletePost)
 
 const initialState = {
   events: [],
@@ -30,7 +30,7 @@ const initialState = {
     hasNextPage: false,
     endCursor: null,
   },
-};
+}
 
 export default handleActions(
   {
@@ -68,7 +68,7 @@ export default handleActions(
     ...pender({
       type: UPDATE_POST,
       onSuccess: (state, action) => {
-        const item = action.payload;
+        const item = action.payload
         return {
           ...state,
           item: {
@@ -79,13 +79,13 @@ export default handleActions(
             })),
           },
           items: state.items.map(i => (i.id === item.id ? item : i)),
-        };
+        }
       },
     }),
     ...pender({
       type: INSERT_POST,
       onSuccess: (state, action) => {
-        const item = action.payload;
+        const item = action.payload
         return {
           ...state,
           error: null,
@@ -97,7 +97,7 @@ export default handleActions(
             })),
           },
           items: [item, ...state.items],
-        };
+        }
       },
     }),
     ...pender({
@@ -115,4 +115,4 @@ export default handleActions(
     }),
   },
   initialState,
-);
+)

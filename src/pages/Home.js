@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 const Home = ({ user }) => {
   return (
@@ -11,9 +11,9 @@ const Home = ({ user }) => {
 
       <article>Welcome {user && user.username}!</article>
     </div>
-  );
-};
+  )
+}
 
 export default connect(state => ({
   user: state.users.user,
-}))(Home);
+}))(Home)
