@@ -11,6 +11,7 @@ import { hasChangedLocation } from 'lib/location'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
 import EventItem from 'components/events/EventItem'
+import { PAGE_TITLE } from 'config'
 
 const EventSearchForm = reduxForm({
   form: 'eventSearchForm',
@@ -55,7 +56,7 @@ class Events extends Component {
     return (
       <div>
         <Helmet>
-          <title>{`Events | ${process.env.REACT_APP_SITE_NAME}`}</title>
+          <title>{`Events | ${PAGE_TITLE}`}</title>
         </Helmet>
 
         <section>

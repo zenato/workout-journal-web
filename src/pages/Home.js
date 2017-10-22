@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { PAGE_TITLE } from 'config'
 
 const Home = ({ user }) => {
   return (
     <div className="home">
       <Helmet>
-        <title>{process.env.REACT_APP_SITE_NAME}</title>
+        <title>{PAGE_TITLE}</title>
       </Helmet>
 
-      <article>Welcome {user && user.username}!</article>
+      <article>Welcome1 {user && user.username}!</article>
     </div>
   )
 }

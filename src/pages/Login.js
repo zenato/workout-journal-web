@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 import * as usersActions from 'redux/modules/users'
 import { LOGIN, GET_USER } from 'redux/modules/users'
 import Form, { validate } from 'components/users/LoginForm'
+import { PAGE_TITLE } from 'config'
 
 const LoginForm = reduxForm({
   form: 'loginForm',
@@ -35,7 +36,7 @@ class Login extends Component {
 
         <article>
           <Helmet>
-            <title>{`Login | ${process.env.REACT_APP_SITE_NAME}`}</title>
+            <title>{`Login | ${PAGE_TITLE}`}</title>
           </Helmet>
           <LoginForm hasError={isLoading ? false : hasError} onSubmit={this.handleSubmit} />
         </article>

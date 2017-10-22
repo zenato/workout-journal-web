@@ -15,6 +15,7 @@ import {
 } from 'redux/modules/posts'
 import Form, { validate } from 'components/posts/PostForm'
 import { formatDate } from 'lib/date'
+import { PAGE_TITLE } from 'config'
 
 const PostForm = reduxForm({
   form: 'postForm',
@@ -76,8 +77,7 @@ class Post extends Component {
         {(this.isNew() || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${process.env
-                .REACT_APP_SITE_NAME}`}</title>
+              <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${PAGE_TITLE}`}</title>
             </Helmet>
             <PostForm
               initialValues={item || this.defaultItem}

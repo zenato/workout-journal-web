@@ -7,6 +7,7 @@ import { reduxForm } from 'redux-form'
 import * as eventsActions from 'redux/modules/events'
 import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
 import Form, { validate } from 'components/events/EventForm'
+import { PAGE_TITLE } from 'config'
 
 const isNew = ({ id }) => id === 'new'
 
@@ -58,8 +59,7 @@ class Event extends Component {
         {(isNew(match.params) || item) && (
           <article>
             <Helmet>
-              <title>{`${item ? item.name : 'New Event'} | ${process.env
-                .REACT_APP_SITE_NAME}`}</title>
+              <title>{`${item ? item.name : 'New Event'} | ${PAGE_TITLE}`}</title>
             </Helmet>
             <EventForm
               initialValues={item}

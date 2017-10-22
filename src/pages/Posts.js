@@ -11,6 +11,7 @@ import { hasChangedLocation } from 'lib/location'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
 import PostItem from 'components/posts/PostItem'
+import { PAGE_TITLE } from 'config'
 
 const PostSearchForm = reduxForm({
   form: 'postSearchForm',
@@ -59,7 +60,7 @@ class Posts extends Component {
     return (
       <div>
         <Helmet>
-          <title>{`Posts | ${process.env.REACT_APP_SITE_NAME}`}</title>
+          <title>{`Posts | ${PAGE_TITLE}`}</title>
         </Helmet>
 
         <section>
