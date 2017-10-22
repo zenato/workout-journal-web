@@ -1,1 +1,1 @@
-export const PAGE_TITLE = 'Workout Journal---'
+export const PAGE_TITLE = 'Workout Journal'
