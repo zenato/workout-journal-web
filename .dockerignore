@@ -1,6 +1,10 @@
-.idea
-*.iml
 .git
 .gitignore
-build
+
+.idea
+*.iml
+
+.vscode
+
+build/
 node_modules/
