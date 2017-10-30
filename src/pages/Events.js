@@ -30,9 +30,9 @@ class Events extends Component {
     }
   }
 
-  fetchData({ location }, cb) {
+  fetchData({ location }, done) {
     const query = queryString.parse(location.search)
-    return this.props.EventsActions.fetchEvents(query, cb)
+    return this.props.EventsActions.fetchEvents(query, done)
   }
 
   handleSearch = values => {
