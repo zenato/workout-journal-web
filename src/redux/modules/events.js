@@ -13,8 +13,8 @@ export const INSERT_EVENT = 'events/INSERT_EVENT'
 export const DELETE_EVENT = 'events/DELETE_EVENT'
 const CLEAR_EVENT = 'events/CLEAR_EVENT'
 
-export const fetchEvents = createAction(REQUEST_FETCH_EVENTS, (query, done) => ({ query, done }))
-export const successFetchEvents = createAction(SUCCESS_FETCH_EVENTS, ({ items }) => ({ items }))
+export const fetchEvents = createAction(REQUEST_FETCH_EVENTS)
+export const successFetchEvents = createAction(SUCCESS_FETCH_EVENTS)
 export const failureFetchEvents = createAction(FAILURE_FETCH_EVENTS)
 
 export const getEvent = createPrivateAction(GET_EVENT, api.getEvent)
