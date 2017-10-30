@@ -35,6 +35,7 @@
     "redux-actions": "^2.2.1",
     "redux-form": "^7.1.1",
     "redux-pender": "^1.1.14",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "serialize-javascript": "^1.4.0",
     "styled-components": "^2.2.0"

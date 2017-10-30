@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
 import * as eventsActions from 'redux/modules/events'
-import { GET_EVENTS } from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -21,7 +20,7 @@ class Events extends Component {
   componentWillMount() {
     const { items, done } = this.props
     if (items.length < 1) {
-      this.fetchData(this.props).then(done, done)
+      this.fetchData(this.props, done)
     }
   }
 
@@ -31,9 +30,9 @@ class Events extends Component {
     }
   }
 
-  fetchData({ location }) {
+  fetchData({ location }, cb) {
     const query = queryString.parse(location.search)
-    return this.props.EventsActions.getEvents(query)
+    return this.props.EventsActions.fetchEvents(query, cb)
   }
 
   handleSearch = values => {
@@ -89,8 +88,8 @@ export default withDone(
   connect(
     state => ({
       items: state.events.items,
-      isLoading: !!state.pender.pending[GET_EVENTS],
-      hasError: !!state.pender.failure[GET_EVENTS],
+      isLoading: state.events.status === 'pending',
+      hasError: state.events.error,
     }),
     dispatch => ({
       EventsActions: bindActionCreators(eventsActions, dispatch),

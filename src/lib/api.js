@@ -37,7 +37,7 @@ const api = (accessToken, query, variables) =>
 
 // Events
 
-export const getEvents = accessToken => params => {
+export const getEvents = (accessToken, params) => {
   const query = `
     query ($name: String) {
       events(name: $name) {
