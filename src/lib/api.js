@@ -353,7 +353,7 @@ export const deletePost = accessToken => id => {
 
 // Users
 
-export const login = ({ username, password }) =>
+export const signIn = ({ username, password }) =>
   axios.post(
     `${API_URL}/o/token/`,
     queryString.stringify({
@@ -369,7 +369,7 @@ export const login = ({ username, password }) =>
     },
   )
 
-export const getUser = accessToken => () => {
+export const fetchLoggedInfo = accessToken => {
   const query = `
     {
       user {

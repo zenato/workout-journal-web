@@ -3,18 +3,18 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { PAGE_TITLE } from 'config'
 
-const Home = ({ user }) => {
+const Home = ({ loggedInfo }) => {
   return (
     <div className="home">
       <Helmet>
         <title>{PAGE_TITLE}</title>
       </Helmet>
 
-      <article>Welcome1 {user && user.username}!</article>
+      <article>Welcome {loggedInfo && loggedInfo.username}!</article>
     </div>
   )
 }
 
 export default connect(state => ({
-  user: state.users.user,
+  loggedInfo: state.users.loggedInfo,
 }))(Home)

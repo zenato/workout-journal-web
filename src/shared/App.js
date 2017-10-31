@@ -5,7 +5,6 @@ import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import Cookies from 'js-cookie'
 import * as usersActions from 'redux/modules/users'
 import { Events, Event, Home, Posts, Post, Login } from 'pages'
 import Nav from 'components/Nav'
@@ -17,9 +16,9 @@ const Container = styled.div`
 
 class App extends Component {
   componentWillMount() {
-    const { accessToken, user, UsersActions, done } = this.props
-    if (accessToken && !user) {
-      UsersActions.getUser().then(done, done)
+    const { accessToken, loggedInfo, UsersActions, done } = this.props
+    if (accessToken && !loggedInfo) {
+      UsersActions.fetchLoggedInfo({ done })
     } else {
       done()
     }
@@ -27,19 +26,18 @@ class App extends Component {
 
   handleLogout = e => {
     e.preventDefault()
-    Cookies.remove('accessToken')
-    window.location.href = '/'
+    this.props.UsersActions.signOut()
   }
 
   render() {
-    const { user } = this.props
+    const { loggedInfo } = this.props
     return (
       <div>
         <Helmet>
           <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
 
-        <Nav user={user} onLogout={this.handleLogout} />
+        <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
         <Container>
           <Route exact path="/" component={Home} />
@@ -62,8 +60,8 @@ class App extends Component {
 
 const ConnectedApp = connect(
   state => ({
-    accessToken: state.accessToken,
-    user: state.users.user,
+    accessToken: state.users.accessToken,
+    loggedInfo: state.users.loggedInfo,
   }),
   dispatch => ({
     UsersActions: bindActionCreators(usersActions, dispatch),

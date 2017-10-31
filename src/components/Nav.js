@@ -46,7 +46,7 @@ const UserInfo = styled.aside`
   }
 `
 
-const Nav = ({ user, onLogout }) => {
+const Nav = ({ loggedInfo, onLogout }) => {
   return (
     <NavWrapper>
       <Menu>
@@ -68,7 +68,7 @@ const Nav = ({ user, onLogout }) => {
           </li>
         </ul>
       </Menu>
-      {user && (
+      {loggedInfo && (
         <UserInfo>
           <a href="" onClick={onLogout}>
             Logout
@@ -80,7 +80,7 @@ const Nav = ({ user, onLogout }) => {
 }
 
 Nav.propTypes = {
-  user: PropTypes.shape({
+  loggedInfo: PropTypes.shape({
     username: PropTypes.string,
   }),
   onLogout: PropTypes.func.isRequired,

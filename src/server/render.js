@@ -8,7 +8,8 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import App from 'shared/App'
 
 const render = async ({ location, accessToken }) => {
-  const store = configureStore({ accessToken })
+  const initialState = { users: { accessToken } }
+  const store = configureStore(initialState)
   const sheet = new ServerStyleSheet()
 
   const { html } = await renderToString(
