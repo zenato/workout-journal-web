@@ -90,8 +90,12 @@ export default function* rootSaga() {
   })
 
   const storedAccessToken = yield select(state => state.users.accessToken)
-  if (!storedAccessToken) {
+  if (storedAccessToken) {
+    yield put(restoreSiginIn())
+  } else {
     const accessToken = Cookies.get('accessToken')
-    yield put(restoreSiginIn({ accessToken }))
+    if (accessToken) {
+      yield put(restoreSiginIn({ accessToken }))
+    }
   }
 }
