@@ -19,5 +19,5 @@ const PrivateRoute = ({ component: Component, pending, loggedInfo, ...rest }) =>
 
 export default connect(state => ({
   loggedInfo: state.users.loggedInfo,
-  pending: state.users.status === 'pending',
+  pending: state.users.pending,
 }))(PrivateRoute)

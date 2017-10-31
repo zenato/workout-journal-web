@@ -27,8 +27,8 @@ export const failureFetchLoggedInfo = createAction(FAILURE_FETCH_LOGGED_INFO)
 const initialState = {
   loggedInfo: null,
   accessToken: null,
-  status: '',
-  error: false,
+  pending: false,
+  error: null,
 }
 
 export default handleActions(
@@ -40,36 +40,36 @@ export default handleActions(
 
     [REQUEST_SIGN_IN]: (state, action) => ({
       ...state,
-      status: 'pending',
-      error: false,
+      pending: true,
+      error: null,
     }),
     [SUCCESS_SIGN_IN]: (state, action) => ({
       ...state,
-      status: 'done',
-      error: false,
+      pending: false,
+      error: null,
       accessToken: action.payload.accessToken,
     }),
     [FAILURE_SIGN_IN]: (state, action) => ({
       ...state,
-      status: 'done',
-      error: true
+      pending: false,
+      error: action.payload.error,
     }),
 
     [REQUEST_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
-      status: 'pending',
-      error: false,
+      pending: true,
+      error: null,
     }),
     [SUCCESS_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
-      status: 'done',
-      error: false,
+      pending: false,
+      error: null,
       loggedInfo: action.payload.loggedInfo,
     }),
     [FAILURE_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
-      status: 'done',
-      error: true,
+      pending: false,
+      error: action.payload.error,
     }),
   },
   initialState,

@@ -13,10 +13,10 @@ import {
 } from 'redux/modules/users'
 import * as api from 'lib/api'
 
-const accessTokenCookieKey = 'accessToken'
+const ACCESS_TOKEN_COOKIE_NAME = 'accessToken'
 
 function storeCookieAndRedirect(accessToken, location) {
-  Cookies.set(accessTokenCookieKey, accessToken, { path: '/' })
+  Cookies.set(ACCESS_TOKEN_COOKIE_NAME, accessToken, { path: '/' })
 
   let from = '/'
   if (location.state && location.state.from) {
@@ -26,7 +26,7 @@ function storeCookieAndRedirect(accessToken, location) {
 }
 
 function clearCookieAndRedirect() {
-  Cookies.remove(accessTokenCookieKey)
+  Cookies.remove(ACCESS_TOKEN_COOKIE_NAME)
   window.location.href = '/'
 }
 
@@ -41,11 +41,11 @@ function* handleSignIn() {
   while (true) {
     const { payload: { location, ...params } } = yield take(REQUEST_SIGN_IN)
     const { accessToken, error } = yield call(signIn, params)
-    if (accessToken && !error) {
+    if (error) {
+      yield put(failureSignIn({ error }))
+    } else {
       yield put(successSignIn({ accessToken }))
       storeCookieAndRedirect(accessToken, location)
-    } else {
-      yield put(failureSignIn({ error }))
     }
   }
 }
@@ -62,10 +62,10 @@ function* handleFetchLoggedInfo() {
     const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
     const accessToken = yield select(state => state.users.accessToken)
     const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
-    if (accessToken && !error) {
-      yield put(successFetchLoggedInfo({ loggedInfo }))
-    } else {
+    if (error) {
       yield put(failureFetchLoggedInfo({ error }))
+    } else {
+      yield put(successFetchLoggedInfo({ loggedInfo }))
     }
     if (done) {
       done()
@@ -93,7 +93,7 @@ export default function* rootSaga() {
   if (storedAccessToken) {
     yield put(restoreSiginIn())
   } else {
-    const accessToken = Cookies.get('accessToken')
+    const accessToken = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
     if (accessToken) {
       yield put(restoreSiginIn({ accessToken }))
     }
