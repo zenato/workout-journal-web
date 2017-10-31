@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux'
 import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as eventsActions from 'redux/modules/events'
-import { GET_EVENT, INSERT_EVENT, UPDATE_EVENT, DELETE_EVENT } from 'redux/modules/events'
+import * as EventsActions from 'redux/modules/events'
 import Form, { validate } from 'components/events/EventForm'
 import { PAGE_TITLE } from 'config'
 
@@ -18,31 +17,37 @@ const EventForm = reduxForm({
 
 class Event extends Component {
   componentWillMount() {
-    const { EventsActions, item, done, match } = this.props
+    const { actions, item, done, match } = this.props
     if (!isNew(match.params) && !item) {
-      EventsActions.getEvent(match.params.id).then(done, done)
+      actions.fetchEvent({ id: match.params.id, done })
+    } else {
+      done()
     }
   }
 
   componentWillUnmount() {
-    this.props.EventsActions.clearEvent()
+    this.props.actions.clearEvent()
   }
 
-  handleSubmit = async values => {
-    const { match, location, history, EventsActions } = this.props
+  handleSubmit = values => {
+    const { match, location, history, actions } = this.props
     if (isNew(match.params)) {
-      const item = await EventsActions.insertEvent(values)
-      history.replace(`/events/${item.id}${location.search}`)
+      actions.insertEvent({
+        values,
+        done: item => history.replace(`/events/${item.id}${location.search}`),
+      })
     } else {
-      await EventsActions.updateEvent(values)
+      actions.updateEvent({ values })
     }
   }
 
-  handleDelete = async () => {
+  handleDelete = () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, EventsActions } = this.props
-      await EventsActions.deleteEvent(match.params.id)
-      history.replace(`/events/${location.search}`)
+      const { match, location, history, actions } = this.props
+      actions.deleteEvent({
+        id: match.params.id,
+        done: () => history.replace(`/events/${location.search}`),
+      })
     }
   }
 
@@ -51,10 +56,10 @@ class Event extends Component {
   }
 
   render() {
-    const { match, item, hasError, isLoading } = this.props
+    const { match, item, error, pending } = this.props
     return (
       <div>
-        {isLoading && <span>Now loading...</span>}
+        {pending && <span>Now loading...</span>}
 
         {(isNew(match.params) || item) && (
           <article>
@@ -64,7 +69,7 @@ class Event extends Component {
             <EventForm
               initialValues={item}
               enableReinitialize={true}
-              hasError={isLoading ? false : hasError}
+              error={error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
@@ -80,21 +85,11 @@ export default withDone(
   connect(
     state => ({
       item: state.events.item,
-      hasError: !!(
-        state.pender.failure[GET_EVENT] ||
-        state.pender.failure[INSERT_EVENT] ||
-        state.pender.failure[UPDATE_EVENT] ||
-        state.pender.failure[DELETE_EVENT]
-      ),
-      isLoading: !!(
-        state.pender.pending[GET_EVENT] ||
-        state.pender.pending[INSERT_EVENT] ||
-        state.pender.pending[UPDATE_EVENT] ||
-        state.pender.pending[DELETE_EVENT]
-      ),
+      error: state.events.error.item,
+      pending: state.events.pending.item,
     }),
     dispatch => ({
-      EventsActions: bindActionCreators(eventsActions, dispatch),
+      actions: bindActionCreators(EventsActions, dispatch),
     }),
   )(Event),
 )

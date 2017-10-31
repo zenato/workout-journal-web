@@ -37,7 +37,7 @@ const api = (accessToken, query, variables) =>
 
 // Events
 
-export const getEvents = (accessToken, params) => {
+export const fetchEvents = (accessToken, params) => {
   const query = `
     query ($name: String) {
       events(name: $name) {
@@ -56,7 +56,7 @@ export const getEvents = (accessToken, params) => {
   return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node))
 }
 
-export const getEvent = accessToken => id => {
+export const fetchEvent = (accessToken, id) => {
   const query = `
     query ($id: ID!) {
       node(id: $id) {
@@ -74,7 +74,7 @@ export const getEvent = accessToken => id => {
   return api(accessToken, query, vars).then(r => r.node)
 }
 
-export const insertEvent = accessToken => params => {
+export const insertEvent = (accessToken, values) => {
   const query = `
     mutation ($input: CreateEventInput!) {
       createEvent(input: $input) {
@@ -90,14 +90,14 @@ export const insertEvent = accessToken => params => {
   `
   const vars = {
     input: {
-      ...params,
+      ...values,
       clientMutationId: getClientMutationID('createEvent'),
     },
   }
   return api(accessToken, query, vars).then(r => r.createEvent.event)
 }
 
-export const updateEvent = accessToken => params => {
+export const updateEvent = (accessToken, values) => {
   const query = `
     mutation ($input: UpdateEventInput!) {
       updateEvent(input: $input) {
@@ -113,14 +113,14 @@ export const updateEvent = accessToken => params => {
   `
   const vars = {
     input: {
-      ...params,
+      ...values,
       clientMutationId: getClientMutationID('updateEvent'),
     },
   }
   return api(accessToken, query, vars).then(r => r.updateEvent.event)
 }
 
-export const deleteEvent = accessToken => id => {
+export const deleteEvent = (accessToken, id) => {
   const query = `
     mutation ($input: DeleteEventInput!) {
       deleteEvent(input: $input) {

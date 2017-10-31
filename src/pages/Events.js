@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as eventsActions from 'redux/modules/events'
+import * as EventsActions from 'redux/modules/events'
 import { hasChangedLocation } from 'lib/location'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -32,7 +32,7 @@ class Events extends Component {
 
   fetchData({ location }, done) {
     const query = queryString.parse(location.search)
-    return this.props.EventsActions.fetchEvents({ query, done })
+    return this.props.actions.fetchEvents({ query, done })
   }
 
   handleSearch = values => {
@@ -50,7 +50,7 @@ class Events extends Component {
   }
 
   render() {
-    const { items, location, isLoading, hasError } = this.props
+    const { items, location, pending, error } = this.props
     const search = { ...queryString.parse(location.search) }
     return (
       <div>
@@ -69,8 +69,8 @@ class Events extends Component {
           placeholder="Input event name."
         />
 
-        {isLoading && <div>Now loading...</div>}
-        {hasError && <div>Oops, An expected error seems to have occurred.</div>}
+        {pending && <div>Now loading...</div>}
+        {error && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
           <ul>
@@ -88,11 +88,11 @@ export default withDone(
   connect(
     state => ({
       items: state.events.items,
-      isLoading: state.events.status === 'pending',
-      hasError: state.events.error,
+      pending: state.events.pending.items,
+      error: state.events.error.items,
     }),
     dispatch => ({
-      EventsActions: bindActionCreators(eventsActions, dispatch),
+      actions: bindActionCreators(EventsActions, dispatch),
     }),
   )(Events),
 )
