@@ -26,7 +26,7 @@ class Post extends Component {
 
   componentWillMount() {
     const { actions, done, match } = this.props
-    actions.fetchPostEvents({
+    actions.fetchPostWithEvents({
       id: this.isNew() ? null : match.params.id,
       done,
     })

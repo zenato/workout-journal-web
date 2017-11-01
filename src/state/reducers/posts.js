@@ -6,9 +6,9 @@ import {
   REQUEST_FETCH_MORE_POSTS,
   SUCCESS_FETCH_MORE_POSTS,
   FAILURE_FETCH_MORE_POSTS,
-  REQUEST_FETCH_POST_EVENTS,
-  SUCCESS_FETCH_POST_EVENTS,
-  FAILURE_FETCH_POST_EVENTS,
+  REQUEST_FETCH_EVENTS,
+  SUCCESS_FETCH_EVENTS,
+  FAILURE_FETCH_EVENTS,
   REQUEST_FETCH_POST,
   SUCCESS_FETCH_POST,
   FAILURE_FETCH_POST,
@@ -172,18 +172,18 @@ export default handleActions(
       events: [],
     }),
 
-    [REQUEST_FETCH_POST_EVENTS]: (state, action) => ({
+    [REQUEST_FETCH_EVENTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, events: true },
       error: { ...state.error, events: null },
     }),
-    [SUCCESS_FETCH_POST_EVENTS]: (state, action) => ({
+    [SUCCESS_FETCH_EVENTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, events: false },
       error: { ...state.error, events: null },
-      events: action.payload.events,
+      events: action.payload.items,
     }),
-    [FAILURE_FETCH_POST_EVENTS]: (state, action) => ({
+    [FAILURE_FETCH_EVENTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, events: false },
       error: { ...state.error, events: action.payload.error },

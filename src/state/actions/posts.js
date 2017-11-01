@@ -26,9 +26,11 @@ export const FAILURE_DELETE_POST = 'posts/FAILURE_DELETE_POST'
 
 export const CLEAR_POST = 'posts/CLEAR_POST'
 
-export const REQUEST_FETCH_POST_EVENTS = 'posts/REQUEST_FETCH_POST_EVENTS'
-export const SUCCESS_FETCH_POST_EVENTS = 'posts/SUCCESS_FETCH_POST_EVENTS'
-export const FAILURE_FETCH_POST_EVENTS = 'posts/FAILURE_FETCH_POST_EVENTS'
+export const REQUEST_FETCH_EVENTS = 'posts/REQUEST_FETCH_EVENTS'
+export const SUCCESS_FETCH_EVENTS = 'posts/SUCCESS_FETCH_EVENTS'
+export const FAILURE_FETCH_EVENTS = 'posts/FAILURE_FETCH_EVENTS'
+
+export const REQUEST_FETCH_POST_WITH_EVENTS = 'posts/REQUEST_FETCH_POST_WITH_EVENTS'
 
 export const fetchPosts = createAction(REQUEST_FETCH_POSTS)
 export const successFetchPosts = createAction(SUCCESS_FETCH_POSTS)
@@ -56,6 +58,8 @@ export const failureDeletePost = createAction(FAILURE_DELETE_POST)
 
 export const clearPost = createAction(CLEAR_POST)
 
-export const fetchPostEvents = createAction(REQUEST_FETCH_POST_EVENTS)
-export const successFetchPostEvents = createAction(SUCCESS_FETCH_POST_EVENTS)
-export const failureFetchPostEvents = createAction(FAILURE_FETCH_POST_EVENTS)
+export const fetchEvents = createAction(REQUEST_FETCH_EVENTS)
+export const successFetchEvents = createAction(SUCCESS_FETCH_EVENTS)
+export const failureFetchEvents = createAction(FAILURE_FETCH_EVENTS)
+
+export const fetchPostWithEvents = createAction(REQUEST_FETCH_POST_WITH_EVENTS)

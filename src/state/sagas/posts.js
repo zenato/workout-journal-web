@@ -1,10 +1,9 @@
-import { take, fork, select, call, put } from 'redux-saga/effects'
+import { take, fork, select, call, put, all } from 'redux-saga/effects'
 import { RESTORE_SIGN_IN } from 'state/actions/users'
 import {
   REQUEST_FETCH_POSTS,
   REQUEST_FETCH_MORE_POSTS,
-  REQUEST_FETCH_POST_EVENTS,
-  REQUEST_FETCH_POST,
+  REQUEST_FETCH_POST_WITH_EVENTS,
   REQUEST_INSERT_POST,
   REQUEST_UPDATE_POST,
   REQUEST_DELETE_POST,
@@ -12,8 +11,10 @@ import {
   failureFetchPosts,
   successFetchMorePosts,
   failureFetchMorePosts,
-  successFetchPostEvents,
-  failureFetchPostEvents,
+  fetchEvents,
+  successFetchEvents,
+  failureFetchEvents,
+  fetchPost,
   successFetchPost,
   failureFetchPost,
   successInsertPost,
@@ -22,12 +23,11 @@ import {
   failureUpdatePost,
   successDeletePost,
   failureDeletePost,
-  fetchPost,
 } from 'state/actions/posts'
 import * as api from 'lib/api'
 
 function fetchPosts(accessToken, query) {
-  return api.fetchPosts(accessToken, query).catch(error => ({ error }))
+  return api.fetchPosts(accessToken, query)
 }
 
 function* handleFetchPosts() {
@@ -45,7 +45,7 @@ function* handleFetchPosts() {
 }
 
 function fetchMorePosts(accessToken, after) {
-  return api.fetchMorePosts(accessToken, after).catch(error => ({ error }))
+  return api.fetchMorePosts(accessToken, after)
 }
 
 function* handleFetchMorePosts() {
@@ -62,51 +62,46 @@ function* handleFetchMorePosts() {
 }
 
 function fetchPostApi(accessToken, id) {
+  if (!id) {
+    return Promise.resolve({ item: {} })
+  }
   return api
     .fetchPost(accessToken, id)
     .then(item => ({ item }))
-    .catch(error => ({ error }))
 }
 
-function* handleFetchPost() {
-  const accessToken = yield select(state => state.users.accessToken)
-  while (true) {
-    const { payload: { id, done } } = yield take(REQUEST_FETCH_POST)
-    const { item, error } = yield call(fetchPostApi, accessToken, id)
-    if (error) {
-      yield put(failureFetchPost({ error }))
-    } else {
-      yield put(successFetchPost({ item }))
-    }
-    done && (yield done())
-  }
-}
-
-function fetchPostEvents(accessToken) {
+function fetchEventsApi(accessToken) {
   return api
     .fetchPostEvents(accessToken)
-    .then(events => ({ events }))
-    .catch(error => ({ error }))
+    .then(items => ({ items }))
 }
 
-function* handleFetchPostEvents() {
+function* handleFetchPostWithEvents() {
   const accessToken = yield select(state => state.users.accessToken)
   while (true) {
-    // Fetch events
-    const { payload: { id, done } } = yield take(REQUEST_FETCH_POST_EVENTS)
-    const { events, error } = yield call(fetchPostEvents, accessToken)
-    if (error) {
-      yield put(failureFetchPostEvents({ error }))
+    const { payload: { id, done } } = yield take(REQUEST_FETCH_POST_WITH_EVENTS)
+
+    yield put(fetchPost())
+    yield put(fetchEvents())
+
+    const [ post, events ] = yield all([
+      call(fetchPostApi, accessToken, id),
+      call(fetchEventsApi, accessToken)
+    ])
+
+    if (post.error) {
+      yield put(failureFetchPost(post))
     } else {
-      yield put(successFetchPostEvents({ events }))
+      yield put(successFetchPost(post))
     }
 
-    // Fetch post
-    if (id) {
-      yield put(fetchPost({ id, done }))
+    if (events.error) {
+      yield put(failureFetchEvents(events))
     } else {
-      done && (yield done())
+      yield put(successFetchEvents(events))
     }
+
+    done && (yield done())
   }
 }
 
@@ -114,7 +109,6 @@ function insertPost(accessToken, values) {
   return api
     .insertPost(accessToken, values)
     .then(item => ({ item }))
-    .catch(error => ({ error }))
 }
 
 function* handleInsertPost() {
@@ -135,7 +129,6 @@ function updatePost(accessToken, values) {
   return api
     .updatePost(accessToken, values)
     .then(item => ({ item }))
-    .catch(error => ({ error }))
 }
 
 function* handleUpdatePost() {
@@ -153,7 +146,7 @@ function* handleUpdatePost() {
 }
 
 function deletePost(accessToken, id) {
-  return api.deletePost(accessToken, id).catch(error => ({ error }))
+  return api.deletePost(accessToken, id)
 }
 
 function* handleDeletePost() {
@@ -176,8 +169,7 @@ export default function* rootSaga() {
 
   yield fork(handleFetchPosts)
   yield fork(handleFetchMorePosts)
-  yield fork(handleFetchPostEvents)
-  yield fork(handleFetchPost)
+  yield fork(handleFetchPostWithEvents)
   yield fork(handleInsertPost)
   yield fork(handleUpdatePost)
   yield fork(handleDeletePost)
