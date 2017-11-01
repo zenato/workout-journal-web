@@ -24,7 +24,7 @@ const Footer = styled.div`
   }
 `
 
-const LoginForm = ({ error, handleSubmit }) => (
+const LoginForm = ({ hasError, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <FormGroup label="Username">
       <Field type="text" name="username" component={Input} />
@@ -33,7 +33,7 @@ const LoginForm = ({ error, handleSubmit }) => (
       <Field type="password" name="password" component={Input} />
     </FormGroup>
 
-    {error && (
+    {hasError && (
       <Error>
         <span>Oops, An expected error seems to have occurred.</span>
       </Error>
@@ -46,7 +46,7 @@ const LoginForm = ({ error, handleSubmit }) => (
 )
 
 LoginForm.propTypes = {
-  error: PropTypes.any,
+  hasError: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 }
 

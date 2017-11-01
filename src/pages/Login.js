@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   render() {
-    const { error, pending } = this.props
+    const { hasError, pending } = this.props
     return (
       <div>
         {pending && <span className="loading">Now loading...</span>}
@@ -28,7 +28,7 @@ class Login extends Component {
           <Helmet>
             <title>{`Login | ${PAGE_TITLE}`}</title>
           </Helmet>
-          <LoginForm error={error} onSubmit={this.handleSubmit} />
+          <LoginForm hasError={hasError} onSubmit={this.handleSubmit} />
         </article>
       </div>
     )
@@ -40,7 +40,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    error: state.users.error,
+    hasError: !!state.users.error,
     pending: state.users.pending,
   }),
   dispatch => ({
