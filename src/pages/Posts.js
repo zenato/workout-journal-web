@@ -5,8 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as postsActions from 'redux/modules/posts'
-import { GET_POSTS } from 'redux/modules/posts'
+import * as PostsActions from 'redux/modules/posts'
 import { hasChangedLocation } from 'lib/location'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -21,7 +20,9 @@ class Posts extends Component {
   componentWillMount() {
     const { items, done } = this.props
     if (items.length < 1) {
-      this.fetchData(this.props).then(done, done)
+      this.fetchData(this.props, done)
+    } else {
+      done()
     }
   }
 
@@ -31,9 +32,9 @@ class Posts extends Component {
     }
   }
 
-  fetchData({ location }) {
+  fetchData({ location }, done) {
     const query = queryString.parse(location.search)
-    return this.props.PostsActions.getPosts(query)
+    return this.props.actions.fetchPosts({ query, done })
   }
 
   handleSearch = values => {
@@ -51,11 +52,11 @@ class Posts extends Component {
   }
 
   handleMorePosts = () => {
-    return this.props.PostsActions.getMorePosts(this.props.pageInfo.endCursor)
+    return this.props.actions.fetchMorePosts({ after: this.props.pageInfo.endCursor })
   }
 
   render() {
-    const { items, location, pageInfo, isLoading, hasError } = this.props
+    const { items, location, pageInfo, pending, error } = this.props
     const search = { ...queryString.parse(location.search) }
     return (
       <div>
@@ -74,8 +75,8 @@ class Posts extends Component {
           placeholder="Input post name."
         />
 
-        {isLoading && <div>Now loading... </div>}
-        {hasError && <div>Oops, An expected error seems to have occurred.</div>}
+        {pending && <div>Now loading... </div>}
+        {error && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
           <ul>
@@ -96,11 +97,11 @@ export default withDone(
     state => ({
       items: state.posts.items,
       pageInfo: state.posts.pageInfo,
-      isLoading: !!state.pender.pending[GET_POSTS],
-      hasError: !!state.pender.failure[GET_POSTS],
+      pending: state.posts.pending.items,
+      error: state.posts.error.items,
     }),
     dispatch => ({
-      PostsActions: bindActionCreators(postsActions, dispatch),
+      actions: bindActionCreators(PostsActions, dispatch),
     }),
   )(Posts),
 )

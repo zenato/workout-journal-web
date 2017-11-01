@@ -5,14 +5,7 @@ import { formValueSelector } from 'redux-form'
 import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as postsActions from 'redux/modules/posts'
-import {
-  GET_POST,
-  INSERT_POST,
-  UPDATE_POST,
-  DELETE_POST,
-  GET_POST_EVENTS,
-} from 'redux/modules/posts'
+import * as PostsActions from 'redux/modules/posts'
 import Form, { validate } from 'components/posts/PostForm'
 import { formatDate } from 'lib/date'
 import { PAGE_TITLE } from 'config'
@@ -32,35 +25,38 @@ class Post extends Component {
   }
 
   componentWillMount() {
-    const { PostsActions, done, match } = this.props
-    const promises = [PostsActions.getPostEvents()]
-    if (!this.isNew()) {
-      promises.push(PostsActions.getPost(match.params.id))
-    }
-    Promise.all(promises).then(done, done)
+    const { actions, done, match } = this.props
+    actions.fetchPostEvents({
+      id: this.isNew() ? null : match.params.id,
+      done,
+    })
   }
 
   componentWillUnmount() {
-    this.props.PostsActions.clearPost()
+    this.props.actions.clearPost()
   }
 
   isNew = () => this.props.match.params.id === 'new'
 
-  handleSubmit = async values => {
-    const { location, history, PostsActions } = this.props
+  handleSubmit = values => {
+    const { location, history, actions } = this.props
     if (this.isNew()) {
-      const item = await PostsActions.insertPost(values)
-      history.replace(`/posts/${item.id}${location.search}`)
+      const item = actions.insertPost({
+        values,
+        done: () => history.replace(`/posts/${item.id}${location.search}`),
+      })
     } else {
-      await PostsActions.updatePost(values)
+      actions.updatePost({ values })
     }
   }
 
   handleDelete = async () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, PostsActions } = this.props
-      await PostsActions.deletePost(match.params.id)
-      history.replace(`/posts/${location.search}`)
+      const { match, location, history, actions } = this.props
+      await actions.deletePost({
+        id: match.params.id,
+        done: () => history.replace(`/posts/${location.search}`),
+      })
     }
   }
 
@@ -69,10 +65,10 @@ class Post extends Component {
   }
 
   render() {
-    const { item, events, hasError, isLoading, formValues } = this.props
+    const { item, events, error, pending, formValues } = this.props
     return (
       <div>
-        {isLoading && <span>Now loading...</span>}
+        {pending && <span>Now loading...</span>}
 
         {(this.isNew() || item) && (
           <article>
@@ -84,7 +80,7 @@ class Post extends Component {
               enableReinitialize={true}
               formValues={formValues}
               events={events}
-              hasError={isLoading ? false : hasError}
+              error={error}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
@@ -101,20 +97,8 @@ const selector = formValueSelector('postForm')
 export default withDone(
   connect(
     state => ({
-      hasError: !!(
-        state.pender.failure[GET_POST_EVENTS] ||
-        state.pender.failure[GET_POST] ||
-        state.pender.failure[INSERT_POST] ||
-        state.pender.failure[UPDATE_POST] ||
-        state.pender.failure[DELETE_POST]
-      ),
-      isLoading: !!(
-        state.pender.pending[GET_POST_EVENTS] ||
-        state.pender.pending[GET_POST] ||
-        state.pender.pending[INSERT_POST] ||
-        state.pender.pending[UPDATE_POST] ||
-        state.pender.pending[DELETE_POST]
-      ),
+      error: state.posts.error.item || state.posts.error.events,
+      pending: state.posts.pending.item || state.posts.pending.events,
       item: state.posts.item,
       events: state.posts.events,
       formValues: {
@@ -122,7 +106,7 @@ export default withDone(
       },
     }),
     dispatch => ({
-      PostsActions: bindActionCreators(postsActions, dispatch),
+      actions: bindActionCreators(PostsActions, dispatch),
     }),
   )(Post),
 )

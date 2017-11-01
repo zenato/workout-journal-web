@@ -139,7 +139,7 @@ export const deleteEvent = (accessToken, id) => {
 
 // Posts
 
-export const getPostEvents = accessToken => params => {
+export const fetchPostEvents = (accessToken, params) => {
   const query = `
     query {
       events {
@@ -165,7 +165,7 @@ export const getPostEvents = accessToken => params => {
   return api(accessToken, query, params).then(r => r.events.edges.map(e => e.node))
 }
 
-export const getPosts = accessToken => params => {
+export const fetchPosts = (accessToken, params) => {
   const query = `
     query ($name: String) {
       posts(first: 10, performances_Event_Name_Icontains: $name) {
@@ -203,7 +203,7 @@ export const getPosts = accessToken => params => {
   }))
 }
 
-export const getPost = accessToken => id => {
+export const fetchPost = (accessToken, id) => {
   const query = `
     query ($id: ID!) {
       node(id: $id) {
@@ -230,7 +230,7 @@ export const getPost = accessToken => id => {
   return api(accessToken, query, vars).then(r => r.node)
 }
 
-export const getMorePosts = accessToken => after => {
+export const fetchMorePosts = (accessToken, after) => {
   const query = `
     query ($name: String, $after: String) {
       posts(first: 10, performances_Event_Name_Icontains: $name, after: $after) {
@@ -269,7 +269,7 @@ export const getMorePosts = accessToken => after => {
   }))
 }
 
-export const insertPost = accessToken => data => {
+export const insertPost = (accessToken, values) => {
   const query = `
     mutation ($input: CreatePostInput!) {
       createPost(input: $input) {
@@ -294,14 +294,14 @@ export const insertPost = accessToken => data => {
   `
   const vars = {
     input: {
-      ...data,
+      ...values,
       clientMutationId: getClientMutationID('createPost'),
     },
   }
   return api(accessToken, query, vars).then(r => r.createPost.post)
 }
 
-export const updatePost = accessToken => params => {
+export const updatePost = (accessToken, values) => {
   const query = `
     mutation ($input: UpdatePostInput!) {
       updatePost(input: $input) {
@@ -327,14 +327,14 @@ export const updatePost = accessToken => params => {
   `
   const vars = {
     input: {
-      ...params,
+      ...values,
       clientMutationId: getClientMutationID('updatePost'),
     },
   }
   return api(accessToken, query, vars).then(r => r.updatePost.post)
 }
 
-export const deletePost = accessToken => id => {
+export const deletePost = (accessToken, id) => {
   const query = `
     mutation ($input: DeletePostInput!) {
       deletePost(input: $input) {
