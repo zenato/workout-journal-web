@@ -65,7 +65,7 @@ class Post extends Component {
   }
 
   render() {
-    const { item, events, error, pending, formValues } = this.props
+    const { item, events, hasError, pending, formValues } = this.props
     return (
       <div>
         {pending && <span>Now loading...</span>}
@@ -80,7 +80,7 @@ class Post extends Component {
               enableReinitialize={true}
               formValues={formValues}
               events={events}
-              error={error}
+              hasError={hasError}
               onSubmit={this.handleSubmit}
               onDelete={this.handleDelete}
               onMoveList={this.handleMoveList}
@@ -97,7 +97,7 @@ const selector = formValueSelector('postForm')
 export default withDone(
   connect(
     state => ({
-      error: state.posts.error.item || state.posts.error.events,
+      hasError: !!state.posts.error.item || !!state.posts.error.events,
       pending: state.posts.pending.item || state.posts.pending.events,
       item: state.posts.item,
       events: state.posts.events,

@@ -50,7 +50,7 @@ class Events extends Component {
   }
 
   render() {
-    const { items, location, pending, error } = this.props
+    const { items, location, pending, hasError } = this.props
     const search = { ...queryString.parse(location.search) }
     return (
       <div>
@@ -70,7 +70,7 @@ class Events extends Component {
         />
 
         {pending && <div>Now loading...</div>}
-        {error && <div>Oops, An expected error seems to have occurred.</div>}
+        {hasError && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
           <ul>
@@ -89,7 +89,7 @@ export default withDone(
     state => ({
       items: state.events.items,
       pending: state.events.pending.items,
-      error: state.events.error.items,
+      hasError: !!state.events.error.items,
     }),
     dispatch => ({
       actions: bindActionCreators(EventsActions, dispatch),
