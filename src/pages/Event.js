@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as EventsActions from 'redux/modules/events'
+import * as EventsActions from 'state/actions/events'
 import Form, { validate } from 'components/events/EventForm'
 import { PAGE_TITLE } from 'config'
 

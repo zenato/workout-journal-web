@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 import penderMiddleware from 'redux-pender'
-import modules from './modules'
+import reducers from './reducers'
 import rootSaga from './sagas'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
@@ -14,14 +14,14 @@ const composeEnhancers = isDevelopment
 const configureStore = initialState => {
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
-    modules,
+    reducers,
     initialState,
     composeEnhancers(applyMiddleware(sagaMiddleware, thunk, penderMiddleware())),
   )
 
   if (module.hot) {
-    module.hot.accept('./modules', () => {
-      const nextRootReducer = require('./modules').default
+    module.hot.accept('./reducers', () => {
+      const nextRootReducer = require('./reducers').default
       store.replaceReducer(nextRootReducer)
     })
   }

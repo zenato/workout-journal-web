@@ -1,5 +1,5 @@
 import { take, fork, select, call, put } from 'redux-saga/effects'
-import { RESTORE_SIGN_IN } from 'redux/modules/users'
+import { RESTORE_SIGN_IN } from 'state/actions/users'
 import {
   REQUEST_FETCH_POSTS,
   REQUEST_FETCH_MORE_POSTS,
@@ -23,7 +23,7 @@ import {
   successDeletePost,
   failureDeletePost,
   fetchPost,
-} from 'redux/modules/posts'
+} from 'state/actions/posts'
 import * as api from 'lib/api'
 
 function fetchPosts(accessToken, query) {

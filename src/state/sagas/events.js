@@ -1,5 +1,5 @@
 import { take, fork, select, call, put } from 'redux-saga/effects'
-import { RESTORE_SIGN_IN } from 'redux/modules/users'
+import { RESTORE_SIGN_IN } from 'state/actions/users'
 import {
   REQUEST_FETCH_EVENTS,
   REQUEST_FETCH_EVENT,
@@ -16,7 +16,7 @@ import {
   failureUpdateEvent,
   successDeleteEvent,
   failureDeleteEvent,
-} from 'redux/modules/events'
+} from 'state/actions/events'
 import * as api from 'lib/api'
 
 function fetchEvents(accessToken, query) {

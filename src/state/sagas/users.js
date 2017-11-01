@@ -10,7 +10,7 @@ import {
   failureSignIn,
   successFetchLoggedInfo,
   failureFetchLoggedInfo,
-} from 'redux/modules/users'
+} from 'state/actions/users'
 import * as api from 'lib/api'
 
 const ACCESS_TOKEN_COOKIE_NAME = 'accessToken'

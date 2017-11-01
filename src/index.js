@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import registerServiceWorker from './registerServiceWorker'
-import configureStore from 'redux/configureStore'
+import configureStore from 'state/configureStore'
 import Root from './client/Root'
 import './index.scss'
 

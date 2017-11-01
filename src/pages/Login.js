@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as usersActions from 'redux/modules/users'
+import * as usersActions from 'state/actions/users'
 import Form, { validate } from 'components/users/LoginForm'
 import { PAGE_TITLE } from 'config'
 
