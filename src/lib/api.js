@@ -34,6 +34,7 @@ const api = (accessToken, query, variables) =>
       if (data.errors) throw data
       return data.data
     })
+    .catch(error => ({ error }))
 
 // Events
 
