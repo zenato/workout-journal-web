@@ -43,12 +43,12 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, items: false },
       error: { ...state.pending, items: null },
-      items: action.payload.items,
+      items: action.payload,
     }),
     [FAILURE_FETCH_EVENTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, items: false },
-      error: { ...state.pending, items: action.payload.error },
+      error: { ...state.pending, items: action.payload },
     }),
 
     [REQUEST_FETCH_EVENT]: state => ({
@@ -60,12 +60,12 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
-      item: action.payload.item,
+      item: action.payload,
     }),
     [FAILURE_FETCH_EVENT]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_UPDATE_EVENT]: (state, action) => ({
@@ -77,13 +77,13 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
-      item: action.payload.item,
-      items: state.items.map(i => (i.id === state.item.id ? { ...i, ...action.payload.item } : i)),
+      item: action.payload,
+      items: state.items.map(i => (i.id === state.item.id ? { ...i, ...action.payload } : i)),
     }),
     [FAILURE_UPDATE_EVENT]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_INSERT_EVENT]: (state, action) => ({
@@ -95,13 +95,13 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
-      item: action.payload.item,
-      items: [action.payload.item, ...state.items],
+      item: action.payload,
+      items: [action.payload, ...state.items],
     }),
     [FAILURE_INSERT_EVENT]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_DELETE_EVENT]: (state, action) => ({
@@ -119,7 +119,7 @@ export default handleActions(
     [FAILURE_DELETE_EVENT]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [CLEAR_EVENT]: (state, action) => ({

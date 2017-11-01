@@ -32,9 +32,9 @@ function* handleFetchEvents() {
     const { payload: { query, done } } = yield take(REQUEST_FETCH_EVENTS)
     const { items, error } = yield call(fetchEvents, accessToken, query)
     if (items) {
-      yield put(successFetchEvents({ items }))
+      yield put(successFetchEvents(items))
     } else {
-      yield put(failureFetchEvents({ error }))
+      yield put(failureFetchEvents(error))
     }
     if (done) {
       yield done()
@@ -55,9 +55,9 @@ function* handleFetchEvent() {
     const { payload: { id, done } } = yield take(REQUEST_FETCH_EVENT)
     const { item, error } = yield call(fetchEvent, accessToken, id)
     if (error) {
-      yield put(failureFetchEvent({ error }))
+      yield put(failureFetchEvent(error))
     } else {
-      yield put(successFetchEvent({ item }))
+      yield put(successFetchEvent(item))
     }
     if (done) {
       yield done()
@@ -78,9 +78,9 @@ function* handleInsertEvent() {
     const { payload: { values, done } } = yield take(REQUEST_INSERT_EVENT)
     const { item, error } = yield call(insertEvent, accessToken, values)
     if (error) {
-      yield put(failureInsertEvent({ error }))
+      yield put(failureInsertEvent(error))
     } else {
-      yield put(successInsertEvent({ item }))
+      yield put(successInsertEvent(item))
       if (done) {
         yield done(item)
       }
@@ -101,9 +101,9 @@ function* handleUpdateEvent() {
     const { payload: { values, done } } = yield take(REQUEST_UPDATE_EVENT)
     const { item, error } = yield call(updateEvent, accessToken, values)
     if (error) {
-      yield put(failureUpdateEvent({ error }))
+      yield put(failureUpdateEvent(error))
     } else {
-      yield put(successUpdateEvent({ item }))
+      yield put(successUpdateEvent(item))
       if (done) {
         yield done(item)
       }
@@ -123,7 +123,7 @@ function* handleDeleteEvent() {
     const { payload: { id, done } } = yield take(REQUEST_DELETE_EVENT)
     const { error } = yield call(deleteEvent, accessToken, id)
     if (error) {
-      yield put(failureDeleteEvent({ error }))
+      yield put(failureDeleteEvent(error))
     } else {
       yield put(successDeleteEvent())
       if (done) {
