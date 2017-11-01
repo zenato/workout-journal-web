@@ -6,7 +6,7 @@ import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import * as usersActions from 'state/actions/users'
+import * as UsersActions from 'state/actions/users'
 import { Events, Event, Home, Posts, Post, Login } from 'pages'
 import Nav from 'components/Nav'
 import PrivateRoute from './PrivateRoute'
@@ -17,9 +17,9 @@ const Container = styled.div`
 
 class App extends Component {
   componentWillMount() {
-    const { accessToken, loggedInfo, UsersActions, done } = this.props
+    const { accessToken, loggedInfo, actions, done } = this.props
     if (accessToken && !loggedInfo) {
-      UsersActions.fetchLoggedInfo({ done })
+      actions.fetchLoggedInfo({ done })
     } else {
       done()
     }
@@ -27,7 +27,7 @@ class App extends Component {
 
   handleLogout = e => {
     e.preventDefault()
-    this.props.UsersActions.signOut()
+    this.props.actions.signOut()
   }
 
   render() {
@@ -70,7 +70,7 @@ const ConnectedApp = connect(
     loggedInfo: state.users.loggedInfo,
   }),
   dispatch => ({
-    UsersActions: bindActionCreators(usersActions, dispatch),
+    actions: bindActionCreators(UsersActions, dispatch),
   }),
 )(App)
 
