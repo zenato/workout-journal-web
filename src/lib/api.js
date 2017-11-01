@@ -34,7 +34,6 @@ const api = (accessToken, query, variables) =>
       if (data.errors) throw data
       return data.data
     })
-    .catch(error => ({ error }))
 
 // Events
 
@@ -379,5 +378,5 @@ export const fetchLoggedInfo = accessToken => {
       }
     }
   `
-  return api(accessToken, query).then(r => r.user)
+  return api(accessToken+'1', query).then(r => r.user)
 }

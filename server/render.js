@@ -17,7 +17,13 @@ module.exports = (req, res, next) => {
   }
 
   return render(params)
-    .then(({ html, state, helmet, style }) => {
+    .then(({ url, html, state, helmet, style }) => {
+      // Redirect
+      if (url) {
+        res.redirect(url)
+        return
+      }
+
       const page = template
         .replace(
           '<div id="root"></div>',

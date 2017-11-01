@@ -42,9 +42,9 @@ function* handleSignIn() {
     const { payload: { location, ...params } } = yield take(REQUEST_SIGN_IN)
     const { accessToken, error } = yield call(signIn, params)
     if (error) {
-      yield put(failureSignIn({ error }))
+      yield put(failureSignIn(error))
     } else {
-      yield put(successSignIn({ accessToken }))
+      yield put(successSignIn(accessToken))
       storeCookieAndRedirect(accessToken, location)
     }
   }
@@ -63,9 +63,9 @@ function* handleFetchLoggedInfo() {
     const accessToken = yield select(state => state.users.accessToken)
     const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
     if (error) {
-      yield put(failureFetchLoggedInfo({ error }))
+      yield put(failureFetchLoggedInfo(error))
     } else {
-      yield put(successFetchLoggedInfo({ loggedInfo }))
+      yield put(successFetchLoggedInfo(loggedInfo))
     }
     if (done) {
       done()

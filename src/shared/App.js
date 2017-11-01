@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Redirect } from 'react-router'
 import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedInfo } = this.props
+    const { loggedInfo, requiredAuth } = this.props
     return (
       <div>
         <Helmet>
@@ -52,6 +53,10 @@ class App extends Component {
             <PrivateRoute path="/posts/:id" component={Post} />
             <PrivateRoute path="/posts" component={Posts} />
           </Switch>
+
+          {requiredAuth && (
+            <Redirect to="/login" />
+          )}
         </Container>
       </div>
     )
@@ -60,6 +65,7 @@ class App extends Component {
 
 const ConnectedApp = connect(
   state => ({
+    requiredAuth: !!state.users.requiredAuth,
     accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
   }),
