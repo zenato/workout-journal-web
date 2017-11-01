@@ -61,7 +61,7 @@ export default handleActions(
     [FAILURE_FETCH_POSTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, items: false },
-      error: { ...state.error, items: action.payload.error },
+      error: { ...state.error, items: action.payload },
     }),
 
     [REQUEST_FETCH_MORE_POSTS]: (state, action) => ({
@@ -79,7 +79,7 @@ export default handleActions(
     [FAILURE_FETCH_MORE_POSTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, items: false },
-      error: { ...state.error, items: action.payload.error },
+      error: { ...state.error, items: action.payload },
     }),
 
     [REQUEST_FETCH_POST]: (state, action) => ({
@@ -91,12 +91,12 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
-      item: action.payload.item,
+      item: action.payload,
     }),
     [FAILURE_FETCH_POST]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_UPDATE_POST]: (state, action) => ({
@@ -109,18 +109,18 @@ export default handleActions(
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
       item: {
-        ...action.payload.item,
-        performances: action.payload.item.performances.map(p => ({
+        ...action.payload,
+        performances: action.payload.performances.map(p => ({
           ...p,
           event: { id: p.event.id },
         })),
       },
-      items: state.items.map(i => (i.id === action.payload.item.id ? action.payload.item : i)),
+      items: state.items.map(i => (i.id === action.payload.id ? action.payload : i)),
     }),
     [FAILURE_UPDATE_POST]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_INSERT_POST]: (state, action) => ({
@@ -133,18 +133,18 @@ export default handleActions(
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
       item: {
-        ...action.payload.item,
-        performances: action.payload.item.performances.map(p => ({
+        ...action.payload,
+        performances: action.payload.performances.map(p => ({
           ...p,
           event: { id: p.event.id },
         })),
       },
-      items: [action.payload.item, ...state.items],
+      items: [action.payload, ...state.items],
     }),
     [FAILURE_INSERT_POST]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [REQUEST_DELETE_POST]: (state, action) => ({
@@ -161,7 +161,7 @@ export default handleActions(
     [FAILURE_DELETE_POST]: (state, action) => ({
       ...state,
       pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload.error },
+      error: { ...state.error, item: action.payload },
     }),
 
     [CLEAR_POST]: (state, action) => ({
@@ -186,7 +186,7 @@ export default handleActions(
     [FAILURE_FETCH_EVENTS]: (state, action) => ({
       ...state,
       pending: { ...state.pending, events: false },
-      error: { ...state.error, events: action.payload.error },
+      error: { ...state.error, events: action.payload },
     }),
   },
   initialState,
