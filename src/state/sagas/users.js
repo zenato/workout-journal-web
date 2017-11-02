@@ -58,9 +58,9 @@ function fetchLoggedInfoApi(accessToken) {
 }
 
 function* handleFetchLoggedInfo() {
+  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
-    const accessToken = yield select(state => state.users.accessToken)
     const { loggedInfo, error } = yield call(fetchLoggedInfoApi, accessToken)
     if (error) {
       yield put(failureFetchLoggedInfo(error))
@@ -80,7 +80,7 @@ function* handleSignOut() {
 
 function* initialAuth() {
   // If rendered server, it has accessToken.
-  let accessToken = yield select(state => state.users.accessToken) ||
+  let accessToken = (yield select(state => state.users.accessToken)) ||
     Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
   if (accessToken) {
     yield put(restoreSiginIn(accessToken))
