@@ -80,7 +80,7 @@ function* handleSignOut() {
 
 function* initialAuth() {
   // If rendered server, it has accessToken.
-  let accessToken = (yield select(state => state.users.accessToken)) ||
+  const accessToken = (yield select(state => state.users.accessToken)) ||
     Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
   if (accessToken) {
     yield put(restoreSiginIn(accessToken))
