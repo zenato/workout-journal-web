@@ -48,16 +48,16 @@ function* handleSignIn() {
   }
 }
 
+function* handleSignOut() {
+  yield take(REQUEST_SIGN_OUT)
+  clearCookieAndRedirect()
+}
+
 function fetchLoggedInfo(accessToken) {
   return api
     .fetchLoggedInfo(accessToken)
     .then(loggedInfo => ({ loggedInfo }))
     .catch(error => ({ error }))
-}
-
-function* handleSignOut() {
-  yield take(REQUEST_SIGN_OUT)
-  clearCookieAndRedirect()
 }
 
 function* initialAuth() {
