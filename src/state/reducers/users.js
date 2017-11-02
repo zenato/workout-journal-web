@@ -1,12 +1,10 @@
 import { handleActions } from 'redux-actions'
 import {
+  INITIALIZED,
   RESTORE_SIGN_IN,
   REQUEST_SIGN_IN,
   SUCCESS_SIGN_IN,
   FAILURE_SIGN_IN,
-  REQUEST_FETCH_LOGGED_INFO,
-  SUCCESS_FETCH_LOGGED_INFO,
-  FAILURE_FETCH_LOGGED_INFO,
   REQUIRED_AUTH,
 } from '../actions/users'
 
@@ -19,13 +17,23 @@ const initialState = {
     loggedInfo: null,
   },
   requiredAuth: false,
+  initialized: false,
 }
 
 export default handleActions(
   {
-    [RESTORE_SIGN_IN]: (state, action) => ({
+    [RESTORE_SIGN_IN]: (state, action) =>
+      action.payload
+        ? {
+            ...state,
+            accessToken: action.payload.accessToken,
+            loggedInfo: action.payload.loggedInfo,
+          }
+        : state,
+
+    [INITIALIZED]: (state, action) => ({
       ...state,
-      accessToken: action.payload,
+      initialized: true,
     }),
 
     [REQUEST_SIGN_IN]: (state, action) => ({
@@ -43,23 +51,6 @@ export default handleActions(
       ...state,
       pending: false,
       error: { ...state.error, signIn: action.payload },
-    }),
-
-    [REQUEST_FETCH_LOGGED_INFO]: (state, action) => ({
-      ...state,
-      pending: true,
-      error: { ...state.error, loggedInfo: null },
-    }),
-    [SUCCESS_FETCH_LOGGED_INFO]: (state, action) => ({
-      ...state,
-      pending: false,
-      error: { ...state.error, loggedInfo: null },
-      loggedInfo: action.payload,
-    }),
-    [FAILURE_FETCH_LOGGED_INFO]: (state, action) => ({
-      ...state,
-      pending: false,
-      error: { ...state.error, loggedInfo: action.payload },
     }),
 
     [REQUIRED_AUTH]: (state, action) => ({

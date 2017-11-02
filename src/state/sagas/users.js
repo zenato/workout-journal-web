@@ -4,12 +4,10 @@ import {
   RESTORE_SIGN_IN,
   REQUEST_SIGN_IN,
   REQUEST_SIGN_OUT,
-  REQUEST_FETCH_LOGGED_INFO,
   restoreSiginIn,
   successSignIn,
   failureSignIn,
-  successFetchLoggedInfo,
-  failureFetchLoggedInfo,
+  initialized,
 } from 'state/actions/users'
 import * as api from 'lib/api'
 
@@ -50,27 +48,11 @@ function* handleSignIn() {
   }
 }
 
-function fetchLoggedInfoApi(accessToken) {
+function fetchLoggedInfo(accessToken) {
   return api
     .fetchLoggedInfo(accessToken)
     .then(loggedInfo => ({ loggedInfo }))
     .catch(error => ({ error }))
-}
-
-function* handleFetchLoggedInfo() {
-  const accessToken = yield select(state => state.users.accessToken)
-  while (true) {
-    const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
-    const { loggedInfo, error } = yield call(fetchLoggedInfoApi, accessToken)
-    if (error) {
-      yield put(failureFetchLoggedInfo(error))
-    } else {
-      yield put(successFetchLoggedInfo(loggedInfo))
-    }
-    if (done) {
-      done()
-    }
-  }
 }
 
 function* handleSignOut() {
@@ -79,12 +61,20 @@ function* handleSignOut() {
 }
 
 function* initialAuth() {
-  // If rendered server, it has accessToken.
-  const accessToken = (yield select(state => state.users.accessToken)) ||
-    Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
-  if (accessToken) {
-    yield put(restoreSiginIn(accessToken))
+  const isInitialized = yield select(state => state.users.initialized)
+  if (isInitialized) {
+    yield put(restoreSiginIn())
+  } else {
+    const accessToken =
+      (yield select(state => state.users.accessToken)) || Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+    if (accessToken) {
+      const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
+      if (!error) {
+        yield put(restoreSiginIn({ accessToken, loggedInfo }))
+      }
+    }
   }
+  yield put(initialized())
 }
 
 export default function* rootSaga() {
@@ -94,6 +84,5 @@ export default function* rootSaga() {
   // Wait sign in
   yield take(RESTORE_SIGN_IN)
 
-  yield fork(handleFetchLoggedInfo)
   yield fork(handleSignOut)
 }

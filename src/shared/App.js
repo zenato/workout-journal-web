@@ -16,12 +16,9 @@ const Container = styled.div`
 `
 
 class App extends Component {
-  componentWillMount() {
-    const { accessToken, loggedInfo, actions, done } = this.props
-    if (accessToken && !loggedInfo) {
-      actions.fetchLoggedInfo({ done })
-    } else {
-      done()
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.initialized && nextProps.initialized) {
+      this.props.done();
     }
   }
 
@@ -31,33 +28,35 @@ class App extends Component {
   }
 
   render() {
-    const { loggedInfo, requiredAuth } = this.props
+    const { initialized, loggedInfo, requiredAuth } = this.props
     return (
       <div>
         <Helmet>
           <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
 
-        <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
+        {initialized && (
+          <div>
+            <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
-        <Container>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/signIn" component={SignIn} />
+            <Container>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/signIn" component={SignIn} />
 
-          <Switch>
-            <PrivateRoute path="/events/:id" component={Event} />
-            <PrivateRoute path="/events" component={Events} />
-          </Switch>
+              <Switch>
+                <PrivateRoute path="/events/:id" component={Event} />
+                <PrivateRoute path="/events" component={Events} />
+              </Switch>
 
-          <Switch>
-            <PrivateRoute path="/posts/:id" component={Post} />
-            <PrivateRoute path="/posts" component={Posts} />
-          </Switch>
+              <Switch>
+                <PrivateRoute path="/posts/:id" component={Post} />
+                <PrivateRoute path="/posts" component={Posts} />
+              </Switch>
 
-          {requiredAuth && (
-            <Redirect to="/signIn" />
-          )}
-        </Container>
+              {requiredAuth && <Redirect to="/signIn" />}
+            </Container>
+          </div>
+        )}
       </div>
     )
   }
@@ -68,6 +67,7 @@ const ConnectedApp = connect(
     requiredAuth: !!state.users.requiredAuth,
     accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
+    initialized: state.users.initialized,
   }),
   dispatch => ({
     actions: bindActionCreators(UsersActions, dispatch),
