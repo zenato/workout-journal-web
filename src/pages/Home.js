@@ -3,24 +3,20 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { PAGE_TITLE } from 'config'
 
-const Home = ({ initialized, loggedInfo }) => {
+const Home = ({ accessToken, loggedInfo }) => {
   return (
     <div className="home">
       <Helmet>
         <title>{PAGE_TITLE}</title>
       </Helmet>
 
-      {initialized && (
-        <div>
-          {loggedInfo && <article>Welcome {loggedInfo.username}!</article>}
-          {!loggedInfo && <article>Required sign in.</article>}
-        </div>
-      )}
+      {accessToken && loggedInfo && <article>Welcome {loggedInfo.username}!</article>}
+      {!accessToken && <article>Required sign in.</article>}
     </div>
   )
 }
 
 export default connect(state => ({
-  initialized: state.users.initialized,
+  accessToken: state.users.accessToken,
   loggedInfo: state.users.loggedInfo,
 }))(Home)

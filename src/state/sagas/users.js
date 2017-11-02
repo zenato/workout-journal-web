@@ -4,10 +4,12 @@ import {
   RESTORE_SIGN_IN,
   REQUEST_SIGN_IN,
   REQUEST_SIGN_OUT,
+  REQUEST_FETCH_LOGGED_INFO,
   restoreSiginIn,
   successSignIn,
   failureSignIn,
-  initialized,
+  successFetchLoggedInfo,
+  failureFetchLoggedInfo,
 } from 'state/actions/users'
 import * as api from 'lib/api'
 
@@ -60,29 +62,30 @@ function fetchLoggedInfo(accessToken) {
     .catch(error => ({ error }))
 }
 
+function* handleFetchLoggedInfo() {
+  const accessToken = yield select(state => state.users.accessToken)
+  while (true) {
+    const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
+    const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
+    if (error) {
+      yield put(failureFetchLoggedInfo(error))
+    } else {
+      yield put(successFetchLoggedInfo(loggedInfo))
+    }
+    done && (yield done())
+  }
+}
+
 function* initialize() {
-  const isInitialized = yield select(state => state.users.initialized)
-  // Initialized on server
-  if (isInitialized) {
-    const accessToken = yield select(state => state.users.accessToken)
-    if (accessToken) {
-      yield put(restoreSiginIn())
-    }
+  const accessToken = yield select(state => state.users.accessToken)
+  if (accessToken) {
+    yield put(restoreSiginIn())
   } else {
-    // Initalized by initail state (on server)
-    let accessToken = yield select(state => state.users.accessToken)
-    if (!accessToken) {
-      accessToken = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
-    }
-    // Fetch user info
-    if (accessToken) {
-      const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
-      if (!error) {
-        yield put(restoreSiginIn({ accessToken, loggedInfo }))
-      }
+    const cookie = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+    if (cookie) {
+      yield put(restoreSiginIn(cookie))
     }
   }
-  yield put(initialized())
 }
 
 export default function* rootSaga() {
@@ -92,5 +95,6 @@ export default function* rootSaga() {
   // Wait sign in
   yield take(RESTORE_SIGN_IN)
 
+  yield fork(handleFetchLoggedInfo)
   yield fork(handleSignOut)
 }

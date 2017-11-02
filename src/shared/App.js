@@ -16,9 +16,12 @@ const Container = styled.div`
 `
 
 class App extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.initialized && nextProps.initialized) {
-      this.props.done();
+  componentWillMount() {
+    const { accessToken, loggedInfo, actions, done } = this.props
+    if (accessToken && !loggedInfo) {
+      actions.fetchLoggedInfo({ done })
+    } else {
+      done()
     }
   }
 
