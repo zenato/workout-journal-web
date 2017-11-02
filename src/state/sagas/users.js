@@ -50,7 +50,7 @@ function* handleSignIn() {
   }
 }
 
-function fetchLoggedInfo(accessToken) {
+function fetchLoggedInfoApi(accessToken) {
   return api
     .fetchLoggedInfo(accessToken)
     .then(loggedInfo => ({ loggedInfo }))
@@ -61,7 +61,7 @@ function* handleFetchLoggedInfo() {
   while (true) {
     const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
     const accessToken = yield select(state => state.users.accessToken)
-    const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
+    const { loggedInfo, error } = yield call(fetchLoggedInfoApi, accessToken)
     if (error) {
       yield put(failureFetchLoggedInfo(error))
     } else {
@@ -78,24 +78,22 @@ function* handleSignOut() {
   clearCookieAndRedirect()
 }
 
-export default function* rootSaga() {
-  yield fork(function*() {
-    yield fork(handleSignIn)
-
-    // Wait sign in
-    yield take(RESTORE_SIGN_IN)
-
-    yield fork(handleFetchLoggedInfo)
-    yield fork(handleSignOut)
-  })
-
-  const storedAccessToken = yield select(state => state.users.accessToken)
-  if (storedAccessToken) {
-    yield put(restoreSiginIn())
-  } else {
-    const accessToken = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
-    if (accessToken) {
-      yield put(restoreSiginIn({ accessToken }))
-    }
+function* initialAuth() {
+  // If rendered server, it has accessToken.
+  let accessToken = yield select(state => state.users.accessToken) ||
+    Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+  if (accessToken) {
+    yield put(restoreSiginIn(accessToken))
   }
+}
+
+export default function* rootSaga() {
+  yield fork(initialAuth)
+  yield fork(handleSignIn)
+
+  // Wait sign in
+  yield take(RESTORE_SIGN_IN)
+
+  yield fork(handleFetchLoggedInfo)
+  yield fork(handleSignOut)
 }

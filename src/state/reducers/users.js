@@ -22,7 +22,7 @@ export default handleActions(
   {
     [RESTORE_SIGN_IN]: (state, action) => ({
       ...state,
-      accessToken: action.payload ? action.payload.accessToken : state.accessToken,
+      accessToken: action.payload,
     }),
 
     [REQUEST_SIGN_IN]: (state, action) => ({
