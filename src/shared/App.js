@@ -35,28 +35,24 @@ class App extends Component {
           <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
 
-        {initialized && (
-          <div>
-            <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
+        <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
-            <Container>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/signIn" component={SignIn} />
+        <Container>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/signIn" component={SignIn} />
 
-              <Switch>
-                <PrivateRoute path="/events/:id" component={Event} />
-                <PrivateRoute path="/events" component={Events} />
-              </Switch>
+          <Switch>
+            <PrivateRoute path="/events/:id" component={Event} />
+            <PrivateRoute path="/events" component={Events} />
+          </Switch>
 
-              <Switch>
-                <PrivateRoute path="/posts/:id" component={Post} />
-                <PrivateRoute path="/posts" component={Posts} />
-              </Switch>
+          <Switch>
+            <PrivateRoute path="/posts/:id" component={Post} />
+            <PrivateRoute path="/posts" component={Posts} />
+          </Switch>
 
-              {requiredAuth && <Redirect to="/signIn" />}
-            </Container>
-          </div>
-        )}
+          {requiredAuth && <Redirect to="/signIn" />}
+        </Container>
       </div>
     )
   }
