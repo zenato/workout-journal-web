@@ -1,7 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import thunk from 'redux-thunk'
-import penderMiddleware from 'redux-pender'
 import reducers from './reducers'
 import rootSaga from './sagas'
 
@@ -16,7 +14,7 @@ const configureStore = initialState => {
   const store = createStore(
     reducers,
     initialState,
-    composeEnhancers(applyMiddleware(sagaMiddleware, thunk, penderMiddleware())),
+    composeEnhancers(applyMiddleware(sagaMiddleware)),
   )
 
   if (module.hot) {
