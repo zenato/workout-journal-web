@@ -14,7 +14,10 @@ const initialState = {
   loggedInfo: null,
   accessToken: null,
   pending: false,
-  error: null,
+  error: {
+    signIn: null,
+    loggedInfo: null,
+  },
   requiredAuth: false,
 }
 
@@ -28,35 +31,35 @@ export default handleActions(
     [REQUEST_SIGN_IN]: (state, action) => ({
       ...state,
       pending: true,
-      error: null,
+      error: { ...state.error, signIn: null },
     }),
     [SUCCESS_SIGN_IN]: (state, action) => ({
       ...state,
       pending: false,
-      error: null,
+      error: { ...state.error, signIn: null },
       accessToken: action.payload,
     }),
     [FAILURE_SIGN_IN]: (state, action) => ({
       ...state,
       pending: false,
-      error: action.payload,
+      error: { ...state.error, signIn: action.payload },
     }),
 
     [REQUEST_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
       pending: true,
-      error: null,
+      error: { ...state.error, loggedInfo: null },
     }),
     [SUCCESS_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
       pending: false,
-      error: null,
+      error: { ...state.error, loggedInfo: null },
       loggedInfo: action.payload,
     }),
     [FAILURE_FETCH_LOGGED_INFO]: (state, action) => ({
       ...state,
       pending: false,
-      error: action.payload,
+      error: { ...state.error, loggedInfo: action.payload },
     }),
 
     [REQUIRED_AUTH]: (state, action) => ({

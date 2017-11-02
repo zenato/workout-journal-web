@@ -40,7 +40,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) =>
 
 export default connect(
   state => ({
-    hasError: !!state.users.error,
+    hasError: !!state.users.error.signIn,
     pending: state.users.pending,
   }),
   dispatch => ({
