@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import { Route } from 'react-router-dom'
 
-const PrivateRoute = ({ component: Component, pending, accessToken, ...rest }) => (
+const PrivateRoute = ({ component: Component, initialized, accessToken, ...rest }) => (
   <Route
     {...rest}
     render={props => {
-      if (!accessToken) {
+      if (initialized) {
+        return null
+      } else if (!accessToken) {
         return <Redirect to="/signIn" />
       }
       return <Component {...props} />
@@ -16,5 +18,6 @@ const PrivateRoute = ({ component: Component, pending, accessToken, ...rest }) =
 )
 
 export default connect(state => ({
+  initialized: state.users.initialized,
   accessToken: state.users.accessToken,
 }))(PrivateRoute)
