@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, initialized, accessToken, ...rest 
   <Route
     {...rest}
     render={props => {
-      if (initialized) {
+      if (!initialized) {
         return null
       } else if (!accessToken) {
         return <Redirect to="/signIn" />
