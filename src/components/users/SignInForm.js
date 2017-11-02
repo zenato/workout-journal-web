@@ -24,7 +24,7 @@ const Footer = styled.div`
   }
 `
 
-const LoginForm = ({ hasError, handleSubmit }) => (
+const SignInForm = ({ hasError, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <FormGroup label="Username">
       <Field type="text" name="username" component={Input} />
@@ -40,12 +40,12 @@ const LoginForm = ({ hasError, handleSubmit }) => (
     )}
 
     <Footer>
-      <Button type="submit" value="Login" color="primary" />
+      <Button type="submit" value="Sign In" color="primary" />
     </Footer>
   </Form>
 )
 
-LoginForm.propTypes = {
+SignInForm.propTypes = {
   hasError: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 }
@@ -61,4 +61,4 @@ export const validate = ({ username, password }) => {
   return errors
 }
 
-export default LoginForm
+export default SignInForm

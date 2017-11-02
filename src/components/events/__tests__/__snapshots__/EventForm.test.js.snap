@@ -99,6 +99,11 @@ exports[`EventForm should render error message if not empty \`hasError\` props. 
     />
   </FormGroup>
   <styled.div>
+    <span>
+      Oops, An expected error seems to have occurred.
+    </span>
+  </styled.div>
+  <styled.div>
     <Button
       className="primary"
       type="submit"

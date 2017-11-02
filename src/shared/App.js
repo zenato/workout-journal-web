@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import * as UsersActions from 'state/actions/users'
-import { Events, Event, Home, Posts, Post, Login } from 'pages'
+import { Events, Event, Home, Posts, Post, SignIn } from 'pages'
 import Nav from 'components/Nav'
 import PrivateRoute from './PrivateRoute'
 
@@ -42,7 +42,7 @@ class App extends Component {
 
         <Container>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/signIn" component={SignIn} />
 
           <Switch>
             <PrivateRoute path="/events/:id" component={Event} />
@@ -55,7 +55,7 @@ class App extends Component {
           </Switch>
 
           {requiredAuth && (
-            <Redirect to="/login" />
+            <Redirect to="/signIn" />
           )}
         </Container>
       </div>

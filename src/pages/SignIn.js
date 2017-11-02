@@ -4,15 +4,15 @@ import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
 import * as usersActions from 'state/actions/users'
-import Form, { validate } from 'components/users/LoginForm'
+import Form, { validate } from 'components/users/SignInForm'
 import { PAGE_TITLE } from 'config'
 
-const LoginForm = reduxForm({
-  form: 'loginForm',
+const SignInForm = reduxForm({
+  form: 'signInForm',
   validate,
 })(Form)
 
-class Login extends Component {
+class SignIn extends Component {
   handleSubmit = async values => {
     const { UsersActions, location } = this.props
     await UsersActions.signIn({ ...values, location })
@@ -26,9 +26,9 @@ class Login extends Component {
 
         <article>
           <Helmet>
-            <title>{`Login | ${PAGE_TITLE}`}</title>
+            <title>{`Sign In | ${PAGE_TITLE}`}</title>
           </Helmet>
-          <LoginForm hasError={hasError} onSubmit={this.handleSubmit} />
+          <SignInForm hasError={hasError} onSubmit={this.handleSubmit} />
         </article>
       </div>
     )
@@ -47,4 +47,4 @@ export default connect(
     UsersActions: bindActionCreators(usersActions, dispatch),
   }),
   mergeProps,
-)(Login)
+)(SignIn)

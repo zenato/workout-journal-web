@@ -8,7 +8,7 @@ const PrivateRoute = ({ component: Component, pending, accessToken, loggedInfo, 
     {...rest}
     render={props => {
       if (!accessToken) {
-        return <Redirect to="/login" />
+        return <Redirect to="/signIn" />
       }
       return loggedInfo ? <Component {...props} /> : null
     }}
