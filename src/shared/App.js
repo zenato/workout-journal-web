@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   render() {
-    const { initialized, loggedInfo, requiredAuth } = this.props
+    const { loggedInfo, requiredAuth } = this.props
     return (
       <div>
         <Helmet>
@@ -63,7 +63,6 @@ const ConnectedApp = connect(
     requiredAuth: !!state.users.requiredAuth,
     accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
-    initialized: state.users.initialized,
   }),
   dispatch => ({
     actions: bindActionCreators(UsersActions, dispatch),
