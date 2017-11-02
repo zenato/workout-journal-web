@@ -378,5 +378,5 @@ export const fetchLoggedInfo = accessToken => {
       }
     }
   `
-  return api(accessToken+'1', query).then(r => r.user)
+  return api(accessToken, query).then(r => r.user)
 }
