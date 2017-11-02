@@ -10,7 +10,13 @@ const Home = ({ loggedInfo }) => {
         <title>{PAGE_TITLE}</title>
       </Helmet>
 
-      <article>Welcome {loggedInfo && loggedInfo.username}!</article>
+      {loggedInfo && (
+        <article>Welcome {loggedInfo.username}!</article>
+      )}
+
+      {!loggedInfo && (
+        <article>Required sign in.</article>
+      )}
     </div>
   )
 }
