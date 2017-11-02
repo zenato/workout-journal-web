@@ -60,13 +60,21 @@ function fetchLoggedInfo(accessToken) {
     .catch(error => ({ error }))
 }
 
-function* initialAuth() {
+function* initialize() {
   const isInitialized = yield select(state => state.users.initialized)
+  // Initialized on server
   if (isInitialized) {
-    yield put(restoreSiginIn())
+    const accessToken = yield select(state => state.users.accessToken)
+    if (accessToken) {
+      yield put(restoreSiginIn())
+    }
   } else {
-    const accessToken =
-      (yield select(state => state.users.accessToken)) || Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+    // Initalized by initail state (on server)
+    let accessToken = yield select(state => state.users.accessToken)
+    if (!accessToken) {
+      accessToken = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+    }
+    // Fetch user info
     if (accessToken) {
       const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
       if (!error) {
@@ -78,7 +86,7 @@ function* initialAuth() {
 }
 
 export default function* rootSaga() {
-  yield fork(initialAuth)
+  yield fork(initialize)
   yield fork(handleSignIn)
 
   // Wait sign in
