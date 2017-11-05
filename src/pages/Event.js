@@ -65,7 +65,7 @@ class Event extends Component {
         {item && (
           <article>
             <Helmet>
-              <title>{`${item ? item.name : 'New Event'} | ${PAGE_TITLE}`}</title>
+              <title>{`${item.name || 'New Event'} | ${PAGE_TITLE}`}</title>
             </Helmet>
             <EventForm
               initialValues={item}
