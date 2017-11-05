@@ -16,14 +16,6 @@ const PostForm = reduxForm({
 })(Form)
 
 class Post extends Component {
-  constructor(props) {
-    super(props)
-
-    this.defaultItem = {
-      workoutDate: new Date(),
-    }
-  }
-
   componentWillMount() {
     const { item, actions, done, match } = this.props
     if (!item) {
