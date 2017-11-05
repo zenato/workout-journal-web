@@ -43,6 +43,9 @@ function* handleFetchEvents() {
 }
 
 function fetchEvent(accessToken, id) {
+  if (id === null) {
+    return Promise.resolve({ item: {} })
+  }
   return api
     .fetchEvent(accessToken, id)
     .then(item => ({ item }))

@@ -25,11 +25,15 @@ class Post extends Component {
   }
 
   componentWillMount() {
-    const { actions, done, match } = this.props
-    actions.fetchPostWithEvents({
-      id: this.isNew() ? null : match.params.id,
-      done,
-    })
+    const { item, actions, done, match } = this.props
+    if (!item) {
+      actions.fetchPostWithEvents({
+        id: match.params.id,
+        done,
+      })
+    } else {
+      done()
+    }
   }
 
   componentWillUnmount() {
@@ -70,13 +74,13 @@ class Post extends Component {
       <div>
         {pending && <span>Now loading...</span>}
 
-        {(this.isNew() || item) && (
+        {item && events && (
           <article>
             <Helmet>
               <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${PAGE_TITLE}`}</title>
             </Helmet>
             <PostForm
-              initialValues={item || this.defaultItem}
+              initialValues={item}
               enableReinitialize={true}
               formValues={formValues}
               events={events}

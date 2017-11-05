@@ -19,7 +19,7 @@ import {
 } from '../actions/events'
 
 const initialState = {
-  items: [],
+  items: null,
   item: null,
 
   pending: {

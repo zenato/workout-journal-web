@@ -25,8 +25,8 @@ import {
 } from '../actions/posts'
 
 const initialState = {
-  events: [],
-  items: [],
+  events: null,
+  items: null,
   item: null,
   pageInfo: {
     hasNextPage: false,

@@ -19,7 +19,7 @@ const PostSearchForm = reduxForm({
 class Posts extends Component {
   componentWillMount() {
     const { items, done } = this.props
-    if (items.length < 1) {
+    if (!items) {
       this.fetchData(this.props, done)
     } else {
       done()
@@ -80,12 +80,12 @@ class Posts extends Component {
 
         <article>
           <ul>
-            {items.map(item => <PostItem key={item.id} item={item} onDetail={this.handleDetail} />)}
+            {items && items.map(item => <PostItem key={item.id} item={item} onDetail={this.handleDetail} />)}
           </ul>
         </article>
 
         <aside>
-          {pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
+          {pageInfo && pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
         </aside>
       </div>
     )

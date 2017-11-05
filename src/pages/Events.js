@@ -19,7 +19,7 @@ const EventSearchForm = reduxForm({
 class Events extends Component {
   componentWillMount() {
     const { items, done } = this.props
-    if (items.length < 1) {
+    if (!items) {
       this.fetchData(this.props, done)
     }
   }
@@ -74,7 +74,7 @@ class Events extends Component {
 
         <article>
           <ul>
-            {items.map(item => (
+            {items && items.map(item => (
               <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
             ))}
           </ul>

@@ -18,8 +18,11 @@ const EventForm = reduxForm({
 class Event extends Component {
   componentWillMount() {
     const { actions, item, done, match } = this.props
-    if (!isNew(match.params) && !item) {
-      actions.fetchEvent({ id: match.params.id, done })
+    if (!item) {
+      actions.fetchEvent({
+        id: isNew(match.params) ? null : match.params.id,
+        done,
+      })
     } else {
       done()
     }
@@ -56,12 +59,12 @@ class Event extends Component {
   }
 
   render() {
-    const { match, item, hasError, pending } = this.props
+    const { item, hasError, pending } = this.props
     return (
       <div>
         {pending && <span>Now loading...</span>}
 
-        {(isNew(match.params) || item) && (
+        {item && (
           <article>
             <Helmet>
               <title>{`${item ? item.name : 'New Event'} | ${PAGE_TITLE}`}</title>
