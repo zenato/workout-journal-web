@@ -20,7 +20,7 @@ class Post extends Component {
     const { item, actions, done, match } = this.props
     if (!item) {
       actions.fetchPostWithEvents({
-        id: match.params.id,
+        id: match.params.id === 'new' ? null : match.params.id,
         done,
       })
     } else {
@@ -32,11 +32,9 @@ class Post extends Component {
     this.props.actions.clearPost()
   }
 
-  isNew = () => this.props.match.params.id === 'new'
-
   handleSubmit = values => {
-    const { location, history, actions } = this.props
-    if (this.isNew()) {
+    const { match, location, history, actions } = this.props
+    if (match.params.id === 'new') {
       const item = actions.insertPost({
         values,
         done: () => history.replace(`/posts/${item.id}${location.search}`),
