@@ -74,7 +74,6 @@ PostForm.propTypes = {
   formValues: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired,
   hasError: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMoveList: PropTypes.func.isRequired,
 }

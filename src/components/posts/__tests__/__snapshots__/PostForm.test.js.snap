@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders without errors. 1`] = `
+exports[`PostForm Renders without errors. 1`] = `
 <Form
   onSubmit={[Function]}
 >
@@ -23,6 +23,7 @@ exports[`Renders without errors. 1`] = `
         },
       ]
     }
+    formValues={Object {}}
     name="performances"
   />
   <FormGroup
