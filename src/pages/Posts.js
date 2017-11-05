@@ -20,19 +20,19 @@ class Posts extends Component {
   componentWillMount() {
     const { items, done } = this.props
     if (!items) {
-      this.fetchData(this.props, done)
+      this.fetchData(this.props.location, done)
     } else {
       done()
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (hasChangedLocation(this.props.location, nextProps.location)) {
-      this.fetchData(nextProps)
+  componentWillReceiveProps({ location }) {
+    if (hasChangedLocation(this.props.location, location)) {
+      this.fetchData(location)
     }
   }
 
-  fetchData({ location }, done) {
+  fetchData(location, done) {
     const query = queryString.parse(location.search)
     return this.props.actions.fetchPosts({ query, done })
   }
