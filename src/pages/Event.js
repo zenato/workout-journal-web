@@ -8,8 +8,6 @@ import * as EventsActions from 'state/actions/events'
 import Form, { validate } from 'components/events/EventForm'
 import { PAGE_TITLE } from 'config'
 
-const isNew = ({ id }) => id === 'new'
-
 const EventForm = reduxForm({
   form: 'eventForm',
   validate: validate,
@@ -20,7 +18,7 @@ class Event extends Component {
     const { actions, item, done, match } = this.props
     if (!item) {
       actions.fetchEvent({
-        id: isNew(match.params) ? null : match.params.id,
+        id: match.params.id === 'new' ? null : match.params.id,
         done,
       })
     } else {
@@ -34,7 +32,7 @@ class Event extends Component {
 
   handleSubmit = values => {
     const { match, location, history, actions } = this.props
-    if (isNew(match.params)) {
+    if (match.params.id === 'new') {
       actions.insertEvent({
         values,
         done: item => history.replace(`/events/${item.id}${location.search}`),
