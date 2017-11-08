@@ -5,6 +5,9 @@ export default function asyncComponent(getComponent) {
     static Component = null
 
     static getComponent() {
+      if (AsyncComponent.Component) {
+        return Promise.resolve(AsyncComponent.Component)
+      }
       return getComponent().then(({ default: Component }) => {
         AsyncComponent.Component = Component
         return Component
