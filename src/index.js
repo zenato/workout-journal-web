@@ -1,26 +1,34 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
+import { BrowserRouter } from 'react-router-dom'
+import Preloader from './shared/Preloader'
 import registerServiceWorker from './registerServiceWorker'
-import configureStore from 'state/configureStore'
-import Root from './client/Root'
+import configureStore from './state/configureStore'
+import App from './shared/App'
 import './index.scss'
 
 const store = configureStore(window.__PRELOADED_STATE__ || {})
 
 const render = Component => {
-  ReactDOM.render(
-    <AppContainer>
-      <Component store={store} />
-    </AppContainer>,
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <Provider store={store}>
+        <Preloader>
+          <AppContainer>
+            <Component />
+          </AppContainer>
+        </Preloader>
+      </Provider>
+    </BrowserRouter>,
     document.getElementById('root'),
   )
 }
 
-render(Root)
+render(App)
+registerServiceWorker()
 
 if (module.hot) {
-  module.hot.accept('./client/Root', () => render(Root))
+  module.hot.accept('./shared/App', () => render(App))
 }
-
-registerServiceWorker()

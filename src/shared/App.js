@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Redirect } from 'react-router'
-import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import * as UsersActions from 'state/actions/users'
-import { Events, Event, Home, Posts, Post, SignIn } from 'pages'
+import routes from 'routes'
 import Nav from 'components/Nav'
-import PrivateRoute from './PrivateRoute'
 
 const Container = styled.div`
   padding: 5px;
@@ -31,7 +28,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedInfo, requiredAuth } = this.props
+    const { loggedInfo } = this.props
     return (
       <div>
         <Helmet>
@@ -41,20 +38,18 @@ class App extends Component {
         <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
         <Container>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/signIn" component={SignIn} />
+          <Route {...routes.Home} />
+          <Route {...routes.SignIn} />
 
           <Switch>
-            <PrivateRoute path="/events/:id" component={Event} />
-            <PrivateRoute path="/events" component={Events} />
+            <Route {...routes.Events} />
+            <Route {...routes.Event} />
           </Switch>
 
           <Switch>
-            <PrivateRoute path="/posts/:id" component={Post} />
-            <PrivateRoute path="/posts" component={Posts} />
+            <Route {...routes.Posts} />
+            <Route {...routes.Post} />
           </Switch>
-
-          {requiredAuth && <Redirect to="/signIn" />}
         </Container>
       </div>
     )
@@ -63,7 +58,6 @@ class App extends Component {
 
 const ConnectedApp = connect(
   state => ({
-    requiredAuth: !!state.users.requiredAuth,
     accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
   }),
@@ -72,4 +66,4 @@ const ConnectedApp = connect(
   }),
 )(App)
 
-export default withDone(withRouter(ConnectedApp))
+export default withRouter(ConnectedApp)

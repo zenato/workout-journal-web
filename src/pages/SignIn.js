@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as UsersActions from 'state/actions/users'
+import { signIn } from 'state/actions/users'
 import Form, { validate } from 'components/users/SignInForm'
 import { PAGE_TITLE } from 'config'
 
@@ -14,8 +14,8 @@ const SignInForm = reduxForm({
 
 class SignIn extends Component {
   handleSubmit = values => {
-    const { actions, location } = this.props
-    actions.signIn({ ...values, location })
+    const { location, signIn } = this.props
+    signIn({ ...values, location })
   }
 
   render() {
@@ -35,16 +35,12 @@ class SignIn extends Component {
   }
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign({}, stateProps, dispatchProps, ownProps)
-
 export default connect(
   state => ({
     hasError: !!state.users.error.signIn,
     pending: state.users.pending,
   }),
   dispatch => ({
-    actions: bindActionCreators(UsersActions, dispatch),
+    ...bindActionCreators({ signIn }, dispatch),
   }),
-  mergeProps,
 )(SignIn)

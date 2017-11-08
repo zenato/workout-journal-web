@@ -34,7 +34,7 @@ function* handleFetchEvents() {
     if (items) {
       yield put(successFetchEvents(items))
     } else {
-      yield put(failureFetchEvents(error))
+      yield put(failureFetchEvents(error.response.data.errors))
     }
     if (done) {
       yield done()

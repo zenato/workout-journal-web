@@ -91,7 +91,7 @@ export default handleActions(
       ...state,
       pending: { ...state.pending, item: false },
       error: { ...state.error, item: null },
-      item: action.payload,
+      item: action.payload.item,
     }),
     [FAILURE_FETCH_POST]: (state, action) => ({
       ...state,

@@ -1,8 +1,8 @@
-import asyncRoute from 'lib/asyncRoute'
+import asyncComponent from 'lib/asyncComponent'
 
-export const Home = asyncRoute(() => import('./Home'))
-export const Events = asyncRoute(() => import('./Events'))
-export const Event = asyncRoute(() => import('./Event'))
-export const Posts = asyncRoute(() => import('./Posts'))
-export const Post = asyncRoute(() => import('./Post'))
-export const SignIn = asyncRoute(() => import('./SignIn'))
+export const Home = asyncComponent(() => import('./Home'))
+export const Events = asyncComponent(() => import('./Events'))
+export const Event = asyncComponent(() => import('./Event'))
+export const Posts = asyncComponent(() => import('./Posts'))
+export const Post = asyncComponent(() => import('./Post'))
+export const SignIn = asyncComponent(() => import('./SignIn'))

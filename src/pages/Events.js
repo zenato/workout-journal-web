@@ -1,12 +1,11 @@
 import queryString from 'query-string'
 import React, { Component } from 'react'
-import { withDone } from 'react-router-server'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as EventsActions from 'state/actions/events'
-import { hasChangedLocation } from 'lib/location'
+import { fetchEvents } from 'state/actions/events'
+import { hasChangedLocation } from 'lib/router'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
 import EventItem from 'components/events/EventItem'
@@ -17,24 +16,21 @@ const EventSearchForm = reduxForm({
 })(SearchForm)
 
 class Events extends Component {
-  componentWillMount() {
-    const { location, items, done } = this.props
-    if (!items) {
-      this.fetchData(location, done)
-    } else {
-      done()
-    }
+  static async preload({ state, dispatch, query }) {
+    return new Promise(resolve => {
+      if (state.events.items) {
+        resolve()
+      } else {
+        dispatch(fetchEvents({ query, done: resolve }))
+      }
+    })
   }
 
   componentWillReceiveProps({ location }) {
     if (hasChangedLocation(this.props.location, location)) {
-      this.fetchData(location)
+      const query = queryString.parse(location.search)
+      return this.props.fetchEvents({ query })
     }
-  }
-
-  fetchData(location, done) {
-    const query = queryString.parse(location.search)
-    return this.props.actions.fetchEvents({ query, done })
   }
 
   handleSearch = values => {
@@ -76,9 +72,10 @@ class Events extends Component {
 
         <article>
           <ul>
-            {items && items.map(item => (
-              <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
-            ))}
+            {items &&
+              items.map(item => (
+                <EventItem key={item.id} item={item} onDetail={this.handleDetail} />
+              ))}
           </ul>
         </article>
       </div>
@@ -86,15 +83,13 @@ class Events extends Component {
   }
 }
 
-export default withDone(
-  connect(
-    state => ({
-      items: state.events.items,
-      pending: state.events.pending.items,
-      hasError: !!state.events.error.items,
-    }),
-    dispatch => ({
-      actions: bindActionCreators(EventsActions, dispatch),
-    }),
-  )(Events),
-)
+export default connect(
+  state => ({
+    items: state.events.items,
+    pending: state.events.pending.items,
+    hasError: !!state.events.error.items,
+  }),
+  dispatch => ({
+    ...bindActionCreators({ fetchEvents }, dispatch),
+  }),
+)(Events)

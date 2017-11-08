@@ -1,12 +1,11 @@
 import queryString from 'query-string'
 import React, { Component } from 'react'
-import { withDone } from 'react-router-server'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as PostsActions from 'state/actions/posts'
-import { hasChangedLocation } from 'lib/location'
+import { fetchPosts, fetchMorePosts } from 'state/actions/posts'
+import { hasChangedLocation } from 'lib/router'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
 import PostItem from 'components/posts/PostItem'
@@ -17,24 +16,21 @@ const PostSearchForm = reduxForm({
 })(SearchForm)
 
 class Posts extends Component {
-  componentWillMount() {
-    const { items, done } = this.props
-    if (!items) {
-      this.fetchData(this.props.location, done)
-    } else {
-      done()
-    }
+  static async preload({ state, dispatch, query }) {
+    return new Promise(resolve => {
+      if (state.posts.items) {
+        resolve()
+      } else {
+        dispatch(fetchPosts({ query, done: resolve }))
+      }
+    })
   }
 
   componentWillReceiveProps({ location }) {
     if (hasChangedLocation(this.props.location, location)) {
-      this.fetchData(location)
+      const query = queryString.parse(location.search)
+      return this.props.fetchPosts({ query })
     }
-  }
-
-  fetchData(location, done) {
-    const query = queryString.parse(location.search)
-    return this.props.actions.fetchPosts({ query, done })
   }
 
   handleSearch = values => {
@@ -52,7 +48,7 @@ class Posts extends Component {
   }
 
   handleMorePosts = () => {
-    return this.props.actions.fetchMorePosts({ after: this.props.pageInfo.endCursor })
+    return this.props.fetchMorePosts({ after: this.props.pageInfo.endCursor })
   }
 
   render() {
@@ -80,28 +76,30 @@ class Posts extends Component {
 
         <article>
           <ul>
-            {items && items.map(item => <PostItem key={item.id} item={item} onDetail={this.handleDetail} />)}
+            {items &&
+              items.map(item => (
+                <PostItem key={item.id} item={item} onDetail={this.handleDetail} />
+              ))}
           </ul>
         </article>
 
         <aside>
-          {pageInfo && pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
+          {pageInfo &&
+            pageInfo.hasNextPage && <Button onClick={this.handleMorePosts} value="More" />}
         </aside>
       </div>
     )
   }
 }
 
-export default withDone(
-  connect(
-    state => ({
-      items: state.posts.items,
-      pageInfo: state.posts.pageInfo,
-      pending: state.posts.pending.items,
-      hasError: !!state.posts.error.items,
-    }),
-    dispatch => ({
-      actions: bindActionCreators(PostsActions, dispatch),
-    }),
-  )(Posts),
-)
+export default connect(
+  state => ({
+    items: state.posts.items,
+    pageInfo: state.posts.pageInfo,
+    pending: state.posts.pending.items,
+    hasError: !!state.posts.error.items,
+  }),
+  dispatch => ({
+    ...bindActionCreators({ fetchPosts, fetchMorePosts }, dispatch),
+  }),
+)(Posts)

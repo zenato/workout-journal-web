@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const serialize = require('serialize-javascript')
 
 // Loading built modules.
 const render = require('../build/server').default
@@ -10,9 +9,9 @@ const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), {
 })
 
 module.exports = (req, res, next) => {
-  const location = req.path
   const params = {
-    location,
+    req,
+    res,
     accessToken: req.cookies.accessToken,
   }
 
@@ -27,9 +26,9 @@ module.exports = (req, res, next) => {
       const page = template
         .replace(
           '<div id="root"></div>',
-          `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${serialize(
+          `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${JSON.stringify(
             state,
-          )}</script>`,
+          ).replace(/</g, '\\u003c')}</script>`,
         )
         .replace(
           '<meta helmet>',

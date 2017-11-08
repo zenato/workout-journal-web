@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as EventsActions from 'state/actions/events'
+import { fetchEvent, insertEvent, updateEvent, deleteEvent } from 'state/actions/events'
 import Form, { validate } from 'components/events/EventForm'
 import { PAGE_TITLE } from 'config'
 
@@ -14,38 +13,33 @@ const EventForm = reduxForm({
 })(Form)
 
 class Event extends Component {
-  componentWillMount() {
-    const { actions, item, done, match } = this.props
-    if (!item) {
-      actions.fetchEvent({
-        id: match.params.id === 'new' ? null : match.params.id,
-        done,
-      })
-    } else {
-      done()
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.actions.clearEvent()
+  static async preload({ dispatch, params }) {
+    return new Promise(resolve => {
+      dispatch(
+        fetchEvent({
+          id: params.id === 'new' ? null : params.id,
+          done: resolve,
+        }),
+      )
+    })
   }
 
   handleSubmit = values => {
-    const { match, location, history, actions } = this.props
+    const { match, location, history, insertEvent, updateEvent } = this.props
     if (match.params.id === 'new') {
-      actions.insertEvent({
+      insertEvent({
         values,
         done: item => history.replace(`/events/${item.id}${location.search}`),
       })
     } else {
-      actions.updateEvent({ values })
+      updateEvent({ values })
     }
   }
 
   handleDelete = () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, actions } = this.props
-      actions.deleteEvent({
+      const { match, location, history } = this.props
+      deleteEvent({
         id: match.params.id,
         done: () => history.replace(`/events/${location.search}`),
       })
@@ -82,15 +76,13 @@ class Event extends Component {
   }
 }
 
-export default withDone(
-  connect(
-    state => ({
-      item: state.events.item,
-      hasError: !!state.events.error.item,
-      pending: state.events.pending.item,
-    }),
-    dispatch => ({
-      actions: bindActionCreators(EventsActions, dispatch),
-    }),
-  )(Event),
-)
+export default connect(
+  state => ({
+    item: state.events.item,
+    hasError: !!state.events.error.item,
+    pending: state.events.pending.item,
+  }),
+  dispatch => ({
+    ...bindActionCreators({ fetchEvent, insertEvent, updateEvent, deleteEvent }, dispatch),
+  }),
+)(Event)

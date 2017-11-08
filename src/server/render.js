@@ -1,20 +1,25 @@
 import React from 'react'
+import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { Provider } from 'react-redux'
-import { renderToString } from 'react-router-server'
 import configureStore from 'state/configureStore'
 import { Helmet } from 'react-helmet'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { getComponents, preload } from 'lib/router'
+import routes from 'routes'
 import App from 'shared/App'
 
-const render = async ({ location, accessToken }) => {
-  const initialState = { users: { accessToken } }
+const render = async ({ req, accessToken }) => {
+  const initialState = { users: { accessToken }, renderedServer: true }
   const store = configureStore(initialState)
   const sheet = new ServerStyleSheet()
   const context = {}
 
-  const { html } = await renderToString(
-    <StaticRouter location={location} context={context}>
+  const components = await getComponents(routes, req.path)
+  await preload(components, store.getState(), store.dispatch, req.query)
+
+  const { html } = renderToString(
+    <StaticRouter location={req.url} context={context}>
       <Provider store={store}>
         <StyleSheetManager sheet={sheet.instance}>
           <App />

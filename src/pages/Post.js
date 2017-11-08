@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { formValueSelector } from 'redux-form'
-import { withDone } from 'react-router-server'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import * as PostsActions from 'state/actions/posts'
+import { fetchPostWithEvents, insertPost, updatePost, deletePost } from 'state/actions/posts'
 import Form, { validate } from 'components/posts/PostForm'
 import { formatDate } from 'lib/date'
 import { PAGE_TITLE } from 'config'
@@ -16,38 +15,33 @@ const PostForm = reduxForm({
 })(Form)
 
 class Post extends Component {
-  componentWillMount() {
-    const { item, actions, done, match } = this.props
-    if (!item) {
-      actions.fetchPostWithEvents({
-        id: match.params.id === 'new' ? null : match.params.id,
-        done,
-      })
-    } else {
-      done()
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.actions.clearPost()
+  static async preload({ dispatch, params }) {
+    return new Promise(resolve => {
+      dispatch(
+        fetchPostWithEvents({
+          id: params.id === 'new' ? null : params.id,
+          done: resolve,
+        }),
+      )
+    })
   }
 
   handleSubmit = values => {
-    const { match, location, history, actions } = this.props
+    const { match, location, history, insertPost, updatePost } = this.props
     if (match.params.id === 'new') {
-      const item = actions.insertPost({
+      const item = insertPost({
         values,
         done: () => history.replace(`/posts/${item.id}${location.search}`),
       })
     } else {
-      actions.updatePost({ values })
+      updatePost({ values })
     }
   }
 
   handleDelete = async () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history, actions } = this.props
-      await actions.deletePost({
+      const { match, location, history, deletePost } = this.props
+      deletePost({
         id: match.params.id,
         done: () => history.replace(`/posts/${location.search}`),
       })
@@ -64,23 +58,26 @@ class Post extends Component {
       <div>
         {pending && <span>Now loading...</span>}
 
-        {item && events && (
-          <article>
-            <Helmet>
-              <title>{`${item ? formatDate(item.workoutDate) : 'New Post'} | ${PAGE_TITLE}`}</title>
-            </Helmet>
-            <PostForm
-              initialValues={item}
-              enableReinitialize={true}
-              formValues={formValues}
-              events={events}
-              hasError={hasError}
-              onSubmit={this.handleSubmit}
-              onDelete={this.handleDelete}
-              onMoveList={this.handleMoveList}
-            />
-          </article>
-        )}
+        {item &&
+          events && (
+            <article>
+              <Helmet>
+                <title>{`${item
+                  ? formatDate(item.workoutDate)
+                  : 'New Post'} | ${PAGE_TITLE}`}</title>
+              </Helmet>
+              <PostForm
+                initialValues={item}
+                enableReinitialize={true}
+                formValues={formValues}
+                events={events}
+                hasError={hasError}
+                onSubmit={this.handleSubmit}
+                onDelete={this.handleDelete}
+                onMoveList={this.handleMoveList}
+              />
+            </article>
+          )}
       </div>
     )
   }
@@ -88,19 +85,17 @@ class Post extends Component {
 
 const selector = formValueSelector('postForm')
 
-export default withDone(
-  connect(
-    state => ({
-      hasError: !!state.posts.error.item || !!state.posts.error.events,
-      pending: state.posts.pending.item || state.posts.pending.events,
-      item: state.posts.item,
-      events: state.posts.events,
-      formValues: {
-        performances: selector(state, 'performances') || [],
-      },
-    }),
-    dispatch => ({
-      actions: bindActionCreators(PostsActions, dispatch),
-    }),
-  )(Post),
-)
+export default connect(
+  state => ({
+    hasError: !!state.posts.error.item || !!state.posts.error.events,
+    pending: state.posts.pending.item || state.posts.pending.events,
+    item: state.posts.item,
+    events: state.posts.events,
+    formValues: {
+      performances: selector(state, 'performances') || [],
+    },
+  }),
+  dispatch => ({
+    ...bindActionCreators({ fetchPostWithEvents, insertPost, updatePost, deletePost }, dispatch),
+  }),
+)(Post)

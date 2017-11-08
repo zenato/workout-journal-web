@@ -9,4 +9,5 @@ export default combineReducers({
   posts,
   users,
   form: formReducer,
+  renderedServer: (state = false) => state,
 })
