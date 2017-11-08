@@ -7,7 +7,6 @@ import {
   REQUEST_FETCH_LOGGED_INFO,
   SUCCESS_FETCH_LOGGED_INFO,
   FAILURE_FETCH_LOGGED_INFO,
-  REQUIRED_AUTH,
 } from '../actions/users'
 
 const initialState = {
@@ -18,7 +17,6 @@ const initialState = {
     signIn: null,
     loggedInfo: null,
   },
-  requiredAuth: false,
 }
 
 export default handleActions(
@@ -60,11 +58,6 @@ export default handleActions(
       ...state,
       pending: false,
       error: { ...state.error, loggedInfo: action.payload },
-    }),
-
-    [REQUIRED_AUTH]: (state, action) => ({
-      ...state,
-      requiredAuth: true,
     }),
   },
   initialState,

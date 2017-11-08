@@ -5722,6 +5722,14 @@ react-router-dom@^4.2.2:
     react-router "^4.2.0"
     warning "^3.0.0"
 
+react-router-redux@^5.0.0-alpha.8:
+  version "5.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-5.0.0-alpha.8.tgz#5242c705730b2ac862aff7a8e90f870d0cf45e12"
+  dependencies:
+    history "^4.7.2"
+    prop-types "^15.6.0"
+    react-router "^4.2.0"
+
 react-router-server@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-server/-/react-router-server-4.2.2.tgz#7cb8ddf932cd2ece63a8801f050df2066ddea1e0"

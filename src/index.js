@@ -2,26 +2,28 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
-import { BrowserRouter } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 import Preloader from './shared/Preloader'
 import registerServiceWorker from './registerServiceWorker'
 import configureStore from './state/configureStore'
 import App from './shared/App'
 import './index.scss'
 
-const store = configureStore(window.__PRELOADED_STATE__ || {})
+const history = createHistory()
+const store = configureStore(window.__PRELOADED_STATE__ || {}, history)
 
 const render = Component => {
   ReactDOM.hydrate(
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
         <Preloader>
           <AppContainer>
             <Component />
           </AppContainer>
         </Preloader>
-      </Provider>
-    </BrowserRouter>,
+      </ConnectedRouter>
+    </Provider>,
     document.getElementById('root'),
   )
 }

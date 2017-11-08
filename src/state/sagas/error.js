@@ -1,12 +1,14 @@
-import _ from 'lodash'
-import { takeEvery, put } from 'redux-saga/effects'
-import { requiredAuth, FAILURE_SIGN_IN } from '../actions/users'
+import { takeEvery, select, put } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 
 function* handleFailureAPI(action) {
-  if ((action.error || /FAILURE_/.test(action.type)) && action.type !== FAILURE_SIGN_IN) {
-    const statusCode = _.get(action.payload, 'response.status') || 0
+  if ((action.error || /FAILURE_/.test(action.type))) {
+    const statusCode =  action.payload.status || 0
     if (statusCode === 401) {
-      yield put(requiredAuth())
+      const location = yield select(state => state.router.location)
+      if (!location || location.pathname !== '/signIn') {
+        yield put(push('/signIn'))
+      }
     }
   }
 }

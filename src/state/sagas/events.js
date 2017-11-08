@@ -34,7 +34,8 @@ function* handleFetchEvents() {
     if (items) {
       yield put(successFetchEvents(items))
     } else {
-      yield put(failureFetchEvents(error))
+      const { status, statusText, data } = error.response || {}
+      yield put(failureFetchEvents({ status, statusText, data }))
     }
     if (done) {
       yield done()
