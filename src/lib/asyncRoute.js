@@ -1,16 +1,23 @@
 import React from 'react'
 
 export default function asyncComponent(getComponent) {
-  return class AsyncComponent extends React.Component {
+  class AsyncComponent extends React.Component {
     static Component = null
+
+    static getComponent() {
+      return getComponent().then(({ default: Component }) => {
+        AsyncComponent.Component = Component
+        return Component
+      })
+    }
+
     state = {
       Component: AsyncComponent.Component,
     }
 
     componentWillMount() {
       if (!this.state.Component) {
-        getComponent().then(({ default: Component }) => {
-          AsyncComponent.Component = Component
+        AsyncComponent.getComponent().then(Component => {
           this.setState({ Component })
         })
       }
@@ -24,4 +31,6 @@ export default function asyncComponent(getComponent) {
       return null
     }
   }
+
+  return AsyncComponent
 }
