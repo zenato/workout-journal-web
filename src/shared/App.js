@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import * as UsersActions from 'state/actions/users'
 import routes from 'routes'
@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedInfo } = this.props
+    const { loggedInfo, requiredAuth } = this.props
     return (
       <div>
         <Helmet>
@@ -38,6 +38,8 @@ class App extends Component {
         <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
         <Container>
+          {requiredAuth ? <Redirect to="signIn" /> : null}
+
           <Route {...routes.Home} />
           <Route {...routes.SignIn} />
 
@@ -58,6 +60,7 @@ class App extends Component {
 
 const ConnectedApp = connect(
   state => ({
+    requiredAuth: state.users.requiredAuth,
     accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
   }),
