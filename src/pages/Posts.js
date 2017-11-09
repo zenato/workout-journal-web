@@ -4,7 +4,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { fetchPosts, fetchMorePosts } from 'state/actions/posts'
+import {
+  fetchPosts,
+  fetchMorePosts,
+  REQUEST_FETCH_POSTS,
+  REQUEST_FETCH_MORE_POSTS,
+  FAILURE_FETCH_POSTS,
+  FAILURE_FETCH_MORE_POSTS,
+} from 'state/actions/posts'
 import { hasChangedLocation } from 'lib/router'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -96,8 +103,8 @@ export default connect(
   state => ({
     items: state.posts.items,
     pageInfo: state.posts.pageInfo,
-    pending: state.posts.pending.items,
-    hasError: !!state.posts.error.items,
+    pending: [REQUEST_FETCH_POSTS, REQUEST_FETCH_MORE_POSTS].includes(state.posts.status),
+    hasError: [FAILURE_FETCH_POSTS, FAILURE_FETCH_MORE_POSTS].includes(state.posts.status),
   }),
   dispatch => ({
     ...bindActionCreators({ fetchPosts, fetchMorePosts }, dispatch),

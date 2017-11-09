@@ -4,7 +4,22 @@ import { bindActionCreators } from 'redux'
 import { formValueSelector } from 'redux-form'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { fetchPostWithEvents, insertPost, updatePost, deletePost } from 'state/actions/posts'
+import {
+  fetchPostWithEvents,
+  insertPost,
+  updatePost,
+  deletePost,
+  REQUEST_FETCH_POST,
+  REQUEST_FETCH_EVENTS,
+  REQUEST_INSERT_POST,
+  REQUEST_UPDATE_POST,
+  REQUEST_DELETE_POST,
+  FAILURE_FETCH_POST,
+  FAILURE_FETCH_EVENTS,
+  FAILURE_INSERT_POST,
+  FAILURE_UPDATE_POST,
+  FAILURE_DELETE_POST,
+} from 'state/actions/posts'
 import Form, { validate } from 'components/posts/PostForm'
 import { formatDate } from 'lib/date'
 import { PAGE_TITLE } from 'config'
@@ -87,8 +102,20 @@ const selector = formValueSelector('postForm')
 
 export default connect(
   state => ({
-    hasError: !!state.posts.error.item || !!state.posts.error.events,
-    pending: state.posts.pending.item || state.posts.pending.events,
+    hasError: [
+      FAILURE_FETCH_POST,
+      FAILURE_FETCH_EVENTS,
+      FAILURE_INSERT_POST,
+      FAILURE_UPDATE_POST,
+      FAILURE_DELETE_POST,
+    ].includes(state.posts.status),
+    pending: [
+      REQUEST_FETCH_POST,
+      REQUEST_FETCH_EVENTS,
+      REQUEST_INSERT_POST,
+      REQUEST_UPDATE_POST,
+      REQUEST_DELETE_POST,
+    ].includes(state.posts.status),
     item: state.posts.item,
     events: state.posts.events,
     formValues: {

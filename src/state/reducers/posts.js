@@ -25,6 +25,7 @@ import {
 } from '../actions/posts'
 
 const initialState = {
+  status: null,
   events: null,
   items: null,
   item: null,
@@ -32,161 +33,122 @@ const initialState = {
     hasNextPage: false,
     endCursor: null,
   },
-  pending: {
-    events: false,
-    items: false,
-    item: false,
-  },
-  error: {
-    events: null,
-    items: null,
-    item: null,
-  },
 }
 
 export default handleActions(
   {
-    [REQUEST_FETCH_POSTS]: (state, action) => ({
+    [REQUEST_FETCH_POSTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: true },
-      error: { ...state.error, items: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_POSTS]: (state, action) => ({
+    [SUCCESS_FETCH_POSTS]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.error, items: null },
-      items: action.payload.items,
-      pageInfo: action.payload.pageInfo,
+      status: type,
+      items: payload.items,
+      pageInfo: payload.pageInfo,
     }),
-    [FAILURE_FETCH_POSTS]: (state, action) => ({
+    [FAILURE_FETCH_POSTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.error, items: action.payload },
+      status: type,
     }),
 
-    [REQUEST_FETCH_MORE_POSTS]: (state, action) => ({
+    [REQUEST_FETCH_MORE_POSTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: true },
-      error: { ...state.error, items: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_MORE_POSTS]: (state, action) => ({
+    [SUCCESS_FETCH_MORE_POSTS]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.error, items: null },
-      items: [...state.items, ...action.payload.items],
-      pageInfo: action.payload.pageInfo,
+      status: type,
+      items: [...state.items, ...payload.items],
+      pageInfo: payload.pageInfo,
     }),
-    [FAILURE_FETCH_MORE_POSTS]: (state, action) => ({
+    [FAILURE_FETCH_MORE_POSTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.error, items: action.payload },
+      status: type,
     }),
 
-    [REQUEST_FETCH_POST]: (state, action) => ({
+    [REQUEST_FETCH_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_POST]: (state, action) => ({
+    [SUCCESS_FETCH_POST]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
-      item: action.payload.item,
+      status: type,
+      item: payload.item,
     }),
-    [FAILURE_FETCH_POST]: (state, action) => ({
+    [FAILURE_FETCH_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [REQUEST_UPDATE_POST]: (state, action) => ({
+    [REQUEST_UPDATE_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_UPDATE_POST]: (state, action) => ({
+    [SUCCESS_UPDATE_POST]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
+      status: type,
       item: {
-        ...action.payload,
-        performances: action.payload.performances.map(p => ({
+        ...payload,
+        performances: payload.performances.map(p => ({
           ...p,
           event: { id: p.event.id },
         })),
       },
-      items: state.items.map(i => (i.id === action.payload.id ? action.payload : i)),
+      items: (state.items || []).map(i => (i.id === payload.id ? payload : i)),
     }),
-    [FAILURE_UPDATE_POST]: (state, action) => ({
+    [FAILURE_UPDATE_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [REQUEST_INSERT_POST]: (state, action) => ({
+    [REQUEST_INSERT_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_INSERT_POST]: (state, action) => ({
+    [SUCCESS_INSERT_POST]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
+      status: type,
       item: {
-        ...action.payload,
-        performances: action.payload.performances.map(p => ({
+        ...payload,
+        performances: payload.performances.map(p => ({
           ...p,
           event: { id: p.event.id },
         })),
       },
-      items: [action.payload, ...state.items],
+      items: state.items ? [payload, ...state.items] : state.items,
     }),
-    [FAILURE_INSERT_POST]: (state, action) => ({
+    [FAILURE_INSERT_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
-    }),
-
-    [REQUEST_DELETE_POST]: (state, action) => ({
-      ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
-    }),
-    [SUCCESS_DELETE_POST]: (state, action) => ({
-      ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
-      items: state.items.filter(i => i.id !== state.item.id),
-    }),
-    [FAILURE_DELETE_POST]: (state, action) => ({
-      ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [CLEAR_POST]: (state, action) => ({
+    [REQUEST_DELETE_POST]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: null, events: null },
-      error: { ...state.error, item: null, events: null },
-      item: null,
-      events: [],
+      status: type,
+    }),
+    [SUCCESS_DELETE_POST]: (state, { type, payload }) => ({
+      ...state,
+      status: type,
+      items: (state.items || []).filter(i => i.id !== state.item.id),
+    }),
+    [FAILURE_DELETE_POST]: (state, { type }) => ({
+      ...state,
+      status: type,
     }),
 
-    [REQUEST_FETCH_EVENTS]: (state, action) => ({
+    [REQUEST_FETCH_EVENTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, events: true },
-      error: { ...state.error, events: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_EVENTS]: (state, action) => ({
+    [SUCCESS_FETCH_EVENTS]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, events: false },
-      error: { ...state.error, events: null },
-      events: action.payload.items,
+      status: type,
+      events: payload.items,
     }),
-    [FAILURE_FETCH_EVENTS]: (state, action) => ({
+    [FAILURE_FETCH_EVENTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, events: false },
-      error: { ...state.error, events: action.payload },
+      status: type,
     }),
   },
   initialState,
