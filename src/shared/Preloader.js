@@ -46,8 +46,8 @@ class Preloader extends React.Component {
     const { children } = this.props
     const { initialized, location } = this.state
     return [
-      <LoadingBar />,
-      initialized && <Route render={() => children} location={location} />
+      <LoadingBar key="loading" />,
+      initialized && <Route key="route" render={() => children} location={location} />
     ]
   }
 }
