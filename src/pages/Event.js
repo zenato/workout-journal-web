@@ -103,7 +103,7 @@ export default connect(
       REQUEST_INSERT_EVENT,
       REQUEST_UPDATE_EVENT,
       REQUEST_DELETE_EVENT,
-    ].include(state.event.status),
+    ].includes(state.events.status),
   }),
   dispatch => ({
     ...bindActionCreators({ fetchEvent, insertEvent, updateEvent, deleteEvent }, dispatch),
