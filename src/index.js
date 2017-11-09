@@ -5,7 +5,7 @@ import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import Cookies from 'js-cookie'
-import registerServiceWorker from './registerServiceWorker'
+//import registerServiceWorker from './registerServiceWorker'
 import configureStore from './state/configureStore'
 import { successSignIn } from './state/actions/users'
 import { fetchLoggedInfo } from './lib/api'
@@ -43,7 +43,7 @@ const render = Component =>
   }
 
   render(App)
-  registerServiceWorker()
+  //registerServiceWorker()
 
   if (module.hot) {
     module.hot.accept('./shared/App', () => render(App))
