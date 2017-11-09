@@ -16,7 +16,7 @@ import './index.scss'
 const history = createHistory()
 const store = configureStore(window.__PRELOADED_STATE__ || {}, history)
 
-const render = Component => {
+const render = Component =>
   ReactDOM.hydrate(
     <Provider store={store}>
       <ConnectedRouter history={history}>
@@ -29,7 +29,6 @@ const render = Component => {
     </Provider>,
     document.getElementById('root'),
   )
-}
 
 ;(async () => {
   // Restore authentication
@@ -39,8 +38,7 @@ const render = Component => {
       try {
         const loggedInfo = await fetchLoggedInfo(accessToken)
         store.dispatch(successSignIn({ accessToken, loggedInfo }))
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }
 
