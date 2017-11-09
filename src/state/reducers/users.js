@@ -25,7 +25,7 @@ export default handleActions(
       pending: true,
       error: { ...state.error, signIn: null },
     }),
-    [SUCCESS_SIGN_IN]: (state, { accessToken, loggedInfo }) => ({
+    [SUCCESS_SIGN_IN]: (state, { payload: { accessToken, loggedInfo } }) => ({
       ...state,
       pending: false,
       error: { ...state.error, signIn: null },
