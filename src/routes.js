@@ -29,3 +29,7 @@ export default {
     component: Post,
   },
 }
+
+if (module.hot) {
+  module.hot.accept('./pages/index', () => {})
+}

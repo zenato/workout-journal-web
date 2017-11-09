@@ -53,3 +53,8 @@ export default withRouter(
     }),
   )(App),
 )
+
+if (module.hot) {
+  // for change trigger
+  require('../pages')
+}
