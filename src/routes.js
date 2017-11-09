@@ -12,7 +12,7 @@ export default {
   },
   Events: {
     path: '/events',
-      component: Events,
+    component: Events,
     exact: true,
   },
   Event: {
