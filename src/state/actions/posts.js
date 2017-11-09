@@ -24,8 +24,6 @@ export const REQUEST_DELETE_POST = 'posts/REQUEST_DELETE_POST'
 export const SUCCESS_DELETE_POST = 'posts/SUCCESS_DELETE_POST'
 export const FAILURE_DELETE_POST = 'posts/FAILURE_DELETE_POST'
 
-export const CLEAR_POST = 'posts/CLEAR_POST'
-
 export const REQUEST_FETCH_EVENTS = 'posts/REQUEST_FETCH_EVENTS'
 export const SUCCESS_FETCH_EVENTS = 'posts/SUCCESS_FETCH_EVENTS'
 export const FAILURE_FETCH_EVENTS = 'posts/FAILURE_FETCH_EVENTS'
@@ -55,8 +53,6 @@ export const failureInsertPost = createAction(FAILURE_INSERT_POST)
 export const deletePost = createAction(REQUEST_DELETE_POST)
 export const successDeletePost = createAction(SUCCESS_DELETE_POST)
 export const failureDeletePost = createAction(FAILURE_DELETE_POST)
-
-export const clearPost = createAction(CLEAR_POST)
 
 export const fetchEvents = createAction(REQUEST_FETCH_EVENTS)
 export const successFetchEvents = createAction(SUCCESS_FETCH_EVENTS)

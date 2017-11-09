@@ -21,7 +21,6 @@ import {
   REQUEST_DELETE_POST,
   SUCCESS_DELETE_POST,
   FAILURE_DELETE_POST,
-  CLEAR_POST,
 } from '../actions/posts'
 
 const initialState = {
