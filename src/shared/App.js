@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import * as UsersActions from 'state/actions/users'
+import { signOut } from 'state/actions/users'
 import routes from 'routes'
 import Nav from 'components/Nav'
 
@@ -13,18 +13,9 @@ const Container = styled.div`
 `
 
 class App extends Component {
-  componentWillMount() {
-    const { accessToken, loggedInfo, actions, done } = this.props
-    if (accessToken && !loggedInfo) {
-      actions.fetchLoggedInfo({ done })
-    } else {
-      done()
-    }
-  }
-
   handleLogout = e => {
     e.preventDefault()
-    this.props.actions.signOut()
+    this.props.signOut()
   }
 
   render() {
@@ -38,15 +29,11 @@ class App extends Component {
         <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
         <Container>
-          <Route {...routes.Home} />
-          <Route {...routes.SignIn} />
-
           <Switch>
+            <Route {...routes.Home} />
+            <Route {...routes.SignIn} />
             <Route {...routes.Events} />
             <Route {...routes.Event} />
-          </Switch>
-
-          <Switch>
             <Route {...routes.Posts} />
             <Route {...routes.Post} />
           </Switch>
@@ -56,14 +43,11 @@ class App extends Component {
   }
 }
 
-const ConnectedApp = connect(
+export default connect(
   state => ({
-    accessToken: state.users.accessToken,
     loggedInfo: state.users.loggedInfo,
   }),
   dispatch => ({
-    actions: bindActionCreators(UsersActions, dispatch),
+    ...bindActionCreators({ signOut }, dispatch),
   }),
 )(App)
-
-export default withRouter(ConnectedApp)

@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions'
 import {
-  RESTORE_SIGN_IN,
   REQUEST_SIGN_IN,
   SUCCESS_SIGN_IN,
   FAILURE_SIGN_IN,
@@ -21,21 +20,17 @@ const initialState = {
 
 export default handleActions(
   {
-    [RESTORE_SIGN_IN]: (state, action) => ({
-      ...state,
-      accessToken: action.payload || state.accessToken,
-    }),
-
     [REQUEST_SIGN_IN]: (state, action) => ({
       ...state,
       pending: true,
       error: { ...state.error, signIn: null },
     }),
-    [SUCCESS_SIGN_IN]: (state, action) => ({
+    [SUCCESS_SIGN_IN]: (state, { accessToken, loggedInfo }) => ({
       ...state,
       pending: false,
       error: { ...state.error, signIn: null },
-      accessToken: action.payload,
+      accessToken,
+      loggedInfo,
     }),
     [FAILURE_SIGN_IN]: (state, action) => ({
       ...state,

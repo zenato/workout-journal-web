@@ -7,19 +7,27 @@ import { Helmet } from 'react-helmet'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import createHistory from 'history/createMemoryHistory'
 import { getComponents, preload } from 'lib/router'
+import { fetchLoggedInfo } from 'lib/api'
+import { successSignIn } from 'state/actions/users'
 import routes from 'routes'
 import App from 'shared/App'
 
-const isPerformRedirect = (store, pathname) => {
-}
-
 const render = async ({ req, accessToken }) => {
-
-  const initialState = { users: { accessToken }, renderedServer: true }
+  const initialState = { renderedServer: true }
   const history = createHistory({ initialEntries: [req.path] })
   const store = configureStore(initialState, history)
   const sheet = new ServerStyleSheet()
 
+  // Restore authentication
+  if (accessToken) {
+    try {
+      const loggedInfo = await fetchLoggedInfo(accessToken)
+      store.dispatch(successSignIn({ accessToken, loggedInfo }))
+    } catch (e) {
+    }
+  }
+
+  // Preload
   const components = await getComponents(routes, req.path)
   await preload(components, store.getState(), store.dispatch, req.query)
 

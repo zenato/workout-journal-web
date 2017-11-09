@@ -1,5 +1,4 @@
 import { take, fork, select, call, put, all } from 'redux-saga/effects'
-import { RESTORE_SIGN_IN } from 'state/actions/users'
 import {
   REQUEST_FETCH_POSTS,
   REQUEST_FETCH_MORE_POSTS,
@@ -168,9 +167,6 @@ function* handleDeletePost() {
 }
 
 export default function* rootSaga() {
-  // Wait sign in
-  yield take(RESTORE_SIGN_IN)
-
   yield fork(handleFetchPosts)
   yield fork(handleFetchMorePosts)
   yield fork(handleFetchPostWithEvents)

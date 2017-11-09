@@ -1,11 +1,9 @@
 import Cookies from 'js-cookie'
 import { take, fork, select, call, put } from 'redux-saga/effects'
 import {
-  RESTORE_SIGN_IN,
   REQUEST_SIGN_IN,
   REQUEST_SIGN_OUT,
   REQUEST_FETCH_LOGGED_INFO,
-  restoreSiginIn,
   successSignIn,
   failureSignIn,
   successFetchLoggedInfo,
@@ -76,25 +74,8 @@ function* handleFetchLoggedInfo() {
   }
 }
 
-function* initialize() {
-  const accessToken = yield select(state => state.users.accessToken)
-  if (accessToken) {
-    yield put(restoreSiginIn())
-  } else {
-    const cookie = Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
-    if (cookie) {
-      yield put(restoreSiginIn(cookie))
-    }
-  }
-}
-
 export default function* rootSaga() {
-  yield fork(initialize)
   yield fork(handleSignIn)
-
-  // Wait sign in
-  yield take(RESTORE_SIGN_IN)
-
   yield fork(handleFetchLoggedInfo)
   yield fork(handleSignOut)
 }

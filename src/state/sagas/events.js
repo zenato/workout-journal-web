@@ -1,5 +1,4 @@
 import { take, fork, select, call, put } from 'redux-saga/effects'
-import { RESTORE_SIGN_IN } from 'state/actions/users'
 import {
   REQUEST_FETCH_EVENTS,
   REQUEST_FETCH_EVENT,
@@ -116,9 +115,7 @@ function* handleUpdateEvent() {
 }
 
 function deleteEvent(accessToken, id) {
-  return api
-    .deleteEvent(accessToken, id)
-    .catch(error => ({ error }))
+  return api.deleteEvent(accessToken, id).catch(error => ({ error }))
 }
 
 function* handleDeleteEvent() {
@@ -138,9 +135,6 @@ function* handleDeleteEvent() {
 }
 
 export default function* rootSaga() {
-  // Wait sign in
-  yield take(RESTORE_SIGN_IN)
-
   yield fork(handleFetchEvents)
   yield fork(handleFetchEvent)
   yield fork(handleInsertEvent)
