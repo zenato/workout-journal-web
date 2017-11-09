@@ -11,48 +11,38 @@ import {
 const initialState = {
   loggedInfo: null,
   accessToken: null,
-  pending: false,
-  error: {
-    signIn: null,
-    loggedInfo: null,
-  },
+  status: null,
 }
 
 export default handleActions(
   {
-    [REQUEST_SIGN_IN]: (state, action) => ({
+    [REQUEST_SIGN_IN]: (state, { type }) => ({
       ...state,
-      pending: true,
-      error: { ...state.error, signIn: null },
+      status: type,
     }),
-    [SUCCESS_SIGN_IN]: (state, { payload: { accessToken, loggedInfo } }) => ({
+    [SUCCESS_SIGN_IN]: (state, { type, payload }) => ({
       ...state,
-      pending: false,
-      error: { ...state.error, signIn: null },
-      accessToken,
-      loggedInfo,
+      status: type,
+      accessToken: payload.accessToken,
+      loggedInfo: payload.loggedInfo,
     }),
-    [FAILURE_SIGN_IN]: (state, action) => ({
+    [FAILURE_SIGN_IN]: (state, { type }) => ({
       ...state,
-      pending: false,
-      error: { ...state.error, signIn: action.payload },
+      stauts: type,
     }),
 
-    [REQUEST_FETCH_LOGGED_INFO]: (state, action) => ({
+    [REQUEST_FETCH_LOGGED_INFO]: (state, { type }) => ({
       ...state,
-      pending: true,
-      error: { ...state.error, loggedInfo: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_LOGGED_INFO]: (state, action) => ({
+    [SUCCESS_FETCH_LOGGED_INFO]: (state, { type, payload }) => ({
       ...state,
-      pending: false,
-      error: { ...state.error, loggedInfo: null },
-      loggedInfo: action.payload,
+      status: type,
+      loggedInfo: payload,
     }),
-    [FAILURE_FETCH_LOGGED_INFO]: (state, action) => ({
+    [FAILURE_FETCH_LOGGED_INFO]: (state, { type }) => ({
       ...state,
-      pending: false,
-      error: { ...state.error, loggedInfo: action.payload },
+      status: type,
     }),
   },
   initialState,

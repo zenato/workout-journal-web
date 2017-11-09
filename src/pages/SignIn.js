@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { signIn } from 'state/actions/users'
+import { signIn, REQUEST_SIGN_IN, FAILURE_SIGN_IN } from 'state/actions/users'
 import Form, { validate } from 'components/users/SignInForm'
 import { PAGE_TITLE } from 'config'
 
@@ -37,8 +37,8 @@ class SignIn extends Component {
 
 export default connect(
   state => ({
-    hasError: !!state.users.error.signIn,
-    pending: state.users.pending,
+    hasError: state.users.status === FAILURE_SIGN_IN,
+    pending: state.users.status === REQUEST_SIGN_IN,
   }),
   dispatch => ({
     ...bindActionCreators({ signIn }, dispatch),
