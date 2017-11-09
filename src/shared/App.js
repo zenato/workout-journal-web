@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { signOut } from 'state/actions/users'
 import routes from 'routes'
@@ -43,11 +43,13 @@ class App extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    loggedInfo: state.users.loggedInfo,
-  }),
-  dispatch => ({
-    ...bindActionCreators({ signOut }, dispatch),
-  }),
-)(App)
+export default withRouter(
+  connect(
+    state => ({
+      loggedInfo: state.users.loggedInfo,
+    }),
+    dispatch => ({
+      ...bindActionCreators({ signOut }, dispatch),
+    }),
+  )(App),
+)
