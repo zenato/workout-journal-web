@@ -26,9 +26,9 @@ function fetchEvents(accessToken, query) {
 }
 
 function* handleFetchEvents() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { query, done } } = yield take(REQUEST_FETCH_EVENTS)
+    const accessToken = yield select(state => state.users.accessToken)
     const { items, error } = yield call(fetchEvents, accessToken, query)
     if (items) {
       yield put(successFetchEvents(items))
@@ -53,9 +53,9 @@ function fetchEvent(accessToken, id) {
 }
 
 function* handleFetchEvent() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { id, done } } = yield take(REQUEST_FETCH_EVENT)
+    const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(fetchEvent, accessToken, id)
     if (error) {
       yield put(failureFetchEvent(error))
@@ -76,9 +76,9 @@ function insertEvent(accessToken, values) {
 }
 
 function* handleInsertEvent() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { values, done } } = yield take(REQUEST_INSERT_EVENT)
+    const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertEvent, accessToken, values)
     if (error) {
       yield put(failureInsertEvent(error))
@@ -99,9 +99,9 @@ function updateEvent(accessToken, values) {
 }
 
 function* handleUpdateEvent() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { values, done } } = yield take(REQUEST_UPDATE_EVENT)
+    const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updateEvent, accessToken, values)
     if (error) {
       yield put(failureUpdateEvent(error))
@@ -119,9 +119,9 @@ function deleteEvent(accessToken, id) {
 }
 
 function* handleDeleteEvent() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { id, done } } = yield take(REQUEST_DELETE_EVENT)
+    const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deleteEvent, accessToken, id)
     if (error) {
       yield put(failureDeleteEvent(error))

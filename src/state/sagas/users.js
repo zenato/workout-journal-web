@@ -61,9 +61,9 @@ function fetchLoggedInfo(accessToken) {
 }
 
 function* handleFetchLoggedInfo() {
-  const accessToken = yield select(state => state.users.accessToken)
   while (true) {
     const { payload: { done } } = yield take(REQUEST_FETCH_LOGGED_INFO)
+    const accessToken = yield select(state => state.users.accessToken)
     const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
     if (error) {
       yield put(failureFetchLoggedInfo(error))
