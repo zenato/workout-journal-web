@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router'
+import LoadingBar, { showLoading, hideLoading } from 'react-redux-loading-bar'
 import queryString from 'query-string'
 import { getComponents, preload } from 'lib/router'
 import routes from 'routes'
@@ -15,16 +16,19 @@ class Preloader extends React.Component {
 
   async componentDidMount() {
     const { location, state, dispatch } = this.props
+    dispatch(showLoading())
     this.components = await getComponents(routes, location.pathname)
     if (!state.renderedServer) {
       await preload(this.components, state, dispatch, query())
     }
     this.setState({ initialized: true, location })
+    dispatch(hideLoading())
   }
 
   async componentWillReceiveProps({ location }) {
     const { location: prevLocation, state, dispatch } = this.props
     if (prevLocation !== location) {
+      dispatch(showLoading())
       const components = await getComponents(routes, location.pathname)
       const changedComponents = components.filter(({ match }) => {
         return !this.components.filter(
@@ -34,14 +38,17 @@ class Preloader extends React.Component {
       await preload(changedComponents, state, dispatch, query())
       this.components = components
       this.setState({ location })
+      dispatch(hideLoading())
     }
   }
 
   render() {
     const { children } = this.props
     const { initialized, location } = this.state
-    if (!initialized) return null
-    return <Route render={() => children} location={location} />
+    return [
+      <LoadingBar />,
+      initialized && <Route render={() => children} location={location} />
+    ]
   }
 }
 
