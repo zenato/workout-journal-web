@@ -15,116 +15,87 @@ import {
   REQUEST_DELETE_EVENT,
   SUCCESS_DELETE_EVENT,
   FAILURE_DELETE_EVENT,
-  CLEAR_EVENT,
 } from '../actions/events'
 
 const initialState = {
+  status: null,
   items: null,
   item: null,
-
-  pending: {
-    items: false,
-    item: false,
-  },
-  error: {
-    items: null,
-    item: null,
-  },
 }
 
 export default handleActions(
   {
-    [REQUEST_FETCH_EVENTS]: state => ({
+    [REQUEST_FETCH_EVENTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: true },
-      error: { ...state.pending, items: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_EVENTS]: (state, action) => ({
+    [SUCCESS_FETCH_EVENTS]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.pending, items: null },
-      items: action.payload,
+      status: type,
+      items: payload,
     }),
-    [FAILURE_FETCH_EVENTS]: (state, action) => ({
+    [FAILURE_FETCH_EVENTS]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, items: false },
-      error: { ...state.pending, items: action.payload },
+      status: type,
     }),
 
-    [REQUEST_FETCH_EVENT]: state => ({
+    [REQUEST_FETCH_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_FETCH_EVENT]: (state, action) => ({
+    [SUCCESS_FETCH_EVENT]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
-      item: action.payload,
+      status: type,
+      item: payload,
     }),
-    [FAILURE_FETCH_EVENT]: (state, action) => ({
+    [FAILURE_FETCH_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [REQUEST_UPDATE_EVENT]: (state, action) => ({
+    [REQUEST_UPDATE_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_UPDATE_EVENT]: (state, action) => ({
+    [SUCCESS_UPDATE_EVENT]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
-      item: action.payload,
-      items: state.items.map(i => (i.id === state.item.id ? { ...i, ...action.payload } : i)),
+      status: type,
+      item: payload,
+      items: (state.items || []).map(i => (i.id === state.item.id ? { ...i, ...payload } : i)),
     }),
-    [FAILURE_UPDATE_EVENT]: (state, action) => ({
+    [FAILURE_UPDATE_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [REQUEST_INSERT_EVENT]: (state, action) => ({
+    [REQUEST_INSERT_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_INSERT_EVENT]: (state, action) => ({
+    [SUCCESS_INSERT_EVENT]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
-      item: action.payload,
-      items: [action.payload, ...state.items],
+      status: type,
+      item: payload,
+      items: state.items ? [payload, ...state.items] : state.items,
     }),
-    [FAILURE_INSERT_EVENT]: (state, action) => ({
+    [FAILURE_INSERT_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
+      status: type,
     }),
 
-    [REQUEST_DELETE_EVENT]: (state, action) => ({
+    [REQUEST_DELETE_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: true },
-      error: { ...state.error, item: null },
+      status: type,
     }),
-    [SUCCESS_DELETE_EVENT]: (state, action) => ({
+    [SUCCESS_DELETE_EVENT]: (state, { type, payload }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: null },
+      status: type,
       item: null,
-      items: state.items.filter(i => i.id !== state.item.id),
+      items: (state.items || []).filter(i => i.id !== state.item.id),
     }),
-    [FAILURE_DELETE_EVENT]: (state, action) => ({
+    [FAILURE_DELETE_EVENT]: (state, { type }) => ({
       ...state,
-      pending: { ...state.pending, item: false },
-      error: { ...state.error, item: action.payload },
-    }),
-
-    [CLEAR_EVENT]: (state, action) => ({
-      ...state,
-      item: null,
+      status: type,
     }),
   },
   initialState,

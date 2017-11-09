@@ -3,7 +3,20 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { fetchEvent, insertEvent, updateEvent, deleteEvent } from 'state/actions/events'
+import {
+  fetchEvent,
+  insertEvent,
+  updateEvent,
+  deleteEvent,
+  REQUEST_FETCH_EVENT,
+  FAILURE_FETCH_EVENT,
+  REQUEST_INSERT_EVENT,
+  FAILURE_INSERT_EVENT,
+  REQUEST_UPDATE_EVENT,
+  FAILURE_UPDATE_EVENT,
+  REQUEST_DELETE_EVENT,
+  FAILURE_DELETE_EVENT,
+} from 'state/actions/events'
 import Form, { validate } from 'components/events/EventForm'
 import { PAGE_TITLE } from 'config'
 
@@ -79,8 +92,18 @@ class Event extends Component {
 export default connect(
   state => ({
     item: state.events.item,
-    hasError: !!state.events.error.item,
-    pending: state.events.pending.item,
+    hasError: [
+      FAILURE_FETCH_EVENT,
+      FAILURE_INSERT_EVENT,
+      FAILURE_UPDATE_EVENT,
+      FAILURE_DELETE_EVENT,
+    ].includes(state.events.status),
+    pending: [
+      REQUEST_FETCH_EVENT,
+      REQUEST_INSERT_EVENT,
+      REQUEST_UPDATE_EVENT,
+      REQUEST_DELETE_EVENT,
+    ].include(state.event.status),
   }),
   dispatch => ({
     ...bindActionCreators({ fetchEvent, insertEvent, updateEvent, deleteEvent }, dispatch),

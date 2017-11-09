@@ -20,8 +20,6 @@ export const REQUEST_DELETE_EVENT = 'events/REQUEST_DELETE_EVENT'
 export const SUCCESS_DELETE_EVENT = 'events/SUCCESS_DELETE_EVENT'
 export const FAILURE_DELETE_EVENT = 'events/FAILURE_DELETE_EVENT'
 
-export const CLEAR_EVENT = 'events/CLEAR_EVENT'
-
 export const fetchEvents = createAction(REQUEST_FETCH_EVENTS)
 export const successFetchEvents = createAction(SUCCESS_FETCH_EVENTS)
 export const failureFetchEvents = createAction(FAILURE_FETCH_EVENTS)
@@ -41,5 +39,3 @@ export const failureInsertEvent = createAction(FAILURE_INSERT_EVENT)
 export const deleteEvent = createAction(REQUEST_DELETE_EVENT)
 export const successDeleteEvent = createAction(SUCCESS_DELETE_EVENT)
 export const failureDeleteEvent = createAction(FAILURE_DELETE_EVENT)
-
-export const clearEvent = createAction(CLEAR_EVENT)

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { fetchEvents } from 'state/actions/events'
+import { fetchEvents, REQUEST_FETCH_EVENTS, FAILURE_FETCH_EVENTS } from 'state/actions/events'
 import { hasChangedLocation } from 'lib/router'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -86,8 +86,8 @@ class Events extends Component {
 export default connect(
   state => ({
     items: state.events.items,
-    pending: state.events.pending.items,
-    hasError: !!state.events.error.items,
+    pending: state.events.status === REQUEST_FETCH_EVENTS,
+    hasError: state.events.status === FAILURE_FETCH_EVENTS,
   }),
   dispatch => ({
     ...bindActionCreators({ fetchEvents }, dispatch),
