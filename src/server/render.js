@@ -28,8 +28,17 @@ const render = async ({ req, accessToken }) => {
   }
 
   // Preload
-  const components = await getComponents(routes, req.path)
-  await preload(components, store.getState(), store.dispatch, req.query)
+  try {
+    const components = await getComponents(routes, req.path)
+    await preload({
+      components,
+      state: store.getState(),
+      dispatch: store.dispatch,
+      query: req.query,
+    })
+  } catch (error) {
+    return { error }
+  }
 
   const html = renderToString(
     <Provider store={store}>

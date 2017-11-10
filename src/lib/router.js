@@ -24,11 +24,11 @@ export async function getComponents(routes, pathname) {
   )
 }
 
-export async function preload(components, state, dispatch, query) {
+export async function preload({ components = [], ...loadParams }) {
   const preloads = components
     .filter(({ component }) => component.preload)
     .map(({ component, match: { params } }) =>
-      component.preload({ dispatch, state, query, params }),
+      component.preload({ ...loadParams, params }),
     )
   return await Promise.all(preloads)
 }

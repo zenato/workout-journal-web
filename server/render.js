@@ -16,11 +16,15 @@ module.exports = (req, res, next) => {
   }
 
   return render(params)
-    .then(({ url, html, state, helmet, style }) => {
+    .then(({ error, url, html, state, helmet, style }) => {
+    // Error
+      if (error) {
+        return res.next(error)
+      }
+
       // Redirect
       if (url) {
-        res.redirect(url)
-        return
+        return res.redirect(url)
       }
 
       const page = template

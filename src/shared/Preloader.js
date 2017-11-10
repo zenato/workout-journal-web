@@ -1,7 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Route, withRouter } from 'react-router'
-import LoadingBar, { showLoading, hideLoading } from 'react-redux-loading-bar'
 import queryString from 'query-string'
 import { getComponents, preload } from 'lib/router'
 import routes from 'routes'
@@ -15,41 +14,73 @@ class Preloader extends React.Component {
   }
 
   async componentDidMount() {
-    const { location, state, dispatch } = this.props
-    dispatch(showLoading())
-    this.components = await getComponents(routes, location.pathname)
-    if (!state.renderedServer) {
-      await preload(this.components, state, dispatch, query())
+    const { location, loadParams, renderedServer, onLoad, onError, onComplete } = this.props
+    onLoad()
+    try {
+      const components = await getComponents(routes, location.pathname)
+      if (!renderedServer) {
+        await preload({
+          ...loadParams,
+          components,
+          query: query(),
+        })
+      }
+      this.components = components
+    } catch (error) {
+      onError({ location, error })
     }
     this.setState({ initialized: true, location })
-    dispatch(hideLoading())
+    onComplete()
   }
 
   async componentWillReceiveProps({ location }) {
-    const { location: prevLocation, state, dispatch } = this.props
+    const { location: prevLocation, loadParams, onLoad, onError, onComplete } = this.props
     if (prevLocation !== location) {
-      dispatch(showLoading())
-      const components = await getComponents(routes, location.pathname)
-      const changedComponents = components.filter(({ match }) => {
-        return !this.components.filter(
-          ({ match: prev }) => prev.path === match.path && prev.exact === match.exact,
-        ).length
-      })
-      await preload(changedComponents, state, dispatch, query())
-      this.components = components
-      this.setState({ location })
-      dispatch(hideLoading())
+      onLoad()
+      try {
+        const components = await getComponents(routes, location.pathname)
+        const changedComponents = components.filter(({ match }) => {
+          return !this.components.filter(
+            ({ match: prev }) => prev.path === match.path && prev.exact === match.exact,
+          ).length
+        })
+        await preload({
+          ...loadParams,
+          components: changedComponents,
+          query: query(),
+        })
+        this.components = components
+        this.setState({ location })
+      } catch (error) {
+        onError({ location, error })
+      }
+      onComplete()
     }
   }
 
   render() {
     const { children } = this.props
     const { initialized, location } = this.state
-    return [
-      <LoadingBar key="loading" />,
-      initialized && <Route key="route" render={() => children} location={location} />
-    ]
+    return initialized && <Route key="route" render={() => children} location={location} />
   }
 }
 
-export default withRouter(connect(state => ({ state }), dispatch => ({ dispatch }))(Preloader))
+Preloader.propTypes = {
+  state: PropTypes.any,
+  dispatch: PropTypes.func,
+  onLoad: PropTypes.func,
+  onError: PropTypes.func,
+  onComplete: PropTypes.func,
+  renderedServer: PropTypes.bool.isRequired,
+  params: PropTypes.object,
+}
+
+Preloader.defaultProps = {
+  onLoad: () => {},
+  onError: () => {},
+  onComplete: () => {},
+  renderedServer: false,
+  loadParams: {},
+}
+
+export default withRouter(Preloader)

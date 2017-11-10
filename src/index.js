@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
+import LoadingBar, { showLoading, hideLoading } from 'react-redux-loading-bar'
 import Cookies from 'js-cookie'
 //import registerServiceWorker from './registerServiceWorker'
 import configureStore from './state/configureStore'
@@ -15,24 +16,32 @@ import './index.scss'
 
 const history = createHistory()
 const store = configureStore(window.__PRELOADED_STATE__ || {}, history)
+const renderedServer = store.getState().renderedServer
 
 const render = Component =>
   ReactDOM.hydrate(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Preloader>
-          <AppContainer>
-            <Component />
-          </AppContainer>
-        </Preloader>
+        <div>
+          <LoadingBar />
+          <Preloader
+            renderedServer={renderedServer}
+            onLoad={() => store.dispatch(showLoading())}
+            onComplete={() => store.dispatch(hideLoading())}
+            loadParams={{ state: store.getState(), dispatch: store.dispatch }}
+          >
+            <AppContainer>
+              <Component />
+            </AppContainer>
+          </Preloader>
+        </div>
       </ConnectedRouter>
     </Provider>,
     document.getElementById('root'),
   )
-
 ;(async () => {
   // Restore authentication
-  if (!store.getState().renderedServer) {
+  if (!renderedServer) {
     const accessToken = Cookies.get('accessToken')
     if (accessToken) {
       try {
