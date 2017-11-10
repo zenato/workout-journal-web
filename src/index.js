@@ -17,7 +17,7 @@ import './index.scss'
 
 const history = createHistory()
 const store = configureStore(window.__PRELOADED_STATE__ || {}, history)
-const renderedServer = store.getState().renderedServer
+const { renderedServer } = store.getState()
 
 const render = Component =>
   ReactDOM.hydrate(
@@ -29,7 +29,7 @@ const render = Component =>
             renderedServer={renderedServer}
             onLoad={() => store.dispatch(showLoading())}
             onComplete={() => store.dispatch(hideLoading())}
-            loadParams={{ state: store.getState(), dispatch: store.dispatch }}
+            loadParams={{ store }}
             renderError={Error}
           >
             <AppContainer>
