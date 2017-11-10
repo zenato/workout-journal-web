@@ -23,12 +23,12 @@ const PostSearchForm = reduxForm({
 })(SearchForm)
 
 class Posts extends Component {
-  static async preload({ state, dispatch, query }) {
-    return new Promise(resolve => {
-      if (state.posts.items) {
+  static async preload({ store, query }) {
+    return new Promise((resolve, reject) => {
+      if (store.getState().posts.items) {
         resolve()
       } else {
-        dispatch(fetchPosts({ query, done: resolve }))
+        store.dispatch(fetchPosts({ query, onSuccess: resolve, onFailure: reject }))
       }
     })
   }

@@ -27,15 +27,16 @@ function fetchEvents(accessToken, query) {
 
 function* handleFetchEvents() {
   while (true) {
-    const { payload: { query, resolve, reject } } = yield take(REQUEST_FETCH_EVENTS)
+    const { payload: { query, onSuccess, onFailure } } = yield take(REQUEST_FETCH_EVENTS)
     const accessToken = yield select(state => state.users.accessToken)
     const { items, error } = yield call(fetchEvents, accessToken, query)
-    if (items) {
-      resolve && resolve(items)
-      yield put(successFetchEvents(items))
-    } else {
-      reject(error)
+    if (error) {
+      onFailure && (error.ignore = true)
       yield put(failureFetchEvents(error))
+      onFailure && onFailure(error)
+    } else {
+      yield put(successFetchEvents(items))
+      onSuccess && onSuccess(items)
     }
   }
 }
@@ -52,16 +53,16 @@ function fetchEvent(accessToken, id) {
 
 function* handleFetchEvent() {
   while (true) {
-    const { payload: { id, done } } = yield take(REQUEST_FETCH_EVENT)
+    const { payload: { id, onSuccess, onFailure } } = yield take(REQUEST_FETCH_EVENT)
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(fetchEvent, accessToken, id)
     if (error) {
+      onFailure && (error.ignore = true)
       yield put(failureFetchEvent(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successFetchEvent(item))
-    }
-    if (done) {
-      yield done()
+      onSuccess && onSuccess(item)
     }
   }
 }
@@ -75,16 +76,14 @@ function insertEvent(accessToken, values) {
 
 function* handleInsertEvent() {
   while (true) {
-    const { payload: { values, done } } = yield take(REQUEST_INSERT_EVENT)
+    const { payload: { values, onSuccess } } = yield take(REQUEST_INSERT_EVENT)
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertEvent, accessToken, values)
     if (error) {
       yield put(failureInsertEvent(error))
     } else {
       yield put(successInsertEvent(item))
-      if (done) {
-        yield done(item)
-      }
+      onSuccess && onSuccess(item)
     }
   }
 }
@@ -98,16 +97,14 @@ function updateEvent(accessToken, values) {
 
 function* handleUpdateEvent() {
   while (true) {
-    const { payload: { values, done } } = yield take(REQUEST_UPDATE_EVENT)
+    const { payload: { values, onSuccess } } = yield take(REQUEST_UPDATE_EVENT)
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updateEvent, accessToken, values)
     if (error) {
       yield put(failureUpdateEvent(error))
     } else {
       yield put(successUpdateEvent(item))
-      if (done) {
-        yield done(item)
-      }
+      onSuccess && onSuccess(item)
     }
   }
 }
@@ -118,16 +115,14 @@ function deleteEvent(accessToken, id) {
 
 function* handleDeleteEvent() {
   while (true) {
-    const { payload: { id, done } } = yield take(REQUEST_DELETE_EVENT)
+    const { payload: { id, onSuccess } } = yield take(REQUEST_DELETE_EVENT)
     const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deleteEvent, accessToken, id)
     if (error) {
       yield put(failureDeleteEvent(error))
     } else {
       yield put(successDeleteEvent())
-      if (done) {
-        yield done()
-      }
+      onSuccess && onSuccess(id)
     }
   }
 }

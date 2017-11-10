@@ -19,6 +19,7 @@ class Error extends Component {
     if (unauthorization(error)) {
       goSignIn(history)
     } else {
+      console.error(error)
       this.setState({ initialized: true })
     }
   }

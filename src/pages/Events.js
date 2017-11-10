@@ -16,9 +16,9 @@ const EventSearchForm = reduxForm({
 })(SearchForm)
 
 class Events extends Component {
-  static async preload({ dispatch, query }) {
+  static async preload({ store, query }) {
     return new Promise((resolve, reject) => {
-      dispatch(fetchEvents({ query, resolve, reject }))
+      store.dispatch(fetchEvents({ query, onSuccess: resolve, onFailure: reject }))
     })
   }
 

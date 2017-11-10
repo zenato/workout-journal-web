@@ -26,12 +26,13 @@ const EventForm = reduxForm({
 })(Form)
 
 class Event extends Component {
-  static async preload({ dispatch, params }) {
-    return new Promise(resolve => {
-      dispatch(
+  static async preload({ store, params }) {
+    return new Promise((resolve, reject) => {
+      store.dispatch(
         fetchEvent({
           id: params.id === 'new' ? null : params.id,
-          done: resolve,
+          onSuccess: resolve,
+          onFailure: reject,
         }),
       )
     })
@@ -42,7 +43,7 @@ class Event extends Component {
     if (match.params.id === 'new') {
       insertEvent({
         values,
-        done: item => history.replace(`/events/${item.id}${location.search}`),
+        onSuccess: item => history.replace(`/events/${item.id}${location.search}`),
       })
     } else {
       updateEvent({ values })
@@ -54,7 +55,7 @@ class Event extends Component {
       const { match, location, history } = this.props
       deleteEvent({
         id: match.params.id,
-        done: () => history.replace(`/events/${location.search}`),
+        onSuccess: () => history.replace(`/events/${location.search}`),
       })
     }
   }

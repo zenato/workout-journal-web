@@ -30,12 +30,13 @@ const PostForm = reduxForm({
 })(Form)
 
 class Post extends Component {
-  static async preload({ dispatch, params }) {
-    return new Promise(resolve => {
-      dispatch(
+  static async preload({ store, params }) {
+    return new Promise((resolve, reject) => {
+      store.dispatch(
         fetchPostWithEvents({
           id: params.id === 'new' ? null : params.id,
-          done: resolve,
+          onSuccess: resolve,
+          onFailure: reject,
         }),
       )
     })
@@ -44,9 +45,9 @@ class Post extends Component {
   handleSubmit = values => {
     const { match, location, history, insertPost, updatePost } = this.props
     if (match.params.id === 'new') {
-      const item = insertPost({
+      insertPost({
         values,
-        done: () => history.replace(`/posts/${item.id}${location.search}`),
+        onSuccess: item => history.replace(`/posts/${item.id}${location.search}`),
       })
     } else {
       updatePost({ values })
@@ -58,7 +59,7 @@ class Post extends Component {
       const { match, location, history, deletePost } = this.props
       deletePost({
         id: match.params.id,
-        done: () => history.replace(`/posts/${location.search}`),
+        onSuccess: () => history.replace(`/posts/${location.search}`),
       })
     }
   }
