@@ -3,7 +3,7 @@ import { takeEvery, select, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
 function* handleError(action) {
-  if (action.error) {
+  if (action.error && !action.payload.ignore) {
     const statusCode =  _.get(action.payload, 'response.status') || 500
     if (statusCode > 400 && statusCode < 500) {
       const location = yield select(state => state.router.location)
