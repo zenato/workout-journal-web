@@ -8,13 +8,16 @@ import routes from 'routes'
 const query = () => queryString.parse(window.location.search)
 
 class Preloader extends React.Component {
+  components = []
+
   state = {
     initialized: false,
     location: null,
+    error: null,
   }
 
   async componentDidMount() {
-    const { location, loadParams, renderedServer, onLoad, onError, onComplete } = this.props
+    const { location, loadParams, renderedServer, onLoad, onComplete } = this.props
     onLoad()
     try {
       const components = await getComponents(routes, location.pathname)
@@ -27,15 +30,16 @@ class Preloader extends React.Component {
       }
       this.components = components
     } catch (error) {
-      onError({ location, error })
+      this.setState({ error })
     }
     this.setState({ initialized: true, location })
     onComplete()
   }
 
   async componentWillReceiveProps({ location }) {
-    const { location: prevLocation, loadParams, onLoad, onError, onComplete } = this.props
+    const { location: prevLocation, loadParams, onLoad, onComplete } = this.props
     if (prevLocation !== location) {
+      this.setState({ error: null })
       onLoad()
       try {
         const components = await getComponents(routes, location.pathname)
@@ -52,15 +56,24 @@ class Preloader extends React.Component {
         this.components = components
         this.setState({ location })
       } catch (error) {
-        onError({ location, error })
+        this.setState({ error })
       }
       onComplete()
     }
   }
 
   render() {
-    const { children } = this.props
-    const { initialized, location } = this.state
+    const { children, renderError } = this.props
+    const { initialized, location, error } = this.state
+
+    if (!initialized) {
+      return null
+    }
+
+    if (error) {
+      return renderError({ error })
+    }
+
     return initialized && <Route key="route" render={() => children} location={location} />
   }
 }
@@ -69,18 +82,18 @@ Preloader.propTypes = {
   state: PropTypes.any,
   dispatch: PropTypes.func,
   onLoad: PropTypes.func,
-  onError: PropTypes.func,
   onComplete: PropTypes.func,
   renderedServer: PropTypes.bool.isRequired,
+  renderError: PropTypes.func,
   params: PropTypes.object,
 }
 
 Preloader.defaultProps = {
   onLoad: () => {},
-  onError: () => {},
   onComplete: () => {},
   renderedServer: false,
   loadParams: {},
+  renderError: () => null,
 }
 
 export default withRouter(Preloader)

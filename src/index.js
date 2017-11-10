@@ -12,6 +12,7 @@ import { successSignIn } from './state/actions/users'
 import { fetchLoggedInfo } from './lib/api'
 import Preloader from './shared/Preloader'
 import App from './shared/App'
+import Error from './pages/Error'
 import './index.scss'
 
 const history = createHistory()
@@ -29,6 +30,7 @@ const render = Component =>
             onLoad={() => store.dispatch(showLoading())}
             onComplete={() => store.dispatch(hideLoading())}
             loadParams={{ state: store.getState(), dispatch: store.dispatch }}
+            renderError={Error}
           >
             <AppContainer>
               <Component />
