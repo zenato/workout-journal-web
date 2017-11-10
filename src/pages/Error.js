@@ -1,23 +1,30 @@
 import _ from 'lodash'
-import React from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-const Error = ({ history, error }) => {
-  const statusCode = _.get(error, 'response.status') || 500
-  if (statusCode > 400 && statusCode < 500) {
-    history.push('/signIn')
-    return null
+class Error extends Component {
+  componentWillReceiveProps({ error }) {
+    const { history, error: prevError } = this.props
+    if (prevError !== error) {
+      const statusCode = _.get(error, 'response.status') || 500
+      if (statusCode > 400 && statusCode < 500) {
+        history.push('/signIn')
+      }
+    }
   }
 
-  return (
-    <div>
-      <div>Oops, An expected error seems to have occurred.</div>
+  render() {
+    const { history } = this.props
+    return (
       <div>
-        <button onClick={() => history.goBack()}>Back</button>
-        <button onClick={() => history.push('/')}>Home</button>
+        <div>Oops, An expected error seems to have occurred.</div>
+        <div>
+          <button onClick={() => history.goBack()}>Back</button>
+          <button onClick={() => history.push('/')}>Home</button>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default withRouter(Error)

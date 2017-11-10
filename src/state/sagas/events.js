@@ -27,17 +27,15 @@ function fetchEvents(accessToken, query) {
 
 function* handleFetchEvents() {
   while (true) {
-    const { payload: { query, done } } = yield take(REQUEST_FETCH_EVENTS)
+    const { payload: { query, resolve, reject } } = yield take(REQUEST_FETCH_EVENTS)
     const accessToken = yield select(state => state.users.accessToken)
     const { items, error } = yield call(fetchEvents, accessToken, query)
     if (items) {
+      resolve && resolve(items)
       yield put(successFetchEvents(items))
     } else {
-      const { status, statusText, data } = error.response || {}
-      yield put(failureFetchEvents({ status, statusText, data }))
-    }
-    if (done) {
-      yield done()
+      reject(error)
+      yield put(failureFetchEvents(error))
     }
   }
 }

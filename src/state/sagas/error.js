@@ -1,10 +1,11 @@
+import _ from 'lodash'
 import { takeEvery, select, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
-function* handleFailureAPI(action) {
-  if ((action.error || /FAILURE_/.test(action.type))) {
-    const statusCode =  action.payload.status || 0
-    if (statusCode === 401) {
+function* handleError(action) {
+  if (action.error) {
+    const statusCode =  _.get(action.payload, 'response.status') || 500
+    if (statusCode > 400 && statusCode < 500) {
       const location = yield select(state => state.router.location)
       if (!location || location.pathname !== '/signIn') {
         yield put(push('/signIn'))
@@ -14,5 +15,5 @@ function* handleFailureAPI(action) {
 }
 
 export default function* rootSaga() {
-  yield takeEvery('*', handleFailureAPI)
+  yield takeEvery('*', handleError)
 }

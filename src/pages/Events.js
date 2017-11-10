@@ -16,20 +16,16 @@ const EventSearchForm = reduxForm({
 })(SearchForm)
 
 class Events extends Component {
-  static async preload({ state, dispatch, query }) {
-    return new Promise(resolve => {
-      if (state.events.items) {
-        resolve()
-      } else {
-        dispatch(fetchEvents({ query, done: resolve }))
-      }
+  static async preload({ dispatch, query }) {
+    return new Promise((resolve, reject) => {
+      dispatch(fetchEvents({ query, resolve, reject }))
     })
   }
 
   componentWillReceiveProps({ location }) {
     if (hasChangedLocation(this.props.location, location)) {
       const query = queryString.parse(location.search)
-      return this.props.fetchEvents({ query })
+      this.props.fetchEvents({ query })
     }
   }
 

@@ -39,7 +39,6 @@ class Preloader extends React.Component {
   async componentWillReceiveProps({ location }) {
     const { location: prevLocation, loadParams, onLoad, onComplete } = this.props
     if (prevLocation !== location) {
-      this.setState({ error: null })
       onLoad()
       try {
         const components = await getComponents(routes, location.pathname)
@@ -54,7 +53,7 @@ class Preloader extends React.Component {
           query: query(),
         })
         this.components = components
-        this.setState({ location })
+        this.setState({ location, error: null })
       } catch (error) {
         this.setState({ error })
       }
@@ -65,16 +64,15 @@ class Preloader extends React.Component {
   render() {
     const { children, renderError } = this.props
     const { initialized, location, error } = this.state
-
     if (!initialized) {
       return null
     }
-
-    if (error) {
-      return renderError({ error })
-    }
-
-    return initialized && <Route key="route" render={() => children} location={location} />
+    return (
+      <Route
+        render={() => (error ? renderError({ error }) : React.Children.only(children))}
+        location={location}
+      />
+    )
   }
 }
 
