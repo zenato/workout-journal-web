@@ -9,7 +9,9 @@ import Cookies from 'js-cookie'
 //import registerServiceWorker from './registerServiceWorker'
 import configureStore from './state/configureStore'
 import { successSignIn } from './state/actions/users'
+import { getComponents } from './lib/router'
 import { fetchLoggedInfo } from './lib/api'
+import routes from 'routes'
 import Preloader from './shared/Preloader'
 import App from './shared/App'
 import Error from './pages/Error'
@@ -38,12 +40,9 @@ const render = Component =>
     </Provider>,
     document.getElementById('root'),
   )
-
-if (renderedServer) {
-  render(App)
-} else {
-  (async () => {
-    // Restore authentication
+;(async () => {
+  // Restore authentication
+  if (renderedServer) {
     const accessToken = Cookies.get('accessToken')
     if (accessToken) {
       try {
@@ -51,9 +50,13 @@ if (renderedServer) {
         store.dispatch(successSignIn({ accessToken, loggedInfo }))
       } catch (e) {}
     }
-    render(App)
-  })()
-}
+  }
+
+  // Components loading for SSR
+  await getComponents(routes, window.location.pathname)
+
+  render(App)
+})()
 
 //registerServiceWorker()
 
