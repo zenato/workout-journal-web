@@ -48,7 +48,7 @@ class Event extends Component {
 
   handleDelete = () => {
     if (window.confirm('Are you sure?')) {
-      const { match, location, history } = this.props
+      const { match, location, history, deleteEvent } = this.props
       deleteEvent({
         id: match.params.id,
         onSuccess: () => history.replace(`/events/${location.search}`),
