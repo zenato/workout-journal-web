@@ -129,7 +129,7 @@ export default handleActions(
     [SUCCESS_DELETE_POST]: (state, { type, payload }) => ({
       ...state,
       status: type,
-      items: (state.items || []).filter(i => i.id !== state.item.id),
+      items: state.items ? state.items.filter(i => i.id !== state.item.id) : state.items,
     }),
     [FAILURE_DELETE_POST]: (state, { type }) => ({
       ...state,

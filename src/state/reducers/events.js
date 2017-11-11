@@ -91,7 +91,7 @@ export default handleActions(
       ...state,
       status: type,
       item: null,
-      items: (state.items || []).filter(i => i.id !== state.item.id),
+      items: state.items ? state.items.filter(i => i.id !== state.item.id) : state.items,
     }),
     [FAILURE_DELETE_EVENT]: (state, { type }) => ({
       ...state,
