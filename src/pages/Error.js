@@ -11,7 +11,7 @@ const goSignIn = ({ push }) => push('/signIn')
 
 class Error extends Component {
   state = {
-    initialized: true,
+    initialized: false,
   }
 
   componentDidMount() {
