@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
     .then(({ error, url, html, state, helmet, style }) => {
     // Error
       if (error) {
-        return res.next(error)
+        return next(error)
       }
 
       // Redirect
