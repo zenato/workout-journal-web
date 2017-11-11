@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { fetchEvents, REQUEST_FETCH_EVENTS, FAILURE_FETCH_EVENTS } from 'state/actions/events'
+import { fetchEvents, FAILURE_FETCH_EVENTS } from 'state/actions/events'
 import { hasChangedLocation } from 'lib/router'
 import { Button } from 'components/form'
 import SearchForm from 'components/SearchForm'
@@ -48,7 +48,7 @@ class Events extends Component {
   }
 
   render() {
-    const { items, location, pending, hasError } = this.props
+    const { items, location , hasError } = this.props
     const search = { ...queryString.parse(location.search) }
     return (
       <div>
@@ -67,7 +67,6 @@ class Events extends Component {
           placeholder="Input event name."
         />
 
-        {pending && <div>Now loading...</div>}
         {hasError && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
@@ -86,7 +85,6 @@ class Events extends Component {
 export default connect(
   state => ({
     items: state.events.items,
-    pending: state.events.status === REQUEST_FETCH_EVENTS,
     hasError: state.events.status === FAILURE_FETCH_EVENTS,
   }),
   dispatch => ({

@@ -8,13 +8,9 @@ import {
   insertEvent,
   updateEvent,
   deleteEvent,
-  REQUEST_FETCH_EVENT,
   FAILURE_FETCH_EVENT,
-  REQUEST_INSERT_EVENT,
   FAILURE_INSERT_EVENT,
-  REQUEST_UPDATE_EVENT,
   FAILURE_UPDATE_EVENT,
-  REQUEST_DELETE_EVENT,
   FAILURE_DELETE_EVENT,
 } from 'state/actions/events'
 import Form, { validate } from 'components/events/EventForm'
@@ -65,11 +61,9 @@ class Event extends Component {
   }
 
   render() {
-    const { item, hasError, pending } = this.props
+    const { item, hasError } = this.props
     return (
       <div>
-        {pending && <span>Now loading...</span>}
-
         {item && (
           <article>
             <Helmet>
@@ -98,12 +92,6 @@ export default connect(
       FAILURE_INSERT_EVENT,
       FAILURE_UPDATE_EVENT,
       FAILURE_DELETE_EVENT,
-    ].includes(state.events.status),
-    pending: [
-      REQUEST_FETCH_EVENT,
-      REQUEST_INSERT_EVENT,
-      REQUEST_UPDATE_EVENT,
-      REQUEST_DELETE_EVENT,
     ].includes(state.events.status),
   }),
   dispatch => ({

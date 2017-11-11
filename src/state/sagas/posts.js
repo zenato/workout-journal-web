@@ -1,4 +1,5 @@
 import { take, fork, select, call, put, all } from 'redux-saga/effects'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {
   REQUEST_FETCH_POSTS,
   REQUEST_FETCH_MORE_POSTS,
@@ -86,9 +87,9 @@ function* handleFetchPostWithEvents() {
     yield put(fetchPost())
     yield put(fetchEvents())
 
-    const [ post, events ] = yield all([
+    const [post, events] = yield all([
       call(fetchPostApi, accessToken, id),
-      call(fetchEventsApi, accessToken)
+      call(fetchEventsApi, accessToken),
     ])
 
     const error = post.error || events.error
@@ -114,6 +115,7 @@ function insertPost(accessToken, values) {
 function* handleInsertPost() {
   while (true) {
     const { payload: { values, onSuccess } } = yield take(REQUEST_INSERT_POST)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertPost, accessToken, values)
     if (error) {
@@ -122,6 +124,7 @@ function* handleInsertPost() {
       yield put(successInsertPost(item))
       onSuccess && onSuccess(item)
     }
+    yield put(hideLoading())
   }
 }
 
@@ -135,6 +138,7 @@ function updatePost(accessToken, values) {
 function* handleUpdatePost() {
   while (true) {
     const { payload: { values, onSuccess } } = yield take(REQUEST_UPDATE_POST)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updatePost, accessToken, values)
     if (error) {
@@ -143,6 +147,7 @@ function* handleUpdatePost() {
       yield put(successUpdatePost(item))
       onSuccess && onSuccess(item)
     }
+    yield put(hideLoading())
   }
 }
 
@@ -153,6 +158,7 @@ function deletePost(accessToken, id) {
 function* handleDeletePost() {
   while (true) {
     const { payload: { id, onSuccess } } = yield take(REQUEST_DELETE_POST)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deletePost, accessToken, id)
     if (error) {
@@ -161,6 +167,7 @@ function* handleDeletePost() {
       yield put(successDeletePost())
       onSuccess && onSuccess(id)
     }
+    yield put(hideLoading())
   }
 }
 

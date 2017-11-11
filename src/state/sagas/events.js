@@ -1,4 +1,5 @@
 import { take, fork, select, call, put } from 'redux-saga/effects'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {
   REQUEST_FETCH_EVENTS,
   REQUEST_FETCH_EVENT,
@@ -77,6 +78,7 @@ function insertEvent(accessToken, values) {
 function* handleInsertEvent() {
   while (true) {
     const { payload: { values, onSuccess } } = yield take(REQUEST_INSERT_EVENT)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertEvent, accessToken, values)
     if (error) {
@@ -85,6 +87,7 @@ function* handleInsertEvent() {
       yield put(successInsertEvent(item))
       onSuccess && onSuccess(item)
     }
+    yield put(hideLoading())
   }
 }
 
@@ -98,6 +101,7 @@ function updateEvent(accessToken, values) {
 function* handleUpdateEvent() {
   while (true) {
     const { payload: { values, onSuccess } } = yield take(REQUEST_UPDATE_EVENT)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updateEvent, accessToken, values)
     if (error) {
@@ -106,6 +110,7 @@ function* handleUpdateEvent() {
       yield put(successUpdateEvent(item))
       onSuccess && onSuccess(item)
     }
+    yield put(hideLoading())
   }
 }
 
@@ -116,6 +121,7 @@ function deleteEvent(accessToken, id) {
 function* handleDeleteEvent() {
   while (true) {
     const { payload: { id, onSuccess } } = yield take(REQUEST_DELETE_EVENT)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deleteEvent, accessToken, id)
     if (error) {
@@ -124,6 +130,7 @@ function* handleDeleteEvent() {
       yield put(successDeleteEvent())
       onSuccess && onSuccess(id)
     }
+    yield put(hideLoading())
   }
 }
 

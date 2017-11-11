@@ -7,8 +7,6 @@ import { reduxForm } from 'redux-form'
 import {
   fetchPosts,
   fetchMorePosts,
-  REQUEST_FETCH_POSTS,
-  REQUEST_FETCH_MORE_POSTS,
   FAILURE_FETCH_POSTS,
   FAILURE_FETCH_MORE_POSTS,
 } from 'state/actions/posts'
@@ -59,7 +57,7 @@ class Posts extends Component {
   }
 
   render() {
-    const { items, location, pageInfo, pending, hasError } = this.props
+    const { items, location, pageInfo, hasError } = this.props
     const search = { ...queryString.parse(location.search) }
     return (
       <div>
@@ -78,7 +76,6 @@ class Posts extends Component {
           placeholder="Input post name."
         />
 
-        {pending && <div>Now loading... </div>}
         {hasError && <div>Oops, An expected error seems to have occurred.</div>}
 
         <article>
@@ -103,7 +100,6 @@ export default connect(
   state => ({
     items: state.posts.items,
     pageInfo: state.posts.pageInfo,
-    pending: [REQUEST_FETCH_POSTS, REQUEST_FETCH_MORE_POSTS].includes(state.posts.status),
     hasError: [FAILURE_FETCH_POSTS, FAILURE_FETCH_MORE_POSTS].includes(state.posts.status),
   }),
   dispatch => ({

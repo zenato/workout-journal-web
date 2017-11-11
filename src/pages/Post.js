@@ -9,11 +9,6 @@ import {
   insertPost,
   updatePost,
   deletePost,
-  REQUEST_FETCH_POST,
-  REQUEST_FETCH_EVENTS,
-  REQUEST_INSERT_POST,
-  REQUEST_UPDATE_POST,
-  REQUEST_DELETE_POST,
   FAILURE_FETCH_POST,
   FAILURE_FETCH_EVENTS,
   FAILURE_INSERT_POST,
@@ -69,11 +64,9 @@ class Post extends Component {
   }
 
   render() {
-    const { item, events, hasError, pending, formValues } = this.props
+    const { item, events, hasError, formValues } = this.props
     return (
       <div>
-        {pending && <span>Now loading...</span>}
-
         {item &&
           events && (
             <article>
@@ -109,13 +102,6 @@ export default connect(
       FAILURE_INSERT_POST,
       FAILURE_UPDATE_POST,
       FAILURE_DELETE_POST,
-    ].includes(state.posts.status),
-    pending: [
-      REQUEST_FETCH_POST,
-      REQUEST_FETCH_EVENTS,
-      REQUEST_INSERT_POST,
-      REQUEST_UPDATE_POST,
-      REQUEST_DELETE_POST,
     ].includes(state.posts.status),
     item: state.posts.item,
     events: state.posts.events,

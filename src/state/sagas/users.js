@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { take, fork, select, call, put } from 'redux-saga/effects'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {
   REQUEST_SIGN_IN,
   REQUEST_SIGN_OUT,
@@ -38,6 +39,7 @@ function signIn(params) {
 function* handleSignIn() {
   while (true) {
     const { payload: { location, ...params } } = yield take(REQUEST_SIGN_IN)
+    yield put(showLoading())
     const { accessToken, error } = yield call(signIn, params)
     if (error) {
       yield put(failureSignIn(error))
@@ -45,6 +47,7 @@ function* handleSignIn() {
       yield put(successSignIn(accessToken))
       storeCookieAndRedirect(accessToken, location)
     }
+    yield put(hideLoading())
   }
 }
 
@@ -63,6 +66,7 @@ function fetchLoggedInfo(accessToken) {
 function* handleFetchLoggedInfo() {
   while (true) {
     yield take(REQUEST_FETCH_LOGGED_INFO)
+    yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { loggedInfo, error } = yield call(fetchLoggedInfo, accessToken)
     if (error) {
@@ -70,6 +74,7 @@ function* handleFetchLoggedInfo() {
     } else {
       yield put(successFetchLoggedInfo(loggedInfo))
     }
+    yield put(hideLoading())
   }
 }
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { reduxForm } from 'redux-form'
-import { signIn, REQUEST_SIGN_IN, FAILURE_SIGN_IN } from 'state/actions/users'
+import { signIn, FAILURE_SIGN_IN } from 'state/actions/users'
 import Form, { validate } from 'components/users/SignInForm'
 import { PAGE_TITLE } from 'config'
 
@@ -19,11 +19,9 @@ class SignIn extends Component {
   }
 
   render() {
-    const { hasError, pending } = this.props
+    const { hasError } = this.props
     return (
       <div>
-        {pending && <span className="loading">Now loading...</span>}
-
         <article>
           <Helmet>
             <title>{`Sign In | ${PAGE_TITLE}`}</title>
@@ -38,7 +36,6 @@ class SignIn extends Component {
 export default connect(
   state => ({
     hasError: state.users.status === FAILURE_SIGN_IN,
-    pending: state.users.status === REQUEST_SIGN_IN,
   }),
   dispatch => ({
     ...bindActionCreators({ signIn }, dispatch),
