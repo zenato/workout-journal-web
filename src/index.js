@@ -42,7 +42,7 @@ const render = Component =>
   )
 ;(async () => {
   // Restore authentication
-  if (renderedServer) {
+  if (!renderedServer) {
     const accessToken = Cookies.get('accessToken')
     if (accessToken) {
       try {
