@@ -1,11 +1,13 @@
 FROM node
 
+RUN npm install -g yarn
+
 COPY . /app
 
-RUN cd /app && npm install && npm run build && npm run build:server
+RUN cd /app && yarn && yarn run build && yarn run build:server
 
 EXPOSE 3001
 
 WORKDIR /app
 
-CMD npm run start:server
+CMD yarn run start:server
