@@ -38,9 +38,12 @@ const render = Component =>
     </Provider>,
     document.getElementById('root'),
   )
-;(async () => {
-  // Restore authentication
-  if (!renderedServer) {
+
+if (renderedServer) {
+  render(App)
+} else {
+  (async () => {
+    // Restore authentication
     const accessToken = Cookies.get('accessToken')
     if (accessToken) {
       try {
@@ -48,12 +51,12 @@ const render = Component =>
         store.dispatch(successSignIn({ accessToken, loggedInfo }))
       } catch (e) {}
     }
-  }
+    render(App)
+  })()
+}
 
-  render(App)
-  //registerServiceWorker()
+//registerServiceWorker()
 
-  if (module.hot) {
-    module.hot.accept('./shared/App', () => render(App))
-  }
-})()
+if (module.hot) {
+  module.hot.accept('./shared/App', () => render(App))
+}
