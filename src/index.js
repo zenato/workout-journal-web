@@ -19,11 +19,13 @@ const history = createHistory()
 const store = configureStore(window.__PRELOADED_STATE__ || {}, history)
 const { renderedServer } = store.getState()
 
+const Container = ({ children }) => <div style={{ padding: 0, maring: 0 }}>{children}</div>
+
 const render = Component =>
   ReactDOM.hydrate(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div>
+        <Container>
           <LoadingBar />
           <Preloader
             renderedServer={renderedServer}
@@ -36,7 +38,7 @@ const render = Component =>
               <Component />
             </AppContainer>
           </Preloader>
-        </div>
+        </Container>
       </ConnectedRouter>
     </Provider>,
     document.getElementById('root'),
