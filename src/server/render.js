@@ -32,8 +32,7 @@ const render = async ({ req, accessToken }) => {
     const components = await getComponents(routes, req.path)
     await preload({
       components,
-      state: store.getState(),
-      dispatch: store.dispatch,
+      store,
       query: req.query,
     })
   } catch (error) {
