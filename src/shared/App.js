@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Helmet } from 'react-helmet'
 import { Route, Switch, withRouter } from 'react-router-dom'
+import LoadingBar from 'react-redux-loading-bar'
 import styled from 'styled-components'
 import { signOut } from 'state/actions/users'
 import routes from 'routes'
@@ -25,6 +26,8 @@ class App extends Component {
         <Helmet>
           <title>{process.env.REACT_APP_SITE_NAME}</title>
         </Helmet>
+
+        <LoadingBar />
 
         <Nav loggedInfo={loggedInfo} onLogout={this.handleLogout} />
 
