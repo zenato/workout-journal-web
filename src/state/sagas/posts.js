@@ -35,7 +35,6 @@ function* handleFetchPosts() {
     const accessToken = yield select(state => state.users.accessToken)
     const { items, pageInfo, error } = yield call(fetchPosts, accessToken, query)
     if (error) {
-      onFailure && (error.ignore = true)
       yield put(failureFetchPosts(error))
       onFailure && onFailure(error)
     } else {
@@ -94,7 +93,6 @@ function* handleFetchPostWithEvents() {
 
     const error = post.error || events.error
     if (error) {
-      onFailure && (error.ignore = true)
       yield put(failureFetchPost(error))
       onFailure && onFailure(error)
     } else {

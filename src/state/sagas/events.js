@@ -32,7 +32,6 @@ function* handleFetchEvents() {
     const accessToken = yield select(state => state.users.accessToken)
     const { items, error } = yield call(fetchEvents, accessToken, query)
     if (error) {
-      onFailure && (error.ignore = true)
       yield put(failureFetchEvents(error))
       onFailure && onFailure(error)
     } else {
@@ -58,7 +57,6 @@ function* handleFetchEvent() {
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(fetchEvent, accessToken, id)
     if (error) {
-      onFailure && (error.ignore = true)
       yield put(failureFetchEvent(error))
       onFailure && onFailure(error)
     } else {

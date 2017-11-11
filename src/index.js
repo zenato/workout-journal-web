@@ -8,6 +8,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import Cookies from 'js-cookie'
 //import registerServiceWorker from './registerServiceWorker'
 import configureStore from './state/configureStore'
+import { fetch, fetchComplete } from './state/actions/preloader'
 import { successSignIn } from './state/actions/users'
 import { getComponents } from './lib/router'
 import { fetchLoggedInfo } from './lib/api'
@@ -27,8 +28,14 @@ const render = Component =>
       <ConnectedRouter history={history}>
         <Preloader
           renderedServer={renderedServer}
-          onLoad={() => store.dispatch(showLoading())}
-          onComplete={() => store.dispatch(hideLoading())}
+          onLoad={() => {
+            store.dispatch(fetch())
+            store.dispatch(showLoading())
+          }}
+          onComplete={() => {
+            store.dispatch(hideLoading())
+            store.dispatch(fetchComplete())
+          }}
           loadParams={{ store }}
           renderError={Error}
         >
