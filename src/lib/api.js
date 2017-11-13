@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import axios from 'axios'
 import queryString from 'query-string'
 
@@ -9,11 +8,6 @@ const getClientMutationID = mutationName => `${mutationName}:${++MUTATION_ID}`
 
 if (process.env.REACT_APP_ENV === 'server') {
   API_URL = 'http://0.0.0.0:3001' + API_URL
-}
-
-export function getErrorMessages(error, fieldName, context) {
-  const prefix = context ? `${context}.` : ''
-  return _.get(error, prefix + fieldName)
 }
 
 const api = (accessToken, query, variables) =>
