@@ -28,7 +28,7 @@ export default handleActions(
     }),
     [FAILURE_SIGN_IN]: (state, { type }) => ({
       ...state,
-      stauts: type,
+      status: type,
     }),
 
     [REQUEST_FETCH_LOGGED_INFO]: (state, { type }) => ({
