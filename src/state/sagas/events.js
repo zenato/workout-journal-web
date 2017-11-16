@@ -75,12 +75,13 @@ function insertEvent(accessToken, values) {
 
 function* handleInsertEvent() {
   while (true) {
-    const { payload: { values, onSuccess } } = yield take(REQUEST_INSERT_EVENT)
+    const { payload: { values, onSuccess, onFailure } } = yield take(REQUEST_INSERT_EVENT)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertEvent, accessToken, values)
     if (error) {
       yield put(failureInsertEvent(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successInsertEvent(item))
       onSuccess && onSuccess(item)
@@ -98,12 +99,13 @@ function updateEvent(accessToken, values) {
 
 function* handleUpdateEvent() {
   while (true) {
-    const { payload: { values, onSuccess } } = yield take(REQUEST_UPDATE_EVENT)
+    const { payload: { values, onSuccess, onFailure } } = yield take(REQUEST_UPDATE_EVENT)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updateEvent, accessToken, values)
     if (error) {
       yield put(failureUpdateEvent(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successUpdateEvent(item))
       onSuccess && onSuccess(item)
@@ -118,12 +120,13 @@ function deleteEvent(accessToken, id) {
 
 function* handleDeleteEvent() {
   while (true) {
-    const { payload: { id, onSuccess } } = yield take(REQUEST_DELETE_EVENT)
+    const { payload: { id, onSuccess, onFailure } } = yield take(REQUEST_DELETE_EVENT)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deleteEvent, accessToken, id)
     if (error) {
       yield put(failureDeleteEvent(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successDeleteEvent())
       onSuccess && onSuccess(id)

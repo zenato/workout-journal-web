@@ -112,12 +112,13 @@ function insertPost(accessToken, values) {
 
 function* handleInsertPost() {
   while (true) {
-    const { payload: { values, onSuccess } } = yield take(REQUEST_INSERT_POST)
+    const { payload: { values, onSuccess, onFailure } } = yield take(REQUEST_INSERT_POST)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(insertPost, accessToken, values)
     if (error) {
       yield put(failureInsertPost(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successInsertPost(item))
       onSuccess && onSuccess(item)
@@ -135,12 +136,13 @@ function updatePost(accessToken, values) {
 
 function* handleUpdatePost() {
   while (true) {
-    const { payload: { values, onSuccess } } = yield take(REQUEST_UPDATE_POST)
+    const { payload: { values, onSuccess, onFailure } } = yield take(REQUEST_UPDATE_POST)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { item, error } = yield call(updatePost, accessToken, values)
     if (error) {
       yield put(failureUpdatePost(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successUpdatePost(item))
       onSuccess && onSuccess(item)
@@ -155,12 +157,13 @@ function deletePost(accessToken, id) {
 
 function* handleDeletePost() {
   while (true) {
-    const { payload: { id, onSuccess } } = yield take(REQUEST_DELETE_POST)
+    const { payload: { id, onSuccess, onFailure } } = yield take(REQUEST_DELETE_POST)
     yield put(showLoading())
     const accessToken = yield select(state => state.users.accessToken)
     const { error } = yield call(deletePost, accessToken, id)
     if (error) {
       yield put(failureDeletePost(error))
+      onFailure && onFailure(error)
     } else {
       yield put(successDeletePost())
       onSuccess && onSuccess(id)
