@@ -34,7 +34,7 @@ const api = (accessToken, query, variables) =>
 export const fetchEvents = (accessToken, params) => {
   const query = `
     query ($name: String) {
-      events(name: $name) {
+      events(name_Icontains: $name) {
         edges {
           node {
             id
