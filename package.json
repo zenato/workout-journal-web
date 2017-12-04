@@ -9,8 +9,14 @@
     "build": "cross-env NODE_PATH=src react-app-rewired build",
     "build:server": "cross-env NODE_PATH=src node scripts/build.server.js",
     "test": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom",
-    "prettier": "cross-env NODE_PATH=src prettier --write \"{config,scripts,server,src}/**/*.js\" config-overrides.js",
+    "precommit": "lint-staged",
     "eject": "react-scripts eject"
+  },
+  "lint-staged": {
+    "{config,scripts,server,src}/**/*.js": [
+      "cross-env NODE_PATH=src prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -50,7 +56,9 @@
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "extract-text-webpack-plugin": "3.0.2",
+    "husky": "^0.14.3",
     "jest-enzyme": "^4.0.1",
+    "lint-staged": "^6.0.0",
     "node-sass": "^4.7.2",
     "postcss-flexbugs-fixes": "3.2.0",
     "prettier": "^1.8.2",
